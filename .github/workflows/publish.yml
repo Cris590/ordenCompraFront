@@ -36,7 +36,9 @@ jobs:
       - name: Get current timestamp for REACT_APP_LAST_UPDATE
         id: timestamp
         run: |
-          echo "REACT_APP_LAST_UPDATE=$(TZ="America/Bogota" date '+%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV       
+          echo "REACT_APP_LAST_UPDATE=$(TZ="America/Bogota" date '+%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV   
+          echo "TAG="${{ github.ref_name }} >> $GITHUB_ENV
+          echo ${{ github.ref_name }}
       - name: Build and push Docker image
         run: |
           docker build . \
