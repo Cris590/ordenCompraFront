@@ -20,8 +20,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN_GITHUB }}
 
-      - name: Determine Docker Tag
-        id: docker-tag
+     # - name: Determine Docker Tag
+      #  id: docker-tag
       #   run: |
       #     if [ "${{ github.ref_name }}" == "production" ]; then
       #       echo "TAG=prod" >> $GITHUB_ENV
