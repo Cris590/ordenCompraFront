@@ -42,8 +42,8 @@ jobs:
           docker build . \
             --build-arg APP_ENV=${{ github.ref_name }} \            
             --build-arg REACT_APP_LAST_UPDATE=${{ env.REACT_APP_LAST_UPDATE }} \
-            --tag ghcr.io/cris590/ordencompra-front-v2:${{ env.TAG }}
-          docker push ghcr.io/cris590/ordencompra-front-v2:${{ env.TAG }}
+            --tag ghcr.io/cris590/ordencompra-front-v2:${{ github.ref_name }}
+          docker push ghcr.io/cris590/ordencompra-front-v2:${{ github.ref_name }}
 
   deploy:
     needs: create-docker-image
