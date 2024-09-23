@@ -4,24 +4,19 @@ WORKDIR /usr/src/app
 
 # Instalar dependencias
 COPY package*.json ./
-RUN npm install env-cmd --save
+RUN npm install
 
 # Instalar tzdata para manejar zonas horarias
-RUN apk add --no-cache tzdata
+ARG APP_ENV
 
 # Configurar la zona horaria a America/Bogota (Colombia)
-ENV TZ=America/Bogota
+
 
 # Copiar el código fuente y construir la aplicación
 COPY . .
-ARG PUBLIC_URL
-ARG REACT_APP_API_URL
-ARG REACT_APP_LAST_UPDATE
-ENV PUBLIC_URL=${PUBLIC_URL}
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
-ENV REACT_APP_LAST_UPDATE=${REACT_APP_LAST_UPDATE}
+RUN npm install env-cmd --save-dev
 
-RUN npm run build
+RUN npm run build:${APP_ENV}
 
 # Etapa de despliegue usando Nginx
 FROM nginx:1.17.1-alpine
@@ -36,7 +31,7 @@ ENV TZ=America/Bogota
 COPY --from=build /usr/src/app/build/ /usr/share/nginx/html
 
 # Copiar la configuración personalizada de Nginx
-#COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Exponer el puerto 80, según tu configuración de Nginx
 EXPOSE 80

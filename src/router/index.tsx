@@ -21,7 +21,7 @@ import { ControlOrdenes } from '../pages/private/control-ordenes/ControlOrdenes'
 import { GuiaUso } from '../pages/private/guia-uso/GuiaUso';
 
 const AppRouter: React.FC = () => {
-  const basename = process.env.REACT_APP_BASE_URL || '';
+  const basename = process.env.PUBLIC_URL || '';  
   return (
     <Router basename={basename}>
       <Routes>
