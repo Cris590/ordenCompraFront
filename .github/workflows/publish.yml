@@ -41,5 +41,5 @@ jobs:
       - name: SSH into server and deploy
         run: |
           sshpass -p ${{ secrets.AUTH_PASS }} ssh -o StrictHostKeyChecking=no ${{ secrets.AUTH_SERVER }} << EOF
-            sh sh /services/deploy-development.sh ${{ github.ref_name }}            
+            sh  /services/deploy-development.sh ${{ github.ref_name }}            
           EOF
