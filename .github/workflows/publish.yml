@@ -40,7 +40,8 @@ jobs:
           echo "TAG=${{ github.ref_name }}" >> $GITHUB_ENV
       - name: Build and push Docker image
         run: |          
-          docker build . \            
+          docker build . \         
+            --build-arg APP_ENV=${{ github.ref_name }} \      
             --tag ghcr.io/cris590/ordencompra-front-v2:${{ github.ref_name }}
           #docker push ghcr.io/cris590/ordencompra-front-v2:${{ github.ref_name }}
 
