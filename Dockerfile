@@ -8,7 +8,8 @@ RUN npm install
 
 # Instalar tzdata para manejar zonas horarias
 ARG APP_ENV
-
+ARG BUILD_DATE
+ENV REACT_APP_LAST_UPDATE=$BUILD_DATE
 # Configurar la zona horaria a America/Bogota (Colombia)
 
 
@@ -26,7 +27,6 @@ RUN apk add --no-cache tzdata
 
 # Configurar la zona horaria a America/Bogota (Colombia)
 ENV TZ=America/Bogota
-
 # Copiar la carpeta build generada en la etapa de construcción
 COPY --from=build /usr/src/app/build/ /usr/share/nginx/html
 
