@@ -1,136 +1,123 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import {
   IoCloseOutline,
   IoLogOutOutline,
-
   IoTicketOutline,
   IoBarcode,
   IoBagCheck,
   IoCreateSharp,
   IoBusinessSharp,
-  IoLibraryOutline, 
+  IoLibraryOutline,
   IoBicycle,
   IoClipboard,
   IoCreate,
-  IoBusinessOutline
-
+  IoBusinessOutline,
+  IoBagCheckSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
 import { useUserStore } from "../../../store/user/user";
 import { useCartStore } from "../../../store/cart/cart-store";
 
-// import { useRouter } from "next/navigation";
-
-// Add more icons as needed
-const iconMapping:{[key:string]:IconType} = {
-  
-  categorias:IoBarcode,
-  "ordenes-compra":IoTicketOutline,
-  productos:IoBagCheck,
-  tallajes:IoCreateSharp,
-  entidades:IoBusinessSharp,
-  reportes:IoLibraryOutline,
-
-  "guia-uso":IoBicycle,
-  "solicitud-dotacion":IoCreate,
-  "control-ordenes":IoClipboard,
-  "info-entidad":IoBusinessOutline,
-  // Add other mappings here
+const iconMapping: { [key: string]: IconType } = {
+  categorias: IoBarcode,
+  "ordenes-compra": IoTicketOutline,
+  productos: IoBagCheck,
+  tallajes: IoCreateSharp,
+  entidades: IoBusinessSharp,
+  reportes: IoLibraryOutline,
+  "guia-uso": IoBicycle,
+  "solicitud-dotacion": IoCreate,
+  "control-ordenes": IoClipboard,
+  "info-entidad": IoBusinessOutline,
+  "politicas": IoBagCheckSharp,
 };
-
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSideMenu);
-  const logOut = useUserStore((state)=>state.logOut)
-  const session = useUserStore(state => state.user);
-  
-  const clearCart = useCartStore((state)=>state.clearCart)
-
-
+  const logOut = useUserStore((state) => state.logOut);
+  const session = useUserStore((state) => state.user);
+  const clearCart = useCartStore((state) => state.clearCart);
   const navigate = useNavigate();
-  let sidebarArray = useUserStore((state)=>state.sidebarMenu)
-  const handleLogOut  = () =>{
+  const sidebarArray = useUserStore((state) => state.sidebarMenu);
 
-    logOut()
-    clearCart()
-    navigate('/auth/login');
+  const handleLogOut = () => {
+    logOut();
+    clearCart();
+    navigate("/auth/login");
+  };
 
-  } 
   return (
-    <div>
-      {/* Background black */}
-      {isSideMenuOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30" />
-      )}
-
-      {/* Blur */}
-      {isSideMenuOpen && (
-        <div
-          onClick={closeMenu}
-          className="fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm"
-        />
-      )}
-
-      {/* Sidemenu */}
+    <div className="flex">
+      {/* Sidebar */}
       <nav
         className={clsx(
-          "fixed p-5 left-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
-          {
-            "-translate-x-full": !isSideMenuOpen,
-          }
+          "fixed left-0 top-0 h-screen bg-white shadow-2xl transform transition-all duration-300 group",
+          isSideMenuOpen
+            ? "w-[350px] z-20" 
+            : "w-[45px] hover:w-[350px] hover:z-20 z-10"
         )}
       >
-        <IoCloseOutline
-          size={50}
-          className="absolute top-1 left-5 cursor-pointer"
-          onClick={() => closeMenu()}
-        />
 
+        {/* Menu Items */}
+        {session &&
+          sidebarArray.map((menuItem, key) => {
+            const IconComponent = iconMapping[menuItem.route];
+            if (menuItem.visible === 1) {
+              return (
+                <Link
+                  key={key}
+                  to={menuItem.route}
+                  className="flex items-start mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+                  onClick={() => closeMenu()}
+                >
+                  {/* Centramos los íconos en el espacio */}
+                  <div className="flex justify-start ">
+                    {IconComponent && <IconComponent size={25} />} 
+                  </div>
+                  <span
+                    className={clsx(
+                      "ml-3 text-l text-start whitespace-nowrap overflow-hidden opacity-0", 
+                      "group-hover:opacity-100 group-hover:ml-5 transition-all duration-300", 
+                      isSideMenuOpen && "opacity-100 ml-5" 
+                    )}
+                  >
+                    {menuItem.label}
+                  </span>
+                </Link>
+              );
+            }
+          })}
 
-
-        {/* Menú */}
-
-        {
-          session && (
-            sidebarArray.map((menuItem , key) => {
-              const IconComponent = iconMapping[menuItem.route];
-              if(menuItem.visible === 1){
-                return (
-                    
-                    <Link
-                      key={key}
-                      to={menuItem.route}
-                      className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-                      onClick={() => closeMenu()}
-                    >
-                      {IconComponent && <IconComponent size={30} />}
-                      <span className="ml-3 text-xl">{menuItem.label}</span>
-                    </Link>
-                  
-                )
-              }
-            })
-          )
-        }
-
-      
         {/* Line Separator */}
         <div className="w-full h-px bg-gray-200 my-10" />
 
         <button
-          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          className="flex w-full items-start mt-10 p-2 hover:bg-gray-100 rounded transition-all"
           onClick={handleLogOut}
         >
-          <IoLogOutOutline size={30} />
-          <span className="ml-3 text-xl">Salir</span>
+          {/* Centramos el ícono de salida también */}
+          <div className="flex justify-start">
+            <IoLogOutOutline size={25} /> {/* Tamaño constante del ícono */}
+          </div>
+          <span
+            className={clsx(
+              "ml-3 text-xl whitespace-nowrap overflow-hidden opacity-0", // Oculto por defecto
+              "group-hover:opacity-100 group-hover:ml-5 transition-all duration-300", // Visible al hacer hover
+              isSideMenuOpen && "opacity-100 ml-5" // Siempre visible cuando el menú está abierto manualmente
+            )}
+          >
+            Salir
+          </span>
         </button>
-
-
       </nav>
+
+      {/* Main content */}
+      <div className={clsx("flex-1 transition-all duration-300", isSideMenuOpen ? "ml-[350px]" : "ml-[80px]")}>
+        {/* Aquí va el contenido de tu aplicación */}
+      </div>
     </div>
   );
 };

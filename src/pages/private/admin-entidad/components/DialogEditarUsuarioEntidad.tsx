@@ -17,7 +17,7 @@ interface Props {
 export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, onClose }: Props) => {
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
-    const [cargos, setCargos] = useState<{ cod_cargo_entidad: number, nombre: string }[]>([])
+    const [cargos, setCargos] = useState<{ cod_cargo_entidad: number, nombre: string, lote:number }[]>([])
 
     const {handleSubmit, reset, control, formState: { isValid } } = useForm<IUsuarioEntidadResumen>({
         defaultValues: usuario
@@ -255,7 +255,7 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
                                     {...field}
                                     label="cargo"
                                 >
-                                    { cargos.map((cargo)=>(<MenuItem value={cargo.cod_cargo_entidad}>{cargo.nombre}</MenuItem>))}
+                                    { cargos.map((cargo)=>(<MenuItem value={cargo.cod_cargo_entidad}>{cargo.nombre} - LOTE {cargo.lote}</MenuItem>))}
                                 </Select>
                             </>
                         )}

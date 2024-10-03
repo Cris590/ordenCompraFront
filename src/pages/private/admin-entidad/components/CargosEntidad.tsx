@@ -10,7 +10,7 @@ interface Props{
 }
 export const CargosEntidad = ({ codEntidad }: Props) => {
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
-    const [cargos, setCargos] = useState<{ cod_cargo_entidad:number, nombre:string}[]>([])
+    const [cargos, setCargos] = useState<{ cod_cargo_entidad:number, nombre:string, lote:number}[]>([])
     const [cargoEntidad, setCargoEntidad] = useState(0)
     const [openFormCargoEntidad, setOpenFormCargoEntidad] = useState(false)
     useEffect(() => {
@@ -66,7 +66,7 @@ export const CargosEntidad = ({ codEntidad }: Props) => {
                     <Button
                         key={cargo.cod_cargo_entidad} 
                         onClick={()=>handleEditarCargo(cargo.cod_cargo_entidad)}
-                    > {cargo.nombre}</Button>
+                    > {cargo.nombre} - LOTE {cargo.lote}</Button>
                 ))
             }
         </ButtonGroup>

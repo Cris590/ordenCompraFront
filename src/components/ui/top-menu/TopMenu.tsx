@@ -24,7 +24,7 @@ export const TopMenu = () => {
   return (
     <>
 
-      <nav className="flex px-5 justify-start items-center w-full bg-slate-500">
+      <nav className="mx-4 flex px-5 justify-start items-center w-full bg-slate-500">
         <div>
           <button
             onClick={openSideMenu}

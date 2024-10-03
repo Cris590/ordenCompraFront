@@ -12,9 +12,12 @@ import clsx from 'clsx';
 import { useCartStore } from '../../../store/cart/cart-store';
 import { useUserStore } from '../../../store/user/user';
 import { reporteGeneralEntidad } from '../../../actions/reporte/reporte';
-import { IoArrowRedoCircleOutline, IoCheckmarkDone } from 'react-icons/io5';
+import { IoArrowRedoCircleOutline, IoCheckmark, IoCheckmarkDone } from 'react-icons/io5';
 import { DialogGestionOrden } from './components/DialogGestionOrden';
 import { formatDate } from '../../../utils/formatDate';
+import Swal from 'sweetalert2';
+import { editarEntidad } from '../../../actions/entidad/entidad';
+import { generarNumeroAleatorio } from '../../../utils/randomNumber';
 
 export const ControlOrdenes = () => {
 
@@ -22,10 +25,12 @@ export const ControlOrdenes = () => {
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false);
     const [usuarios, setUsuarios] = useState<IUsuarioGestionar[]>([]);
     const [ordenCompleta, setOrdenCompleta] = useState<boolean>(false);
-    
+
     const [ordenGestionada, setOrdenGestionada] = useState<boolean>(false);
     const [fechaGestionada, setFechaGestionada] = useState<string>('');
-    
+    const [tipoEntrega, setTipoEntrega] = useState<string>('');
+
+
     const { search, setSearch, filteredData } = useFilteredData(usuarios);
     const clearCart = useCartStore((state) => state.clearCart)
     const session = useUserStore((state) => state.user)
@@ -59,30 +64,30 @@ export const ControlOrdenes = () => {
             sortable: true,
         },
         {
+            name: 'Aceptó políticas',
+            selector: (row: IUsuarioGestionar) => ((row.cod_orden ) ? 'Si' : 'No'),
+        },
+        {
             name: 'Acciones',
             cell: (row: IUsuarioGestionar) => {
 
-                if (row.cod_orden) {
+                if (tipoEntrega.length === 0 || tipoEntrega === 'FISICO') {
+                   return (
+                    <Button disabled>No aplica</Button>
+                   )
+                } else if (row.cod_orden) {
                     // Orden Completa, verlo en resumen
                     return (
                         <button
                             type='button'
-                            className={
-                                clsx(
-                                    'py-0.5 px-1 my-1 border-2 rounded-sm hover:text-white transition-colors duration-300',
-                                    {
-                                        'border-green-500 text-green-500 hover:bg-green-500 ': row.orden_completa,
-                                        ' border-orange-500 text-orange-500 hover:bg-orange-500 ': !row.orden_completa,
-                                    }
-                                )
-                            }
-                            onClick={() => navigate('/resumen_orden/' + row.cod_usuario ,
+                            className='py-0.5 px-1 my-1 border-2 rounded-sm hover:text-white transition-colors duration-300 border-green-500 text-green-500 hover:bg-green-500'
+                            onClick={() => navigate('/resumen_orden/' + row.cod_usuario,
                                 {
                                     state: { origin: 'control-ordenes' }
                                 }
                             )}
                         >
-                            {row.orden_completa ? 'Orden Completa' : 'Gestionar Orden'}
+                            Ver Orden
                         </button>
                     )
                 } else {
@@ -114,10 +119,11 @@ export const ControlOrdenes = () => {
         setLoadingSpinner(false)
         if (response?.error == 0) {
             setUsuarios(response.usuarios)
-            let ordenCompleta = response.usuarios.every(usuario => !!usuario.orden_completa ) ;
+            let ordenCompleta = response.usuarios.every(usuario => !!usuario.cod_orden);
             setOrdenCompleta(ordenCompleta)
             setOrdenGestionada(response.gestionada)
             setFechaGestionada(response.fecha_gestionada || '')
+            setTipoEntrega(response.entrega_bonos || '')
         }
     }
 
@@ -131,6 +137,41 @@ export const ControlOrdenes = () => {
         }
         setOpen(false);
     };
+
+    const actualizarEntidad = async () => {
+        try {
+    
+          const currentDate = new Date();
+          const colombiaOffset = -5; // Colombia es UTC-5
+          const offsetInMillis = colombiaOffset * 60 * 60 * 1000; // Offset en milisegundos
+    
+          // Obtener la fecha en UTC
+          const utcDate = currentDate.toISOString();
+          // Convertir a la fecha en Colombia
+          const colombiaDate = new Date(currentDate.getTime() + offsetInMillis);
+          // Obtener la fecha en formato ISO 8601 en la zona horaria de Colombia
+          const colombiaDateISOString = colombiaDate.toISOString();
+    
+          let aux = {
+            gestionada: true,
+            fecha_gestionada: colombiaDateISOString,
+            no_orden: generarNumeroAleatorio(7)
+          }
+          let res = await editarEntidad(aux, session?.cod_entidad || 0)
+          if (res) {
+            Swal.fire(res.msg)
+            if(res.error === 0){
+                obtenerSolicitudes()
+            }
+          }
+    
+        } catch (e) {
+          Swal.fire({
+            icon: "error",
+            text: "Comuniquese con el administrador"
+          })
+        }
+      }
 
 
     return (
@@ -146,35 +187,44 @@ export const ControlOrdenes = () => {
                 />
                 <Button variant='contained' startIcon={<IoMdDownload />} onClick={handleDescargarReporte}>Descargar Reporte</Button>
 
-
                 {
-                    (ordenCompleta && !ordenGestionada) &&
-                
+                    (tipoEntrega.length === 0) &&
                     <div className='mx-4 inline-block'>
                         <Button
-                            
+
                             variant='contained'
                             color="success"
                             startIcon={<IoArrowRedoCircleOutline />}
                             onClick={() => setOpen(true)}>
-                            Tramitar entrega orden
+                            Tramitar entrega
                         </Button>
                     </div>
                 }
 
+                {
+                    (ordenCompleta && !ordenGestionada && tipoEntrega === "VIRTUAL")  &&
+                        <div className='mx-4 inline-block'>
+                            <Button
+
+                                variant='contained'
+                                color="success"
+                                startIcon={<IoCheckmark />}
+                                onClick={() => actualizarEntidad()}>
+                                Finalizar Orden Entrega
+                            </Button>
+                        </div>
+                }
+
 
                 {
-                    !!ordenGestionada && 
+                   ( !!ordenGestionada && tipoEntrega === "VIRTUAL")  &&
                     <div className='inline-block'>
                         <div className=' flex flex-row items-center m-0 mx-4 p-2 bg-green-600 rounded-sm max-w-md'>
-                            <IoCheckmarkDone color='white' size={30}/>
-                        <p className='text-white text-lg '>Orden Gestionada ( {formatDate(fechaGestionada)} )</p>
+                            <IoCheckmarkDone color='white' size={30} />
+                            <p className='text-white text-lg '>Orden Gestionada ( {formatDate(fechaGestionada)} )</p>
                         </div>
                     </div>
                 }
-                    
-                
-
 
             </div>
             <DataTable

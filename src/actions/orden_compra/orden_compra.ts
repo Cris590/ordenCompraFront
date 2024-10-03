@@ -78,28 +78,6 @@ export const crearOrdenCompra = async (dataOrden: {
   }
 }
 
-export const actualizarOrdenCompra = async (codOrden:number, dataOrden: { ciudad:string, direccion:string}) => {
-  try {
-
-    let options = {
-      method: 'put',
-      url: `${actionsSettings.backendRoutes.actualizarOrden}/${codOrden}`,
-      headers: {
-        'Authorization': getAuthToken(),
-        'Content-Type': 'application/json',
-      },
-      data: dataOrden
-    }
-    const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
-    return data
-  } catch (e) {
-    handleHttpError(e);
-    console.log('************')
-    console.log(e)
-    return null
-  }
-}
-
 export const validarOrdenUsuario = async (codUsuario:number) => {
   try {
 

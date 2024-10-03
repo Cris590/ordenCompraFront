@@ -13,10 +13,10 @@ interface Props {
 
 const indicacionesCarga = [
     'El archivo debe ser de tipo csv, separado por COMAS', 
-    'Los encabezados deben ser en minúsculas y siempre deben ser los siguiente => nombre,cedula,email,cargo,sexo,activo,password ( En ese mismo Orden )',
+    'Los encabezados deben ser en minúsculas y siempre deben ser los siguiente => nombre,cedula,email,cargo,lote,sexo,activo,password ( En ese mismo Orden )',
     'Si carga elementos sin nombre, documento, cedula, cargo o email el usuario no se creara',
     'Usuarios que ya esten creados previamente no se podran crear nuevamente',
-    'El nombre del cargo debe ser exactamente igual a los creados en la pestaña de cargos usuario',
+    'El nombre del cargo debe ser exactamente igual a los creados en la pestaña de cargos usuario, asi com su número de lote',
     'Para el sexo del usuario debe poner la letra M para másculino o la letra F para feminino',
     'El parametro activo deber ser 1 (Activo) o 0 (Inactivo)'
 ];

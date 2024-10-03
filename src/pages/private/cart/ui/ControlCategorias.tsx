@@ -52,6 +52,11 @@ export const ControlCategorias = ( { mostrarSoloTotal }:Props ) => {
                 <p>{usuarioOrden?.sexo === 'M' ? 'Másculino' : 'Femenino'}</p>
             </div>
 
+            <div className='my-3 border-gray-3 border-b-2'>
+                <p className='font-bold text-sm'>COORDINADOR</p>
+                <p>{usuarioOrden?.coordinador}</p>
+            </div>
+
             <p className='font-bold text-lg'>CONTROL CATEGORIAS</p>
             {categorias.length === 0 &&
                 <p>No hay categorias, por lo tanto no puede escoger productos</p>

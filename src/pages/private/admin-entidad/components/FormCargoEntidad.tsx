@@ -18,11 +18,13 @@ interface Props {
 
 interface ICargoCategoria {
     nombre: string,
+    lote:number,
     cod_categorias: string[],
 }
 
 const defaulValueCargo: ICargoCategoria = {
     nombre: '',
+    lote:0,
     cod_categorias:[],
 }
 
@@ -64,7 +66,8 @@ export const FormCargoEntidad = ({ codCargoEntidad, codEntidad, openDialog, onCl
 
                 let cargoAux: ICargoCategoria = {
                     nombre:response.cargo.nombre,
-                    cod_categorias: response.cargo.cod_categorias.map((cat: any) => cat.cod_categoria)
+                    cod_categorias: response.cargo.cod_categorias.map((cat: any) => cat.cod_categoria),
+                    lote:response.cargo.lote
                 }
                 setCategoriasSave(response.cargo.cod_categorias)
                 reset(cargoAux)
@@ -179,6 +182,21 @@ export const FormCargoEntidad = ({ codCargoEntidad, codEntidad, openDialog, onCl
                                 render={({ field }) => (
                                     <TextField
                                         label="Nombre"
+                                        variant="outlined"
+                                        {...field}
+                                        value={field.value || ''}
+                                    />
+                                )}
+                            />
+                            <br />
+
+                            <Controller
+                                name="lote"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field }) => (
+                                    <TextField
+                                        label="lote"
                                         variant="outlined"
                                         {...field}
                                         value={field.value || ''}

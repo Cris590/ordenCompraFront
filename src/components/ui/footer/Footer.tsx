@@ -26,6 +26,7 @@ export const Footer = () => {
       <div className="flex flex-col mx-4 max-w-sm">
         <p>En caso de presentarse alguna dificultad relacionada con la operación de la plataforma o la ejecución de la orden de entrega, puede comunicarse con nuestro equipo de soporte a través de los siguientes datos de contacto. Este servicio está disponible de lunes a sábado, de 08:00 a.m. a 04:00 p.m.</p>
         <p>Número de contacto: <span className="font-bold">323 219 4970</span> y <span className="font-bold"> 601 455 9328 </span></p>
+        <p>Correo: <span className="font-bold"> servicioclienteinversionesbrt@gmail.com</span></p>
         <p>Estamos a su disposición para brindarle la asistencia necesaria</p>
       </div>
 

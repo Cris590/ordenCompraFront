@@ -6,7 +6,8 @@ export interface IEntidadResumen {
     activo:1|0,
     nit:string,
     gestionada:1|0,
-    fecha_gestionada?:string
+    fecha_gestionada?:string,
+    entrega_bonos:string
 }
 
 export interface IResponseEntidadResumen {
@@ -73,13 +74,14 @@ export interface IUsuarioEntidadResumen{
 }   
 
 export interface IResponseResumenCargosEntidad extends IRespuestaGeneralAction{
-    cargos:{ cod_cargo_entidad:number, nombre:string}[]
+    cargos:{ cod_cargo_entidad:number, nombre:string, lote:number }[]
 }
 
 export interface ICargoEntidadDetalle {
     cod_cargo_entidad:number,
     nombre:string,
     cod_entidad:number,
+    lote:number,
     cod_categorias:{cod_categoria:number , cantidad:number}[],
 }
 
@@ -109,5 +111,7 @@ export interface IInfoContratoEntidad{
     gestionada:string,
     fecha_gestionada?:string,
     entrega_bonos?:'FISICO' | 'VIRTUAL',
-    no_orden?:string
+    no_orden?:string,
+    direccion:string,
+    ciudad:string
 }

@@ -19,6 +19,7 @@ import { SolicitudesDotacion } from '../pages/private/solicitud-dotacion/Solicit
 import { InfoEntidadContrato } from '../pages/private/info-entidad/InfoEntidadContrato';
 import { ControlOrdenes } from '../pages/private/control-ordenes/ControlOrdenes';
 import { GuiaUso } from '../pages/private/guia-uso/GuiaUso';
+import { PoliticasPage } from '../pages/private/politicas-devolucion/PoliticasPage';
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -47,6 +48,7 @@ const AppRouter: React.FC = () => {
           <Route path="/solicitud-dotacion" element={<RouteGuard element={<SolicitudesDotacion />} />} />
           <Route path="/control-ordenes" element={<RouteGuard element={<ControlOrdenes />} />} />
           <Route path="/info-entidad" element={<RouteGuard element={<InfoEntidadContrato />} />} />
+          <Route path="/politicas" element={<RouteGuard element={<PoliticasPage />} />} />
 
           <Route path="/404" element={<PageNotFound />} />
           <Route path="/*" element={<PageNotFound />} />

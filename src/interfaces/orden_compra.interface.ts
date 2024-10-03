@@ -53,7 +53,8 @@ export interface IUsuarioValidacion {
     nit: string,
     usuario: string,
     sexo:'M' | 'F',
-    cod_usuario:number
+    cod_usuario:number,
+    coordinador:string
 }
 
 export interface IOrdenValidar {
@@ -64,14 +65,14 @@ export interface IOrdenValidar {
     direccion?: string,
     ciudad?: string,
     productos: CartProducto[],
-    usuario_creacion: string,
-    observaciones:string
+    usuario_creacion: string
 }
 
 export interface IResponseUsuariosGestionar extends IRespuestaGeneralAction {
     usuarios: IUsuarioGestionar[],
     gestionada:boolean,
-    fecha_gestionada?:string
+    fecha_gestionada?:string,
+    entrega_bonos?:string
 }
 
 export interface IUsuarioGestionar extends IUsuarioEntidadResumen {

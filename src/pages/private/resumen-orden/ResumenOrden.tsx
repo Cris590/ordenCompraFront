@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useUserStore } from '../../../store/user/user';
-import { actualizarOrdenCompra, validarOrdenUsuario } from '../../../actions/orden_compra/orden_compra';
+import { validarOrdenUsuario } from '../../../actions/orden_compra/orden_compra';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { CardProducto } from './components/CardProducto';
-import { ICategoriaUsuario, IOrdenValidar } from '../../../interfaces/orden_compra.interface';
+import { IOrdenValidar } from '../../../interfaces/orden_compra.interface';
 import { ControlCategorias } from '../cart/ui/ControlCategorias';
 import { useCartStore } from '../../../store/cart/cart-store';
 import { formatDate } from '../../../utils/formatDate';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { BreadCrumbsResumen } from './components/BreadCrumbsResumen';
-
-interface IFormDireccion {
-  ciudad: string,
-  direccion: string,
-  observaciones: string
-}
 
 export const ResumenOrden = () => {
 
@@ -29,10 +22,6 @@ export const ResumenOrden = () => {
   const location = useLocation();
   const { state } = location;
   const origin = state?.origin;
-
-  const { register, handleSubmit, reset, control, formState: { isValid }, watch } = useForm<IFormDireccion>({
-    defaultValues: { ciudad: '', direccion: '', observaciones:'' }
-  });
 
 
   useEffect(() => {
@@ -59,11 +48,7 @@ export const ResumenOrden = () => {
           setInfoUsuarioOrden(ordenUsuario.usuario)
           setOrden(ordenUsuario.orden)
           setCategorias(ordenUsuario.categorias)
-          reset({
-            ciudad: ordenUsuario.orden?.ciudad,
-            direccion: ordenUsuario.orden?.direccion,
-            observaciones: ordenUsuario.orden?.observaciones
-          })
+          
         } else {
           navigate('/')
 
@@ -79,21 +64,7 @@ export const ResumenOrden = () => {
     }
   }
 
-  const onSubmit: SubmitHandler<IFormDireccion> = async (data) => {
-    try {
-      let response = await actualizarOrdenCompra(orden?.cod_orden || 0, data)
-      if (response) {
-        Swal.fire(response.msg)
-      }
-    } catch (e) {
-      Swal.fire({
-        icon: 'error',
-        text: 'Error al actualizar la información de la orden, comuniquese con el administrador'
-      })
-    }
 
-
-  }
 
   return (
     <>
@@ -113,110 +84,36 @@ export const ResumenOrden = () => {
 
         <ControlCategorias mostrarSoloTotal={true} />
         <div>
-          {session?.cod_perfil === 2 ? (
-            <form onSubmit={handleSubmit(onSubmit)} className=''>
-
-
-              <div className="flex flex-row justify-center  mx-4 mt-6">
-                <Controller
-                  name="ciudad"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <TextField
-                      fullWidth
-                      label="Ciudad"
-                      variant="outlined"
-                      {...field}
-                      value={field.value || ''}
-                    />
-
-                  )}
+          {
+           ( session?.cod_perfil === 2 ) && (
+            <>
+              <div className='flex justify-start my-6'>
+                <TextField
+                  fullWidth
+                  label="Ciudad"
+                  variant="outlined"
+                  disabled
+                  value={orden?.ciudad}
+                  InputLabelProps={{
+                    shrink: Boolean(orden?.ciudad), // Force the label to shrink when there's a value
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  label="Dirección"
+                  variant="outlined"
+                  disabled
+                  value={orden?.direccion}
+                  InputLabelProps={{
+                    shrink: Boolean(orden?.direccion), // Force the label to shrink when there's a value
+                  }}
                 />
 
-
-                <Controller
-                  name="direccion"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-
-                    <TextField
-                      fullWidth
-                      label="Dirección"
-                      variant="outlined"
-                      {...field}
-                      value={field.value || ''}
-                    />
-                  )}
-                />
-
-
-
-
+                
               </div>
-
-              <div className='mx-4 flex flex-row justify-between items-center'>
-                <Controller
-                  name="observaciones"
-                  control={control}
-                  rules={{ required: false }}
-                  render={({ field }) => (
-
-                    <TextField
-                      fullWidth
-                      label="Observaciones coordinador"
-                      variant="outlined"
-                      {...field}
-                      value={field.value || ''}
-                    />
-                  )}
-                />
-                <div className='my-4'>
-                  <Button type='submit' disabled={!isValid}>
-                    Guardar Cambios
-                  </Button>
-                </div>
-              </div>
-
-
-            </form>
-          ) : <>
-            <div className='flex justify-start my-6'>
-              <TextField
-                fullWidth
-                label="Ciudad"
-                variant="outlined"
-                disabled
-                value={orden?.ciudad}
-                InputLabelProps={{
-                  shrink: Boolean(orden?.ciudad), // Force the label to shrink when there's a value
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Dirección"
-                variant="outlined"
-                disabled
-                value={orden?.direccion}
-                InputLabelProps={{
-                  shrink: Boolean(orden?.direccion), // Force the label to shrink when there's a value
-                }}
-              />
-
-              
-            </div>
-            <TextField
-                fullWidth
-                label="Observaciones coordinador"
-                variant="outlined"
-                disabled
-                value={orden?.observaciones}
-                InputLabelProps={{
-                  shrink: Boolean(orden?.observaciones), // Force the label to shrink when there's a value
-                }}
-              />
-          </>
+            
+            </>
+            )
           }
 
           <hr />

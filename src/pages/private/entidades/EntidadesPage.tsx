@@ -10,6 +10,8 @@ import { obtenerEntidades } from '../../../actions/entidad/entidad';
 import { useFilteredData } from '../../../hooks/useFilteredData';
 import { reporteGeneralEntidad } from '../../../actions/reporte/reporte';
 import { formatDate } from '../../../utils/formatDate';
+import { IconButton } from '@mui/material';
+import { IoBan, IoCheckmarkDoneOutline, IoNewspaper, IoPencil } from 'react-icons/io5';
 
 
 
@@ -32,12 +34,22 @@ export const EntidadesPage = () => {
       selector: (row: IEntidadResumen) => (row.activo === 1) ? 'Activo' : 'Inactivo',
     },
     {
+      name: 'Tipo Entrega',
+      selector: (row: IEntidadResumen) => row.entrega_bonos,
+    },
+    {
       name: 'Gestionada',
       cell: (row: IEntidadResumen) => (
         (!!row.gestionada) ? (
-          <Button variant='contained' size='small' color='success'>Solicitud completa</Button>
+          // <Button variant='contained' size='small' color='success'>Solicitud completa</Button>
+          <IconButton aria-label="delete" color='success'>
+            <IoCheckmarkDoneOutline />
+          </IconButton>
         ) : (
-          <Button variant='contained' size='small' color='error'>Solicitud sin gestionar</Button>
+          // <Button variant='contained' size='small' color='error'>Solicitud sin gestionar</Button>
+          <IconButton aria-label="ioban" color='error'>
+            <IoBan />
+          </IconButton>
         )
       ),
     },
@@ -53,16 +65,14 @@ export const EntidadesPage = () => {
             onClick={() => handleClickOpen(row.cod_entidad)}
             className="bg-blue-500 text-white px-2 py-1 rounded mx-3"
           >
-            Editar
+            <IoPencil />
           </button>
 
           <button
             className="bg-green-500 text-white px-2 py-1 rounded mx-3"
             onClick={() => handleDescargarReporte(row.cod_entidad)}
           >
-           
-           Descargar Reporte
-           
+           <IoNewspaper />
           </button>
         </>
       ),
