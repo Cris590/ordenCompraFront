@@ -77,6 +77,10 @@ export const DialogCargarUsuarios = ({ codEntidad, openDialog, onClose }: Props)
                         <Button type="submit" disabled={!file}>Cargar Archivo</Button>
                     </form>
 
+                    <a href="/files/cargar_usuario.csv" download>
+                        <Button color='warning'>Descargar Ejemplo</Button>
+                    </a>
+
                     <div className='mt-8'>
                     <p className='font-bold  text-center text-3xl text-gray-800'>Instrucciones de carga del archivo</p>
                     <List>

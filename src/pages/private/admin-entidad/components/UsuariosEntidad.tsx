@@ -27,8 +27,7 @@ export const UsuariosEntidad = ({ codEntidad }: Props) => {
 
     return (
         <>
-        {mostrarCargaMasiva &&    <Button type="button" onClick={handleClickOpen}>Cargar Usuarios</Button>
-        }
+        { mostrarCargaMasiva &&    <Button type="button" onClick={handleClickOpen}>Cargar Usuarios</Button> }
             <DataTableUsuarios 
                 codEntidad={codEntidad}  
                 refreshUsuarios={refreshUsuarios}
