@@ -61,6 +61,7 @@ export interface IOrdenValidar {
     cod_orden: number,
     cod_usuario: number,
     fecha_creacion: string,
+    fecha_creacion_local:string,
     cod_usuario_creacion: number,
     direccion?: string,
     ciudad?: string,

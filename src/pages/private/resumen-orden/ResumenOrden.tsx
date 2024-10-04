@@ -76,7 +76,7 @@ export const ResumenOrden = () => {
       <h3 className='my-4 font-bold text-lg'>Resumen de orden</h3>
 
       <div className="w-100 bg-orange-400 p-4">
-        <p> Solicitud no: <span className='font-bold uppercase'>{orden?.cod_orden}</span>, creada el <span className='font-bold'>( {formatDate(orden?.fecha_creacion || '')} )</span> por el usuario <span className='font-bold uppercase'>{orden?.usuario_creacion} </span> </p>
+        <p> Solicitud no: <span className='font-bold uppercase'>{orden?.cod_orden}</span>, creada el <span className='font-bold'>( {formatDate(orden?.fecha_creacion_local || '')} )</span> por el usuario <span className='font-bold uppercase'>{orden?.usuario_creacion} </span> </p>
       </div>
 
       <div className="grid grid-cols-[20%_1fr]">

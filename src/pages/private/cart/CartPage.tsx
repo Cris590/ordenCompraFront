@@ -55,7 +55,12 @@ export const CartPage = () => {
           await Swal.fire(res.msg)
           if(res?.error == 0){
             clearCart()
-            navigate('/resumen_orden/' + data.cod_usuario)
+            if(user?.cod_perfil === 2){
+              navigate('/control-ordenes/')
+            }else{
+              navigate('/resumen_orden/' + data.cod_usuario)
+            }
+
           }
         }
       } 
