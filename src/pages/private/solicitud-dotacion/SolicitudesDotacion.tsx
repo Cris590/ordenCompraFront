@@ -16,8 +16,8 @@ export const SolicitudesDotacion = () => {
     const { search, setSearch, filteredData } = useFilteredData(ordenes);
     const columns = [
         {
-            name: 'Código',
-            selector: (row: IOrdenPendiente) => row.cod_orden,
+            name: 'Documento',
+            selector: (row: IOrdenPendiente) => row.cedula,
         },
         {
             name: 'Usuario',
@@ -28,25 +28,13 @@ export const SolicitudesDotacion = () => {
             selector: (row: IOrdenPendiente) =>  row.cargo,
         },
         {
-            name: 'Usuario creación',
-            selector: (row: IOrdenPendiente) =>  row.usuario_creacion,
-        },
-        {
-            name: 'Doc Usuario creación',
-            selector: (row: IOrdenPendiente) =>  row.documento_usuario_creacion,
-        },
-        {
-            name: 'Fecha',
-            selector: (row: IOrdenPendiente) =>  formatDate(row.fecha_creacion),
-        },
-        {
             name: 'Actions',
             cell: (row: IOrdenPendiente) => (
                 <button
                     onClick={() => handleGestionarOrden(row.cod_usuario)}
                     className="bg-blue-500 text-white px-2 py-1 rounded"
                 >
-                    Gestionar
+                    Crear Orden
                 </button>
             ),
         },
@@ -67,7 +55,7 @@ export const SolicitudesDotacion = () => {
     }
 
     const handleGestionarOrden = (codUsuario:number) => {
-        navigate('/resumen_orden/'+ codUsuario, {
+        navigate('/ordenes-compra/'+ codUsuario, {
             state: { origin: 'solicitud-dotacion' }
         })
     }

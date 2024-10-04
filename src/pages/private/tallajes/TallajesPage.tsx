@@ -50,7 +50,6 @@ export const TallajesPage = () => {
 
   const obtenerTodosProductos = async () => {
     let response = await obtenerTallajes()
-    console.log(response)
     if (response?.error == 0) {
       setTallas(response.tallajes)
     }

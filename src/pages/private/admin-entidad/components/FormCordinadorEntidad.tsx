@@ -63,7 +63,6 @@ export const FormCordinadorEntidad = ({ codEntidad }: Props) => {
 
     const crearUsuario = async (data: Partial<IUsuarioEntidadResumen>) => {
         try {
-            console.log('VAMOS A CREAR', data)
             setLoadingSpinner(true)
             let res = await crearUsuarioEntidad(data)
             setLoadingSpinner(false)

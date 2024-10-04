@@ -60,7 +60,6 @@ export const CartPage = () => {
         }
       } 
     } catch (e) {
-      console.log(e)
       Swal.fire({
         icon:'error',
         text:'Error, comuniquese con el administrador'

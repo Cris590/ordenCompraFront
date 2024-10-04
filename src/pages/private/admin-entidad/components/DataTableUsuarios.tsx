@@ -105,13 +105,13 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
     }
 
     const handleActionUsuario = async (usuario:IUsuarioEntidadResumen ) => {
-        console.log('********', usuario)
+      
         setUsuarioEditar(usuario)
         setOpenEditUsuario(true)
     }
 
     const handleOpenOrden = async (codOrden: number) => {
-        console.log('********', codOrden)
+    
     }
 
     const handleClickCrearClienteEntidad = () => {

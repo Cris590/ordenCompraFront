@@ -23,7 +23,7 @@ export const OrdenesCompraPage = () => {
 
   useEffect(() => {
     const usuarioId = codUsuario ? +codUsuario : session?.cod_usuario;
-    console.log('*******', usuarioId)
+   
     if (usuarioId) {
       
       if (!codUsuario && session?.cod_perfil === 2) {

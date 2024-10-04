@@ -97,9 +97,6 @@ export const FormTallaje = ({ tallaje, openDialog, onClose }: Props) => {
                 }
             }
 
-            console.log('EDICION')
-            console.log(data)
-
         } catch (e) {
             Swal.fire({
                 icon: "error",

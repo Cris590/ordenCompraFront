@@ -9,8 +9,5 @@ export interface IOrdenPendiente{
     cod_usuario:number,
     usuario:string,
     cedula:string,
-    usuario_creacion:string,
-    fecha_creacion:string,
     cargo:string,
-    documento_usuario_creacion:string
 }

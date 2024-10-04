@@ -20,11 +20,6 @@ export const ImagenProductoCargada = ( { url, cod_producto_color_imagen, borrarI
     
     const handleImageClick = () => setIsDialogOpen(true);
 
-    const handleRemove = () => {
-        console.log('Vamos a eliminar esta ')
-        console.log(cod_producto_color_imagen)
-    };
-
     return (
         <div
         style={{ position: 'relative', display: 'inline-block' }}

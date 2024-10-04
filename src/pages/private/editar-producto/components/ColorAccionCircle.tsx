@@ -18,10 +18,6 @@ export const ColorAccionCircle = ({editarColor,borrarColor, seleccionarColor, co
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
 
-    const handleRemove = () => {
-        console.log('Vamos a eliminar esta ')
-        console.log()
-    };
 
     return (
         <div

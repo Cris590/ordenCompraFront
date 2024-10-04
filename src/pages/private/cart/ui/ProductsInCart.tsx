@@ -27,11 +27,6 @@ export const ProductsInCart = () => {
     updateProductQuantity(product, cantidad)
     let {cantidadMaxima ,cantidadSeleccionada } = categoriasSeleccionada[product.cod_categoria]
     let cantidadNuevaSeleccionada = cantidad + cantidadSeleccionada
-
-    console.log('*****')
-    console.log(cantidad)
-    console.log(cantidadSeleccionada)
-    console.log(cantidadMaxima)
     // setQuantity(cantidad)
     setMaxQuantityReached(cantidadSeleccionada > cantidadMaxima)
    
