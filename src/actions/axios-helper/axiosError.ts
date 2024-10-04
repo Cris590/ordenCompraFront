@@ -1,5 +1,5 @@
 
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useUserStore } from '../../store/user/user';
 import { useCartStore } from '../../store/cart/cart-store';
 

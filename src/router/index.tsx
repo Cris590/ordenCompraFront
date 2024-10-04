@@ -43,7 +43,7 @@ const AppRouter: React.FC = () => {
           <Route path="/producto/:codProducto" element={<RouteGuard element={<ProductBySlugPage />} />} />
           <Route path="/resumen_orden/:codUsuario" element={<RouteGuard element={<ResumenOrden />} />} />
           
-          <Route path="/guia-uso" element={<RouteGuard element={<GuiaUso />} />} />
+          {/* <Route path="/guia-uso" element={<RouteGuard element={<GuiaUso />} />} /> */}
 
           <Route path="/solicitud-dotacion" element={<RouteGuard element={<SolicitudesDotacion />} />} />
           <Route path="/control-ordenes" element={<RouteGuard element={<ControlOrdenes />} />} />

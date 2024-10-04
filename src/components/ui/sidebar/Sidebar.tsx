@@ -66,28 +66,53 @@ export const Sidebar = () => {
           sidebarArray.map((menuItem, key) => {
             const IconComponent = iconMapping[menuItem.route];
             if (menuItem.visible === 1) {
-              return (
-                <Link
-                  key={key}
-                  to={menuItem.route}
-                  className="flex items-start mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-                  onClick={() => closeMenu()}
-                >
-                  {/* Centramos los íconos en el espacio */}
-                  <div className="flex justify-start ">
-                    {IconComponent && <IconComponent size={25} />} 
-                  </div>
-                  <span
-                    className={clsx(
-                      "ml-3 text-l text-start whitespace-nowrap overflow-hidden opacity-0", 
-                      "group-hover:opacity-100 group-hover:ml-5 transition-all duration-300", 
-                      isSideMenuOpen && "opacity-100 ml-5" 
-                    )}
+              if(menuItem.route === "guia-uso"){
+                return (
+                    <a 
+                      href={session.cod_perfil === 2 ? "/files/guia_coordinador.pdf":"/files/guia_usuario.pdf" }  
+                      className="flex items-start mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+                      download
+                    >
+                       {/* Centramos los íconos en el espacio */}
+                      <div className="flex justify-start ">
+                        {IconComponent && <IconComponent size={25} />} 
+                      </div>
+                      <span
+                        className={clsx(
+                          "ml-3 text-l text-start whitespace-nowrap overflow-hidden opacity-0", 
+                          "group-hover:opacity-100 group-hover:ml-5 transition-all duration-300", 
+                          isSideMenuOpen && "opacity-100 ml-5" 
+                        )}
+                      >
+                        {menuItem.label}
+                      </span>
+                    </a>
+                )
+              }else{              
+                return (
+                  <Link
+                    key={key}
+                    to={menuItem.route}
+                    className="flex items-start mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+                    onClick={() => closeMenu()}
                   >
-                    {menuItem.label}
-                  </span>
-                </Link>
-              );
+                    {/* Centramos los íconos en el espacio */}
+                    <div className="flex justify-start ">
+                      {IconComponent && <IconComponent size={25} />} 
+                    </div>
+                    <span
+                      className={clsx(
+                        "ml-3 text-l text-start whitespace-nowrap overflow-hidden opacity-0", 
+                        "group-hover:opacity-100 group-hover:ml-5 transition-all duration-300", 
+                        isSideMenuOpen && "opacity-100 ml-5" 
+                      )}
+                    >
+                      {menuItem.label}
+                    </span>
+                  </Link>
+                );
+              }
+
             }
           })}
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Dialog, DialogContent, IconButton } from '@mui/material';
-import { IoCloseCircle } from 'react-icons/io5';
+import { Dialog, DialogContent } from '@mui/material';
 
 interface Props {
     url:string,
@@ -18,7 +17,7 @@ export const ImagenTallajeCargada = ( { url }:Props) => {
     >
         <img
             src={url}
-            alt={`Image`}
+            alt={`Image Imagen`}
             style={{ width: '300px', cursor: 'pointer' }}
             onClick={handleImageClick}
         />

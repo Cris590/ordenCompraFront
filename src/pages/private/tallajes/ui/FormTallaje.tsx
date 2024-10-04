@@ -30,7 +30,7 @@ interface Props {
 export const FormTallaje = ({ tallaje, openDialog, onClose }: Props) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
-    const { register, handleSubmit, reset, control, formState: { isValid } } = useForm<ITallajeResumen>({
+    const { handleSubmit, reset, control, formState: { isValid } } = useForm<ITallajeResumen>({
         defaultValues: tallaje
     });
 
