@@ -55,7 +55,12 @@ export const EntidadesPage = () => {
     },
     {
       name: 'Fecha Gestion',
-      selector: (row: IEntidadResumen) =>(!!row.fecha_gestionada) ?  formatDate(row.fecha_gestionada ):'',
+      // selector: (row: IEntidadResumen) =>(!!row.fecha_gestionada) ?  formatDate(row.fecha_gestionada ):'',
+      cell: (row: IEntidadResumen) => (
+        <div style={{ whiteSpace: 'normal', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+          {(!!row.fecha_gestionada) ?  formatDate(row.fecha_gestionada ):''}
+        </div>
+      ),
     },
     {
       name: 'Acciones',

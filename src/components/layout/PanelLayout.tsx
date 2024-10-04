@@ -26,11 +26,11 @@ export const PanelLayout =() => {
   }, [session]);
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen overflow-x-hidden">
       
       <TopMenu />
       <Sidebar />
-      <div className="mx-4 px-0 sm:px-10 h-100 h-screen w-full overflow-y-auto">
+      <div className=" h-100 h-screen w-auto relative right-[-50px] mr-auto overflow-y-auto overflow-x-hidden">
         <Outlet />
       </div>
       <Footer />
