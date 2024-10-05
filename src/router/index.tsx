@@ -20,6 +20,8 @@ import { InfoEntidadContrato } from '../pages/private/info-entidad/InfoEntidadCo
 import { ControlOrdenes } from '../pages/private/control-ordenes/ControlOrdenes';
 import { GuiaUso } from '../pages/private/guia-uso/GuiaUso';
 import { PoliticasPage } from '../pages/private/politicas-devolucion/PoliticasPage';
+import { CatalogoPage } from '../pages/private/catalogo/CatalogoPage';
+import { ProductoVisualizacionPage } from '../pages/private/producto_visualizacion/ProductoVisualizacionPage';
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -49,6 +51,9 @@ const AppRouter: React.FC = () => {
           <Route path="/control-ordenes" element={<RouteGuard element={<ControlOrdenes />} />} />
           <Route path="/info-entidad" element={<RouteGuard element={<InfoEntidadContrato />} />} />
           <Route path="/politicas" element={<RouteGuard element={<PoliticasPage />} />} />
+
+          <Route path="/catalogo" element={<RouteGuard element={<CatalogoPage />} />} />
+          <Route path="/producto_visual/:codProducto" element={<RouteGuard element={<ProductoVisualizacionPage />} />} />
 
           <Route path="/404" element={<PageNotFound />} />
           <Route path="/*" element={<PageNotFound />} />

@@ -115,3 +115,44 @@ export interface IInfoContratoEntidad{
     direccion:string,
     ciudad:string
 }
+
+export interface IResponseResumenProductosEntidad{
+    error:    number;
+    response: IResumentProductos[];
+}
+
+
+export interface IResumentProductos {
+    cargo:      string;
+    categorias: ICategoriaResumen[];
+}
+
+export interface ICategoriaResumen {
+    nombre: string;
+    cantidad:number;
+    sexos:  ISexoResumen[];
+}
+
+export interface ISexoResumen {
+    nombre:    string;
+    productos: IProductoResumen[];
+}
+
+export interface IProductoResumen {
+    cod_producto:  number;
+    cod_categoria: number;
+    nombre:        string;
+    descripcion:string;
+    tiene_talla:   number;
+    tiene_color:   number;
+    categoria:     string;
+    talla:        string[];
+    colores:      IResumenColores[];
+}
+
+export interface IResumenColores {
+    cod_producto_color: number;
+    color:              string;
+    color_descripcion:  string;
+    imagenes:           string[];
+}

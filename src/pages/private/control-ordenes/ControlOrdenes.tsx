@@ -11,7 +11,7 @@ import { obtenerUsuariosCoordinadorGestionar } from '../../../actions/orden_comp
 import clsx from 'clsx';
 import { useCartStore } from '../../../store/cart/cart-store';
 import { useUserStore } from '../../../store/user/user';
-import { reporteGeneralEntidad } from '../../../actions/reporte/reporte';
+import { reporteComparativo, reporteGeneralEntidad } from '../../../actions/reporte/reporte';
 import { IoArrowRedoCircleOutline, IoCheckmark, IoCheckmarkDone } from 'react-icons/io5';
 import { DialogGestionOrden } from './components/DialogGestionOrden';
 import { formatDate } from '../../../utils/formatDate';
@@ -131,6 +131,10 @@ export const ControlOrdenes = () => {
         await reporteGeneralEntidad(session?.cod_entidad || 0)
     }
 
+    const handleDescargarComparativo = async () => {
+        await reporteComparativo(session?.cod_entidad || 0)
+    }
+
     const handleClose = (gestionarOrden: boolean) => {
         if (gestionarOrden) {
             obtenerSolicitudes()
@@ -185,8 +189,10 @@ export const ControlOrdenes = () => {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                <Button variant='contained' startIcon={<IoMdDownload />} onClick={handleDescargarReporte}>Descargar Reporte</Button>
-
+                <Button variant='contained' startIcon={<IoMdDownload />} onClick={handleDescargarReporte}>Reporte General</Button>
+                <div className='mx-4 inline-block'>
+                    <Button variant='contained'color='secondary' startIcon={<IoMdDownload />} onClick={handleDescargarComparativo}>Descargar Comparativo</Button>
+                </div>
                 {
                     (tipoEntrega.length === 0) &&
                     <div className='mx-4 inline-block'>

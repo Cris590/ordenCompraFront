@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { IInformacionBasicaCargoGuardar, IInformacionBasicaEntidad, IInformacionBasicaEntidadGuardar, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
+import { IInformacionBasicaCargoGuardar, IInformacionBasicaEntidad, IInformacionBasicaEntidadGuardar, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 import { IUser } from "../../interfaces/user.interfaces";
 
@@ -320,6 +320,29 @@ export const obtenerInfoContrato = async () => {
       maxRedirects: 21,
     }
     const { data }: AxiosResponse<IResponseInfoContrato> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+export const obtenerProductosEntidadResumen = async ( codEntidad:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.resumentProductosEntidad}/${codEntidad}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseResumenProductosEntidad> = await axios(options);
     return data
   } catch (e) {
     handleHttpError(e);

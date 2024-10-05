@@ -8,10 +8,11 @@ import { ColorCircle } from '../../product/color-circle/ColorCircle';
 
 interface Props {
   producto: IProductoMostrar;
+  ruta?:string
 }
 
 
-export const ProductGridItem = ({ producto }: Props) => {
+export const ProductGridItem = ({ producto , ruta="producto" }: Props) => {
 
   const [displayImage, setDisplayImage] = useState<string>(producto?.colores?.[0]?.imagenes?.[0] || '');
 
@@ -21,7 +22,7 @@ export const ProductGridItem = ({ producto }: Props) => {
     <Card>
       <div className="rounded-md overflow-hidden fade-in">
 
-        <Link to={`/producto/${producto.cod_producto}`}>
+        <Link to={`/${ruta}/${producto.cod_producto}`}>
           <div style={{ minHeight: '300px' }}>
 
             <LazyLoadImage
@@ -47,11 +48,11 @@ export const ProductGridItem = ({ producto }: Props) => {
           <p className='font-bold text-lg text-gray-500 '> {producto.categoria}</p>
           <Link
             className="hover:text-blue-600"
-            to={`/producto/${producto.cod_producto}`}>
+            to={`/${ruta}/${producto.cod_producto}`}>
             {producto.nombre}
           </Link>
 
-          <p className='font-semibold my-2'>{producto.tiene_talla &&  producto.talla.join(',')}</p>
+          <p className='font-semibold my-2 break-words'>{producto.tiene_talla ?  producto.talla.join(',') : ''}</p>
           {/* <span className="font-bold">${ producto.price }</span> */}
           {
             (producto.colores && producto.tiene_color) && (

@@ -10,10 +10,11 @@ import { CartProducto } from "../../../../interfaces/cart.interface";
 
 interface Props {
   producto: IProductoMostrar;
-  cambiarColor: (colorSeleccionado: number) => void
+  cambiarColor: (colorSeleccionado: number) => void;
+  guardarOrden?:boolean
 }
 
-export const AddToCart = ({ producto, cambiarColor }: Props) => {
+export const AddToCart = ({ producto, cambiarColor, guardarOrden = true }: Props) => {
 
   const addProductToCart = useCartStore(state => state.addProductTocart);
   const categoriasSeleccionada = useCartStore(state => state.categoriasSeleccionada);
@@ -137,9 +138,13 @@ export const AddToCart = ({ producto, cambiarColor }: Props) => {
 
 
       {/* Button */}
-      <Button onClick={addToCart} variant="outlined" className="btn-primary my-5">
-        Agregar al carrito
-      </Button>
+      {
+        guardarOrden && 
+          <Button onClick={addToCart} variant="outlined" className="btn-primary my-5">
+            Agregar al carrito
+          </Button>
+      }
+
     </>
   );
 };

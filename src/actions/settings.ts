@@ -50,6 +50,7 @@ export const actionsSettings  = {
         infoContrato :`${apiUrl}/entidad/info_contrato`,
         crearCargo:`${apiUrl}/entidad/crear_cargo`,
         editarCargo:`${apiUrl}/entidad/editar_cargo`,
+        resumentProductosEntidad:`${apiUrl}/entidad/resumen_productos`,
 
     
         validarOrdenUsuario:`${apiUrl}/orden_compra/validar_orden`,
@@ -60,7 +61,9 @@ export const actionsSettings  = {
         actualizarOrden:`${apiUrl}/orden_compra/actualizar`,
 
         obtenerSolicitudesPendientes:`${apiUrl}/solicitud_dotacion/ordenes_pendientes`,
+
         reporteGeneralEntidad:`${apiUrl}/reporte/reporte_general_entidad`,
+        reporteComparativo:`${apiUrl}/reporte/reporte_comparativo`,
         bonosEntidad:`${apiUrl}/reporte/bonos_usuario`,
 
         login:`${apiUrl}/users/authentication`,

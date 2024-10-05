@@ -16,7 +16,7 @@ export const SizeSelector = ({ selectedSize, availableSizes,onSizeChanged  }: Pr
     <div className="my-5">
       <h3 className="font-bold mb-4">Tallas disponibles</h3>
 
-      <div className="flex">
+      <div className="flex flex-wrap">
 
         {
           availableSizes.map( size => (
