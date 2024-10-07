@@ -67,7 +67,8 @@ export const Sidebar = () => {
         {session &&
           sidebarArray.map((menuItem, key) => {
             const IconComponent = iconMapping[menuItem.route];
-            if (menuItem.visible === 1) {
+
+            if (menuItem.visible === 1 ) {
               if(menuItem.route === "guia-uso"){
                 return (
                     <a 
@@ -90,7 +91,11 @@ export const Sidebar = () => {
                       </span>
                     </a>
                 )
-              }else{              
+              }else if((menuItem.route === "ordenes-compra" && session.cod_perfil === 2)){
+                return <></>
+              }
+              else{
+
                 return (
                   <Link
                     key={key}
