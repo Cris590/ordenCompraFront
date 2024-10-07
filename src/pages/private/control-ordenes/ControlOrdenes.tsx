@@ -223,7 +223,7 @@ export const ControlOrdenes = () => {
 
 
                 {
-                   ( !!ordenGestionada && tipoEntrega === "VIRTUAL")  &&
+                   ( !!ordenGestionada && tipoEntrega.length > 0)  &&
                     <div className='inline-block'>
                         <div className=' flex flex-row items-center m-0 mx-4 p-2 bg-green-600 rounded-sm max-w-md'>
                             <IoCheckmarkDone color='white' size={30} />
