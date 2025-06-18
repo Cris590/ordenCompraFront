@@ -7,7 +7,6 @@ import { actionsSettings } from '../settings';
 export const loginBackend = async (cedula:string, password:string) =>{
   try {
 
-    
     let options = {
       method: 'post',
       url:actionsSettings.backendRoutes.login,

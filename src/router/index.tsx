@@ -18,7 +18,7 @@ import { ResumenOrden } from '../pages/private/resumen-orden/ResumenOrden';
 import { SolicitudesDotacion } from '../pages/private/solicitud-dotacion/SolicitudesDotacion';
 import { InfoEntidadContrato } from '../pages/private/info-entidad/InfoEntidadContrato';
 import { ControlOrdenes } from '../pages/private/control-ordenes/ControlOrdenes';
-import { GuiaUso } from '../pages/private/guia-uso/GuiaUso';
+// import { GuiaUso } from '../pages/private/guia-uso/GuiaUso';
 import { PoliticasPage } from '../pages/private/politicas-devolucion/PoliticasPage';
 import { CatalogoPage } from '../pages/private/catalogo/CatalogoPage';
 import { ProductoVisualizacionPage } from '../pages/private/producto_visualizacion/ProductoVisualizacionPage';
