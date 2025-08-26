@@ -13,8 +13,8 @@ export const ImagenTallajeCargada = ( { url }:Props) => {
 
     return (
         <div
-        style={{ position: 'relative', display: 'inline-block' }}
-    >
+            style={{ position: 'relative', display: 'inline-block' }}
+        >
         <img
             src={url}
             alt={`Image Imagen`}
@@ -22,11 +22,11 @@ export const ImagenTallajeCargada = ( { url }:Props) => {
             onClick={handleImageClick}
         />
         
-        <Dialog open={isDialogOpen} onClose={handleDialogClose} maxWidth="md" fullWidth>
-            <DialogContent>
-                <img src={url} alt={`Imagen`} style={{ width: '100%' }} />
-            </DialogContent>
-        </Dialog>
+            <Dialog open={isDialogOpen} onClose={handleDialogClose} maxWidth="md" fullWidth>
+                <DialogContent>
+                    <img src={url} alt={`Imagen`} style={{ width: '100%' }} />
+                </DialogContent>
+            </Dialog>
     </div>
     );
 }

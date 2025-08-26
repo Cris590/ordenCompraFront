@@ -5,6 +5,7 @@ import { IUsuarioEntidadResumen } from '../../../../interfaces/entidad.interface
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { actualizarUsuarioEntidad, cargosPorEntidad, crearUsuarioEntidad } from '../../../../actions/entidad/entidad';
 import Swal from 'sweetalert2';
+import { useEntidadStore } from '../../../../store/entidad/entidad';
 
 
 interface Props {
@@ -17,9 +18,10 @@ interface Props {
 export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, onClose }: Props) => {
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
-    const [cargos, setCargos] = useState<{ cod_cargo_entidad: number, nombre: string, lote:number }[]>([])
+    const [cargos, setCargos] = useState<{ cod_cargo_entidad: number, nombre: string, lote: number }[]>([])
+    const infoEntidad = useEntidadStore((state) => state.entidad)
 
-    const {handleSubmit, reset, control, formState: { isValid } } = useForm<IUsuarioEntidadResumen>({
+    const { handleSubmit, reset, control, formState: { isValid } } = useForm<IUsuarioEntidadResumen>({
         defaultValues: usuario
     });
 
@@ -52,7 +54,7 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
         let dataAux: any = {
             ...data,
             cod_entidad: codEntidad,
-            cod_perfil: 3
+            cod_perfil: (infoEntidad.tipo_entrega_contrato == 1) ? 3 : 5
         }
         delete dataAux.cod_usuario
         delete dataAux.cod_orden
@@ -105,6 +107,7 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
         }
     }
 
+  
 
     return (
         <>
@@ -244,22 +247,22 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
                                 )}
                             />
 
-<Controller
-                        name="cod_cargo_entidad"
-                        control={control}
-                        render={({ field }) => (
-                            <>
-                                <InputLabel id="cargo" className='mt-4'>Cargo</InputLabel>
-                                <Select
-                                    labelId="cargo"
-                                    {...field}
-                                    label="cargo"
-                                >
-                                    { cargos.map((cargo)=>(<MenuItem value={cargo.cod_cargo_entidad}>{cargo.nombre} - LOTE {cargo.lote}</MenuItem>))}
-                                </Select>
-                            </>
-                        )}
-                    />
+                            <Controller
+                                name="cod_cargo_entidad"
+                                control={control}
+                                render={({ field }) => (
+                                    <>
+                                        <InputLabel id="cargo" className='mt-4'>Cargo</InputLabel>
+                                        <Select
+                                            labelId="cargo"
+                                            {...field}
+                                            label="cargo"
+                                        >
+                                            {cargos.map((cargo) => (<MenuItem value={cargo.cod_cargo_entidad}>{cargo.nombre} - LOTE {cargo.lote}</MenuItem>))}
+                                        </Select>
+                                    </>
+                                )}
+                            />
 
                         </div>
 

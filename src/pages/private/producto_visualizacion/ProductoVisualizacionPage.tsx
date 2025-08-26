@@ -120,7 +120,7 @@ export const ProductoVisualizacionPage = () => {
 
             <p className='font-md my-2'>{producto.descripcion}</p>
 
-            <AddToCart guardarOrden={false} producto={producto} cambiarColor={cambiarColor} />
+            <AddToCart ocultarCantidad guardarOrden={false} producto={producto} cambiarColor={cambiarColor} />
 
 
 

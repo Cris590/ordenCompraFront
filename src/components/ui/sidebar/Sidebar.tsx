@@ -15,6 +15,10 @@ import {
   IoBusinessOutline,
   IoBagCheckSharp,
   IoAlbums,
+  IoBriefcase,
+  IoAccessibilitySharp,
+  IoSkullSharp,
+  IoPeopleSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -33,7 +37,11 @@ const iconMapping: { [key: string]: IconType } = {
   "control-ordenes": IoClipboard,
   "info-entidad": IoBusinessOutline,
   "politicas": IoBagCheckSharp,
-  "catalogo":IoAlbums
+  "catalogo":IoAlbums,
+  "depositos":IoBriefcase,
+  "clientes":IoAccessibilitySharp,
+  "proveedores":IoSkullSharp,
+  "usuarios_bonos_dotacion":IoPeopleSharp
 };
 
 export const Sidebar = () => {

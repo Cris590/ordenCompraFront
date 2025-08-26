@@ -22,6 +22,10 @@ import { ControlOrdenes } from '../pages/private/control-ordenes/ControlOrdenes'
 import { PoliticasPage } from '../pages/private/politicas-devolucion/PoliticasPage';
 import { CatalogoPage } from '../pages/private/catalogo/CatalogoPage';
 import { ProductoVisualizacionPage } from '../pages/private/producto_visualizacion/ProductoVisualizacionPage';
+import { DepositosPage } from '../pages/private/depositos/DepositosPage';
+import { ClientesPage } from '../pages/private/clientes/ClientesPage';
+import { ProveedoresPage } from '../pages/private/proveedores/ProveedoresPage';
+import { UsuariosDotacionPage } from '../pages/private/usuarios-bonos-dotacion/UsuariosDotacionPage';
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -54,6 +58,17 @@ const AppRouter: React.FC = () => {
 
           <Route path="/catalogo" element={<RouteGuard element={<CatalogoPage />} />} />
           <Route path="/producto_visual/:codProducto" element={<RouteGuard element={<ProductoVisualizacionPage />} />} />
+
+          {/* RUTAS COORDINADOR BONOS */}
+          <Route path="/usuarios_bonos_dotacion" element={<RouteGuard element={<UsuariosDotacionPage />} />} />
+
+
+          {/* RUTAS FABRICA */}
+          <Route path="/depositos" element={<RouteGuard element={<DepositosPage />} />} />
+          <Route path="/clientes" element={<RouteGuard element={<ClientesPage />} />} />
+          <Route path="/proveedores" element={<RouteGuard element={<ProveedoresPage />} />} />
+
+
 
           <Route path="/404" element={<PageNotFound />} />
           <Route path="/*" element={<PageNotFound />} />

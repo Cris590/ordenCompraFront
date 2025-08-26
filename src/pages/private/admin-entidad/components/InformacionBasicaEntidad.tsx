@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { Button, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import dayjs from 'dayjs';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { IInformacionBasicaEntidad } from '../../../../interfaces/entidad.interface';
 import { crearEntidad, editarEntidad, obtenerInfoBasicaEntidad } from '../../../../actions/entidad/entidad';
+import { IoInformationCircleSharp } from 'react-icons/io5';
+import { useEntidadStore } from '../../../../store/entidad/entidad';
 
 interface Props {
     codEntidad?: string
@@ -20,7 +26,8 @@ const defaulValueProducto: IInformacionBasicaEntidad = {
     info_contrato: '',
     no_contrato: '',
     fecha_inicio: '',
-    fecha_final: ''
+    fecha_final: '',
+    tipo_entrega_contrato: 1,
 }
 
 
@@ -29,8 +36,14 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
     const [isFocused, setIsFocused] = useState(false);
+    const infoEntidad = useEntidadStore((state) => state.entidad)
 
     const navigate = useNavigate();
+    const textoInformativoTipoEntrega = `
+    A traves de este se seleccion el tipo de entrega del bono
+        1.Entrega fisica y virtual, acuerdo Marco: Por medio de esta opción la entrega se hace por medio de la página web, y el cliente escoje los productos dependediendo de si la entrega es virtual o física.
+        2.Entrega por tarjeta magnética: Con la presentación de una tarjeta con un código único se hace la entrega, en este se especifica de manera general a que tiene acceso el usuario.
+    `
 
     useEffect(() => {
         if (codEntidad && +codEntidad !== 0) {
@@ -38,19 +51,20 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
         } else {
             reset(defaulValueProducto)
         }
-    }, [codEntidad])
+    }, [infoEntidad])
 
 
 
     const obtenerInfoEntidad = async (codEntidad: string) => {
-        let response = await obtenerInfoBasicaEntidad(codEntidad)
-        if (response?.error === 0) {
-            if (Object.keys(response.entidad).length === 0) {
+        // let response = await obtenerInfoBasicaEntidad(codEntidad)
+
+        if (Object.keys(infoEntidad).length != 0) {
+            if (Object.keys(infoEntidad).length === 0) {
                 navigate('/')
             }
 
             let entidadAux: IInformacionBasicaEntidad = {
-                ...response.entidad,
+                ...infoEntidad,
             }
             reset(entidadAux)
         }
@@ -87,6 +101,14 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
 
 
     }
+
+    const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+        <Tooltip {...props} classes={{ popper: className }} />
+    ))({
+        [`& .${tooltipClasses.tooltip}`]: {
+            maxWidth: 500,
+        },
+    });
 
 
     return (
@@ -150,6 +172,7 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
                                     InputLabelProps={{ shrink: true }}  // Keeps label up when value is empty
                                     variant="outlined"
                                     {...field}
+                                    value={field.value ? dayjs(field.value).format('YYYY-MM-DD') : ''}
                                 />
                             )}
                         />
@@ -159,14 +182,14 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
                             name="fecha_final"
                             control={control}
                             rules={{ required: true }}
-                            render={({ field }) => (
-                                <TextField
-                                    label="Fecha Fin"
-                                    type="date"
-                                    InputLabelProps={{ shrink: true }}  // Keeps label up when value is empty
-                                    variant="outlined"
-                                    {...field}
-                                />
+                            render={({ field }) => (<TextField
+                                label="Fecha Fin"
+                                type="date"
+                                InputLabelProps={{ shrink: true }}  // Keeps label up when value is empty
+                                variant="outlined"
+                                {...field}
+                                value={field.value ? dayjs(field.value).format('YYYY-MM-DD') : ''}
+                            />
                             )}
                         />
 
@@ -224,7 +247,38 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
                             </>
                         )}
                     />
-                    <br/>
+                    <div className="flex flex-row items-center gap-2">
+                        <div className="w-[3%] shrink-0">
+                            <CustomWidthTooltip title={textoInformativoTipoEntrega}>
+                                <IconButton aria-label="info">
+                                    <IoInformationCircleSharp />
+                                </IconButton>
+                            </CustomWidthTooltip>
+                        </div>
+                        <div className="w-[97%] shrink-0">
+                            <Controller
+                                name="tipo_entrega_contrato"
+                                control={control}
+                                render={({ field }) => (
+                                    <>
+                                        <InputLabel id="tipo_entrega_contrato" className="mt-4">Tipo de entrega</InputLabel>
+                                        <Select
+                                            labelId="tipo_entrega_contrato"
+                                            {...field}
+                                            value={field.value || ''}
+                                            fullWidth
+                                            disabled={(codEntidad && +codEntidad !== 0) || false}
+                                        >
+                                            <MenuItem value={1}>Entrega física y virtual, acuerdo Marco</MenuItem>
+                                            <MenuItem value={2}>Entrega por tarjeta magnética</MenuItem>
+                                        </Select>
+                                    </>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+                    <br />
                     <Button disabled={!isValid} type='submit' variant='contained'>
                         {(!codEntidad || +codEntidad === 0) ? 'Crear Entidad' : 'Editar Entidad'}
                     </Button>

@@ -2,9 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { IInformacionBasicaCargoGuardar, IInformacionBasicaEntidad, IInformacionBasicaEntidadGuardar, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
+import { ICargoBonoProductoGuardar, IInformacionBasicaCargoGuardar, IInformacionBasicaEntidadGuardar, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoBonoProducto, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
-import { IUser } from "../../interfaces/user.interfaces";
 
 export const obtenerEntidades = async () => {
     try {
@@ -52,6 +51,55 @@ export const obtenerEntidades = async () => {
       return null
     }
   }
+
+  export const crearCargoBonoProducto= async (cargoBono: ICargoBonoProductoGuardar) => {
+    try {
+  
+      let options = {
+        method: 'post',
+        url: `${actionsSettings.backendRoutes.crearCargaBonoProducto}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21,
+        data: cargoBono
+  
+      }
+      const { data }: AxiosResponse<IResponseCreacionEntidad> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+  export const editarCargoBonoProducto = async (entidad: Partial<IInformacionBasicaEntidadGuardar>, codCargoBonoProducto: number) => {
+    try {
+  
+      let options = {
+        method: 'put',
+        url: `${actionsSettings.backendRoutes.editarCargoEntidadProducto}/${codCargoBonoProducto}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21,
+        data: entidad
+  
+      }
+      const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
 
   export const editarEntidad = async (entidad: Partial<IInformacionBasicaEntidadGuardar>, codEntidad: number) => {
     try {
@@ -225,6 +273,30 @@ export const detalleCargoEntidad = async (codCargoEntidad: number) => {
 
     }
     const { data }: AxiosResponse<IResponseDetalleCargoEntidad> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+export const detalleCargoBonoProducto = async (codCargoEntidad: number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.detalleCargoBonoProducto}/${codCargoEntidad}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+
+    }
+    const { data }: AxiosResponse<IResponseDetalleCargoBonoProducto> = await axios(options);
     return data
   } catch (e) {
     handleHttpError(e);

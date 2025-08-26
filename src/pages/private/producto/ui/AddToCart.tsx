@@ -11,10 +11,11 @@ import { CartProducto } from "../../../../interfaces/cart.interface";
 interface Props {
   producto: IProductoMostrar;
   cambiarColor: (colorSeleccionado: number) => void;
-  guardarOrden?:boolean
+  guardarOrden?:boolean,
+  ocultarCantidad?:boolean
 }
 
-export const AddToCart = ({ producto, cambiarColor, guardarOrden = true }: Props) => {
+export const AddToCart = ({ producto, cambiarColor, guardarOrden = true, ocultarCantidad = false }: Props) => {
 
   const addProductToCart = useCartStore(state => state.addProductTocart);
   const categoriasSeleccionada = useCartStore(state => state.categoriasSeleccionada);
@@ -117,11 +118,13 @@ export const AddToCart = ({ producto, cambiarColor, guardarOrden = true }: Props
       }
 
       {/* Selector de Cantidad */}
-      <QuantitySelector
-        quantity={quantity}
-        onQuantityChanged={handleCantidadSeleccionada}
-        disabled={maxQuantityReached}
-      />
+      { !ocultarCantidad && 
+        <QuantitySelector
+          quantity={quantity}
+          onQuantityChanged={handleCantidadSeleccionada}
+          disabled={maxQuantityReached}
+        />
+      }
       {((producto.tiene_color === 1) && producto.colores) &&
         <ColorSelector
           colorSeleccionado={color}

@@ -7,7 +7,8 @@ export interface IEntidadResumen {
     nit:string,
     gestionada:1|0,
     fecha_gestionada?:string,
-    entrega_bonos:string
+    entrega_bonos:string,
+    tipo_entrega_contrato:number
 }
 
 export interface IResponseEntidadResumen {
@@ -22,7 +23,8 @@ export interface IInformacionBasicaEntidad {
     info_contrato:string,
     no_contrato:string,
     fecha_inicio:string,
-    fecha_final:string
+    fecha_final:string,
+    tipo_entrega_contrato:number
 }
 
 export interface IInformacionBasicaEntidadGuardar {
@@ -34,7 +36,8 @@ export interface IInformacionBasicaEntidadGuardar {
     fecha_inicio:string,
     fecha_final:string,
     entrega_bonos?:'FISICO' | 'VIRTUAL',
-    fecha_gestionada?:string
+    fecha_gestionada?:string,
+    tipo_entrega_contrato:number
 
 }
 
@@ -70,7 +73,8 @@ export interface IUsuarioEntidadResumen{
     password?:string,
     cod_orden?:number,
     cod_cargo_entidad:number,
-    cargo_entidad?:string
+    cargo_entidad?:string,
+    redimido?:boolean
 }   
 
 export interface IResponseResumenCargosEntidad extends IRespuestaGeneralAction{
@@ -83,12 +87,27 @@ export interface ICargoEntidadDetalle {
     cod_entidad:number,
     lote:number,
     cod_categorias:{cod_categoria:number , cantidad:number}[],
+    cod_cargo_bonos_producto?:ICargoBonoProducto[],
 }
 
 export interface IResponseDetalleCargoEntidad{
     error:1| 0
     cargo:ICargoEntidadDetalle
 }
+
+export interface ICargoBonoProducto {
+    cod_cargo_bonos_producto:number,
+    cod_cargo_entidad:number,
+    nombre:string,
+    descripcion:string,
+    valor:number,
+}
+
+export interface IResponseDetalleCargoBonoProducto{
+    error:1| 0
+    cargo_bono:ICargoBonoProducto
+}
+
 
 export interface IInformacionBasicaCargoGuardar {
     nombre:string,
@@ -155,4 +174,11 @@ export interface IResumenColores {
     color:              string;
     color_descripcion:  string;
     imagenes:           string[];
+}
+
+export interface ICargoBonoProductoGuardar {
+    cod_cargo_entidad:number,
+    nombre: string,
+    descripcion: string,
+    valor: number,
 }

@@ -41,7 +41,10 @@ export const LoginForm = () => {
                 rutaRedirect = '/entidades'
             } else if (result.user.cod_perfil === 2) {
                 rutaRedirect = '/control-ordenes'
+            }else if (result.user.cod_perfil === 6) {
+                rutaRedirect = '/usuarios_bonos_dotacion'
             }
+
             navigate(rutaRedirect);
         } else {
             setWronCredentials(false)

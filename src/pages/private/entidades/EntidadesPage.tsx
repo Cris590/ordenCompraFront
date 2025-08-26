@@ -12,6 +12,7 @@ import { reporteGeneralEntidad } from '../../../actions/reporte/reporte';
 import { formatDate } from '../../../utils/formatDate';
 import { IconButton } from '@mui/material';
 import { IoBan, IoCheckmarkDoneOutline, IoNewspaper, IoPencil } from 'react-icons/io5';
+import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 
 
 
@@ -20,6 +21,8 @@ export const EntidadesPage = () => {
   const navigate = useNavigate()
   const [entidades, setEntidades] = useState<IEntidadResumen[]>([]);
   const { search, setSearch, filteredData } = useFilteredData(entidades);
+  const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
+
   const columns = [
     {
       name: 'Nombre',
@@ -28,6 +31,10 @@ export const EntidadesPage = () => {
     {
       name: 'NIT',
       selector: (row: IEntidadResumen) => row.nit,
+    },
+    {
+      name: 'TIpo Entrega',
+      selector: (row: IEntidadResumen) => (row.tipo_entrega_contrato == 1) ? 'Entrega física y virtual, acuerdo Marco' : 'Entrega por tarjeta magnetica',
     },
     {
       name: 'Estado',
@@ -85,11 +92,13 @@ export const EntidadesPage = () => {
   ];
 
   useEffect(() => {
-    obtenerTodosProductos()
+    obtenerEntidadesInfo()
   }, [])
 
-  const obtenerTodosProductos = async () => {
+  const obtenerEntidadesInfo = async () => {
+    setOpenLoadingSpinner(true)
     let response = await obtenerEntidades()
+    setOpenLoadingSpinner(false)
     if (response?.error == 0) {
       setEntidades(response.entidades)
     }
@@ -127,6 +136,7 @@ export const EntidadesPage = () => {
         pagination
         highlightOnHover
       />
+      <LoadingSpinnerScreen open={openLoadingSpinner} />
     </div>
   );
 

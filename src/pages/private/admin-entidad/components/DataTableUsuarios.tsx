@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Title } from '../../../../components/title/Title';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import DataTable from 'react-data-table-component';
 import { obtenerUsuariosEntidad } from '../../../../actions/entidad/entidad';
 import { IUsuarioEntidadResumen } from '../../../../interfaces/entidad.interface';
@@ -76,14 +76,16 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         {
             name: 'Actions',
             cell: (row: IUsuarioEntidadResumen) => (
+                <Tooltip title={!!row.redimido && 'Al cliente ya se le redimio dotación'}>
                 <Button
-                    disabled={!!row.cod_orden}
+                    disabled={!!row.cod_orden || !!row.redimido}
                     onClick={() => handleActionUsuario(row)}
                     variant='outlined'
                     size="small"
                 >
-                    Editar
+                    {(!!row.cod_orden || !!row.redimido) ? 'Redimido' : 'Editar'} 
                 </Button>
+                </Tooltip>
             ),
         },
     ];

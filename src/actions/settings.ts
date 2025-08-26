@@ -37,6 +37,7 @@ export const actionsSettings  = {
         crearEntidad:`${apiUrl}/entidad/crear`,
         obtenerInfoBasicaEntidad:`${apiUrl}/entidad/info_basica`,
         editarEntidad:`${apiUrl}/entidad/editar_entidad`,
+        editarCargoEntidadProducto:`${apiUrl}/entidad/editar_cargo_bono`,
         cargarUsuariosEntidad:`${apiUrl}/entidad/cargar_usuarios`,
         obtenerUsuariosEntidad:`${apiUrl}/entidad/usuarios`,
         crearUsuarioEntidad:`${apiUrl}/entidad/crear_usuario_entidad`,
@@ -44,11 +45,17 @@ export const actionsSettings  = {
         obtenerUsuarioCoordinador:`${apiUrl}/entidad/usuario_coordinador`,
         cargosEntidad:`${apiUrl}/entidad/cargos`,
         detalleCargoEntidad :`${apiUrl}/entidad/detalle_cargo`,
+        detalleCargoBonoProducto :`${apiUrl}/entidad/detalle_cargo_bono_producto`,
         infoContrato :`${apiUrl}/entidad/info_contrato`,
         crearCargo:`${apiUrl}/entidad/crear_cargo`,
         editarCargo:`${apiUrl}/entidad/editar_cargo`,
         resumentProductosEntidad:`${apiUrl}/entidad/resumen_productos`,
+        crearCargaBonoProducto:`${apiUrl}/entidad/crear_cargo_bono_producto`,
 
+        consultarBonosFiltro:`${apiUrl}/entidad_bono/consultar_bonos`,
+        consultarBonoProducto:`${apiUrl}/entidad_bono/consultar_bono_usuario`,
+        redimirBonoEntrega:`${apiUrl}/entidad_bono/redimir_bono_entrega`,
+        
     
         validarOrdenUsuario:`${apiUrl}/orden_compra/validar_orden`,
         productosUsuario:`${apiUrl}/orden_compra/productos`,

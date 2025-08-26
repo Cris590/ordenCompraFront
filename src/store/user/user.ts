@@ -22,7 +22,7 @@ export const useUserStore = create<State>()(
             sidebarMenu: [],
             loginUser: (logedUser: IUser) => set({ user: logedUser }),
             setToken:(token:string) => set({ token }),
-            logOut:() => set({ user:null , token:''}),
+            logOut:() => set({ user:null , token:'', sidebarMenu:[]}),
             fullFillMenu: (menu: ISidebar[]) => set({ sidebarMenu: menu }),
         }),
         {

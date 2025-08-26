@@ -92,6 +92,8 @@ export const FormCargoEntidad = ({ codCargoEntidad, codEntidad, openDialog, onCl
                 if (response.error === 0) {
                     // navigate('/entidades/admin-entidad/' + response.cod_entidad.toString())
                     onClose(true)
+                }else{
+                    Swal.fire(response.msg)
                 }
             }
 

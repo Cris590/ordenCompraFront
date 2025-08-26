@@ -8,6 +8,7 @@ import { ColorCircle } from '../../../components/product/color-circle/ColorCircl
 import { obtenerProductos } from '../../../actions/producto/producto';
 import { Title } from '../../../components/title/Title';
 import { useFilteredData } from '../../../hooks/useFilteredData';
+import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 
 
 
@@ -15,6 +16,7 @@ export const ProductosPage = () => {
 
   const navigate = useNavigate()
   const [productos, setProductos] = useState<IProductoResumen[]>([]);
+  const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
   const { search, setSearch, filteredData } = useFilteredData(productos);
   const columns = [
     {
@@ -69,7 +71,9 @@ export const ProductosPage = () => {
   }, [])
 
   const obtenerTodosProductos = async () => {
+    setOpenLoadingSpinner(true)
     let response = await obtenerProductos()
+    setOpenLoadingSpinner(false)
     if (response?.error == 0) {
       setProductos(response.productos)
     }
@@ -103,6 +107,7 @@ export const ProductosPage = () => {
         pagination
         highlightOnHover
       />
+       <LoadingSpinnerScreen open={openLoadingSpinner} />
 
     </div>
   );

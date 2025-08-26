@@ -5,6 +5,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { IUsuarioEntidadResumen } from '../../../../interfaces/entidad.interface';
 import Swal from 'sweetalert2';
 import { actualizarUsuarioEntidad, crearUsuarioEntidad, obtenerUsuariosCoordinador } from '../../../../actions/entidad/entidad';
+import { useEntidadStore } from '../../../../store/entidad/entidad';
 
 
 
@@ -29,6 +30,7 @@ export const FormCordinadorEntidad = ({ codEntidad }: Props) => {
     const { register, handleSubmit, reset, control, formState: { isValid }, watch } = useForm<IUsuarioEntidadResumen>({
         defaultValues: defaultUsuario
     });
+    const infoEntidad = useEntidadStore((state) => state.entidad)
 
     useEffect(() => {
         getUsuarioCoordinador()
@@ -49,7 +51,7 @@ export const FormCordinadorEntidad = ({ codEntidad }: Props) => {
         let dataAux: any = {
             ...data,
             cod_entidad: codEntidad,
-            cod_perfil: 2
+            cod_perfil: (infoEntidad.tipo_entrega_contrato == 1) ? 2 : 6
         }
         delete dataAux.cod_usuario
         delete dataAux.cod_orden
