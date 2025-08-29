@@ -54,7 +54,7 @@ export const CardBono = ({ bonoProducto, actualizarBonosUsuario }: Props) => {
                                     component="textarea"
                                     value={bonoProducto.descripcion}
                                     readOnly
-                                    style={{ width: '100%', minHeight: "250px", border: 'none', resize: 'none', background: 'transparent' }}
+                                    style={{ width: '100%', minHeight: "200px", border: 'none', resize: 'none', background: 'transparent' }}
                                 />
 
                                 <Typography variant="body1" component="div">
@@ -65,8 +65,23 @@ export const CardBono = ({ bonoProducto, actualizarBonosUsuario }: Props) => {
                                     <span className='font-bold'>Fecha Redimido: </span>
                                     {bonoProducto.fecha_redimido ? formatDate(bonoProducto.fecha_redimido) : 'Pendiente'}
                                 </Typography>
-                                <br />
-                                <Typography variant="body2">
+                                <Typography variant="body1" component="div">
+                                    <span className='font-bold'>Valor: </span>
+                                    {currencyFormat(bonoProducto.valor)}
+                                </Typography>
+                                <Typography variant="body1" component="div">
+                                    <span className='font-bold'>Cedula Vendedor: </span>
+                                    {bonoProducto.cedula_vendedor}
+                                </Typography>
+                                <Typography variant="body1" component="div">
+                                    <span className='font-bold'>Nombre del vendedor: </span>
+                                    {bonoProducto.nombre_vendedor}
+                                </Typography>
+                                <Typography variant="body1" component="div">
+                                    <span className='font-bold'>Tienda: </span>
+                                    {bonoProducto.tienda}
+                                </Typography>
+                                <Typography variant="body1">
                                     <span className='font-bold'> Comentario de cierre: </span>
                                     {bonoProducto.comentario_cierre}
 

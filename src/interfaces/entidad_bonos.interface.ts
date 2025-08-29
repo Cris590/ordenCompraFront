@@ -38,5 +38,8 @@ export interface IBonoProductoUsuario{
     valor:number,
     redimido:boolean,
     fecha_redimido:string,
-    comentario_cierre:string
+    comentario_cierre:string,
+    cedula_vendedor:string,
+    nombre_vendedor:string,
+    tienda:string
 }

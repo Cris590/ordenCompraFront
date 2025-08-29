@@ -34,7 +34,7 @@ export const EntidadesPage = () => {
     },
     {
       name: 'TIpo Entrega',
-      selector: (row: IEntidadResumen) => (row.tipo_entrega_contrato == 1) ? 'Entrega física y virtual, acuerdo Marco' : 'Entrega por tarjeta magnetica',
+      selector: (row: IEntidadResumen) => (row.tipo_entrega_contrato == 1) ? 'Entrega física y virtual, acuerdo Marco' : 'Entrega por tarjeta magnetica / Bono Virtual',
     },
     {
       name: 'Estado',

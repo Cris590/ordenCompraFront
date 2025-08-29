@@ -19,8 +19,10 @@ export const CargosEntidadBonos = ({ codEntidad }: Props) => {
 
   const handleCrearCargo = () => {
     setCargoEntidad(0)
-    setOpenFormCargoEntidad(true)
     
+    setTimeout(() => {
+      setOpenFormCargoEntidad(true)  
+    }, 200);
   }
 
   const handleEditarCargo = (codCargoEntidad: number) => {

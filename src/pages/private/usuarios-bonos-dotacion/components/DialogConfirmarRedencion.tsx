@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogContent, DialogTitle, InputLabel, TextareaAutosize } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, InputLabel, TextareaAutosize, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -13,7 +13,10 @@ interface Props {
 }
 
 interface IRedencionBono {
-    comentario_cierre: string
+    comentario_cierre: string,
+    cedula_vendedor: number,
+    nombre_vendedor: string,
+    tienda: string,
 }
 
 export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, onClose }: Props) => {
@@ -25,7 +28,7 @@ export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, on
 
     const onSubmit: SubmitHandler<IRedencionBono> = async (data) => {
 
-        
+
         Swal.fire({
             title: "¿Está seguro de redimir este bono?",
             text: "Esta acción es definitiva, no podrá redimirlo nuevamente!",
@@ -36,7 +39,7 @@ export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, on
             confirmButtonText: "Sí, redimir bono!"
         }).then((result) => {
             if (result.isConfirmed) {
-                 const dataRedimir = {
+                const dataRedimir = {
                     ...data,
                     cod_usuario_bono_entrega: codUsuarioBonoEntrega
                 };
@@ -48,13 +51,13 @@ export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, on
     }
 
 
-    const handleRedimir = async (dataRedimir:{ comentario_cierre:string, cod_usuario_bono_entrega:number}) => {
-       
+    const handleRedimir = async (dataRedimir: { comentario_cierre: string, cod_usuario_bono_entrega: number }) => {
+
         setLoadingSpinner(true);
         const response = await redimirBono(dataRedimir);
         setLoadingSpinner(false);
         if (response) {
-            Swal.fire(response?.msg).then(()=>{
+            Swal.fire(response?.msg).then(() => {
                 onClose(true)
             })
         }
@@ -84,42 +87,90 @@ export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, on
                     </DialogTitle>
 
                     <form onSubmit={handleSubmit(onSubmit)} >
-
-
-                        <Controller
-                            name="comentario_cierre"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                                <>
-                                    <InputLabel className='mt-4'>Comentario de cierre</InputLabel>
-                                    <TextareaAutosize
-
-                                        minRows={2}
-                                        placeholder="..."
+                        <div className="flex flex-row gap-3 mt-4 items-end flex-wrap mb-5">
+                            <Controller
+                                name="cedula_vendedor"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                        label="Cédula Vendedor"
+                                        variant="outlined"
+                                        required={true}
                                         {...field}
                                         value={field.value || ''}
-                                        onFocus={() => setIsFocused(true)}
-                                        onBlur={() => setIsFocused(false)}
-                                        style={{
-                                            width: '100%',
-                                            padding: '10px',
-                                            borderRadius: '4px',
-                                            border: isFocused ? '2px solid #1976d2' : '1px solid #ccc',
-                                            fontSize: '1rem',
-                                            lineHeight: '1.5',
-                                            color: '#495057',
-                                            backgroundColor: '#fff',
-                                            boxShadow: 'inset 0 1px 1px rgba(0, 0, 0, 0.075)',
-                                            transition: 'border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s',
-                                        }}
                                     />
-                                </>
+                                )}
+                            />
 
-                            )}
-                        />
+                            <br />
+                            <br />
+                            <Controller
+                                name="nombre_vendedor"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                        label="Nombre del vendedor"
+                                        variant="outlined"
+                                        required={true}
+                                        {...field}
+                                        value={field.value || ''}
+                                    />
+                                )}
+                            />
+
+                            <br />
+                            <br />
+                            <Controller
+                                name="tienda"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                        label="Punto de venta"
+                                        variant="outlined"
+                                        required={true}
+                                        {...field}
+                                        value={field.value || ''}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                name="comentario_cierre"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field }) => (
+                                    <>
+                                        <InputLabel className='mt-4'>Comentario de cierre</InputLabel>
+                                        <TextareaAutosize
+
+                                            minRows={2}
+                                            placeholder="..."
+                                            {...field}
+                                            value={field.value || ''}
+                                            onFocus={() => setIsFocused(true)}
+                                            onBlur={() => setIsFocused(false)}
+                                            style={{
+                                                width: '100%',
+                                                padding: '10px',
+                                                borderRadius: '4px',
+                                                border: isFocused ? '2px solid #1976d2' : '1px solid #ccc',
+                                                fontSize: '1rem',
+                                                lineHeight: '1.5',
+                                                color: '#495057',
+                                                backgroundColor: '#fff',
+                                                boxShadow: 'inset 0 1px 1px rgba(0, 0, 0, 0.075)',
+                                                transition: 'border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s',
+                                            }}
+                                        />
+                                    </>
+
+                                )}
+                            />
+
+                            <br />
 
 
+                            <br />
+                        </div>
                         <Button disabled={!isValid} type='submit' variant='contained'>
                             Redimir Bono
                         </Button>

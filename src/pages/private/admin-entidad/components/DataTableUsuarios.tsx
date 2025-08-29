@@ -36,6 +36,10 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
     const { search, setSearch, filteredData } = useFilteredData(usuarios);
     const columns = [
         {
+            name: 'Código',
+            selector: (row: IUsuarioEntidadResumen) => row.codigo || '',
+        },
+        {
             name: 'Cédula',
             selector: (row: IUsuarioEntidadResumen) => row.cedula,
         },

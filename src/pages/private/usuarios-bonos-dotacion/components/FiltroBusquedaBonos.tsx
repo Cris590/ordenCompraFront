@@ -32,20 +32,6 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
 
     }
 
-    const conceptos = [{
-        cod_concepto: 1,
-        nombre: 'Abono Venta'
-    }, {
-        cod_concepto: 2,
-        nombre: 'Abono Compra'
-    }, {
-        cod_concepto: 3,
-        nombre: 'Transferencia Entre Deposito'
-    }, {
-        cod_concepto: 4,
-        nombre: 'Caja Menor'
-    }]
-
     return (
         <div className='m-3'>
             <Accordion defaultExpanded className='w-full'>
@@ -70,6 +56,7 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
                                             <TextField
                                                 label="Código"
                                                 variant="outlined"
+                                                required={true}
                                                 {...field}
                                                 value={field.value || ''}
                                             />
@@ -83,13 +70,14 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
                                             <TextField
                                                 label="Cédula Beneficiario"
                                                 variant="outlined"
+                                                required={true}
                                                 {...field}
                                                 value={field.value || ''}
                                             />
                                         )}
                                     />
                                     <br />
-                                    <Controller
+                                    {/* <Controller
                                         name="nit"
                                         control={control}
                                         render={({ field }) => (
@@ -113,7 +101,7 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
                                                 value={field.value || ''}
                                             />
                                         )}
-                                    />
+                                    /> */}
                                     <br />
 
                                 </div>
@@ -121,7 +109,7 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
                                     <Button disabled={!isValid} type='submit' variant='contained' className='mt-5'>
                                         Filtrar informacion!
                                     </Button>
-                                    <Button type='button' variant='contained' color='warning' className='mt-5' onClick={()=>reset()}>
+                                    <Button type='button' variant='contained' color='warning' className='ms-1 mt-5' onClick={()=>reset()}>
                                         Reiniciar filtro
                                     </Button>
                                 </div>

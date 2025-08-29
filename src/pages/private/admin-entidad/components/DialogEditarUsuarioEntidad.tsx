@@ -120,7 +120,7 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
                 maxWidth='lg'
             >
                 <DialogTitle id="alert-dialog-title">
-                    Crear Usuario
+                   {usuario.cod_usuario ? 'Editar Usuario':'Crear Usuario'} 
                 </DialogTitle>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent>
@@ -159,6 +159,24 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
                                         <TextField
                                             fullWidth
                                             label="Cédula"
+                                            variant="outlined"
+                                            {...field}
+                                            value={field.value || ''}
+                                        />
+                                    </div>
+                                )}
+                            />
+
+                            <Controller
+                                name="codigo"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field }) => (
+
+                                    <div className="my-2 w-96">
+                                        <TextField
+                                            fullWidth
+                                            label="Código"
                                             variant="outlined"
                                             {...field}
                                             value={field.value || ''}

@@ -74,7 +74,8 @@ export interface IUsuarioEntidadResumen{
     cod_orden?:number,
     cod_cargo_entidad:number,
     cargo_entidad?:string,
-    redimido?:boolean
+    redimido?:boolean,
+    codigo?:string
 }   
 
 export interface IResponseResumenCargosEntidad extends IRespuestaGeneralAction{

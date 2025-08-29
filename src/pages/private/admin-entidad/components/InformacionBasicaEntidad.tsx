@@ -140,6 +140,11 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
                                 variant="outlined"
                                 {...field}
                                 value={field.value || ''}
+                                inputProps={{
+                                maxLength:10, // for extra safety
+                                inputMode: "numeric", // mobile numeric keyboard
+                                pattern: "[0-9]*"
+                            }}
                             />
                         )}
                     />
@@ -270,7 +275,7 @@ export const InformacionBasicaEntidad = ({ codEntidad }: Props) => {
                                             disabled={(codEntidad && +codEntidad !== 0) || false}
                                         >
                                             <MenuItem value={1}>Entrega física y virtual, acuerdo Marco</MenuItem>
-                                            <MenuItem value={2}>Entrega por tarjeta magnética</MenuItem>
+                                            <MenuItem value={2}>Entrega por tarjeta magnética / Bono Virtual</MenuItem>
                                         </Select>
                                     </>
                                 )}
