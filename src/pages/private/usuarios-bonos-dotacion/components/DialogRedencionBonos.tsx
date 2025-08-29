@@ -1,12 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, MenuItem, Select, TextareaAutosize, TextField } from '@mui/material'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { ICategoriaActiva } from '../../../../interfaces/categoria.interface';
-import { obtenerCategoriasActivas } from '../../../../actions/categorias/categorias';
-import { crearCargoBonoProducto, detalleCargoBonoProducto, editarCargoBonoProducto } from '../../../../actions/entidad/entidad';
-import { useNavigate } from 'react-router-dom';
+import {  Dialog,  DialogContent, DialogTitle } from '@mui/material'
 import Swal from 'sweetalert2';
 import { consultarBonoProducto } from '../../../../actions/entidad_bono/entidad_bono';
 import { IBonoProductoUsuario } from '../../../../interfaces/entidad_bonos.interface';

@@ -1,6 +1,5 @@
 import { Button, Dialog, DialogContent, DialogTitle, InputLabel, TextareaAutosize, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';

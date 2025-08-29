@@ -10,6 +10,7 @@ export interface IUsuarioBonoBusqueda{
     no_contrato:string,
     nit:string,
     redimido:boolean,
+    codigo:string
     
 }
 

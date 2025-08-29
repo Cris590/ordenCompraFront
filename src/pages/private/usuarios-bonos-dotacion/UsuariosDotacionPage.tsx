@@ -24,7 +24,7 @@ export const UsuariosDotacionPage = () => {
     const columns = [
         {
             name: 'Codigo',
-            selector: (row: IUsuarioBonoBusqueda) => row.cod_usuario,
+            selector: (row: IUsuarioBonoBusqueda) => row.codigo,
             sortable: true
         },
         {

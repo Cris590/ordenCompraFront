@@ -53,6 +53,26 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const sidebarArray = useUserStore((state) => state.sidebarMenu);
 
+  const obtenerGuiaUso = () => {
+    let guiaUso = '/files/guia_usuario.pdf'
+    if(session){
+    
+      switch (session.cod_perfil) {
+        case 2:
+          guiaUso = '/files/guia_coordinador.pdf'
+          break;
+        case 6:
+          guiaUso = '/files/guia_coordinador_bonos.pdf'
+          break;
+      
+        default:
+          break;
+      }
+    }
+
+    return guiaUso
+  }
+
   const handleLogOut = () => {
     logOut();
     clearCart();
@@ -80,7 +100,7 @@ export const Sidebar = () => {
               if(menuItem.route === "guia-uso"){
                 return (
                     <a 
-                      href={session.cod_perfil === 2 ? "/files/guia_coordinador.pdf":"/files/guia_usuario.pdf" }  
+                      href={obtenerGuiaUso()} 
                       className="flex items-start mt-10 p-2 hover:bg-gray-100 rounded transition-all"
                       download
                     >
