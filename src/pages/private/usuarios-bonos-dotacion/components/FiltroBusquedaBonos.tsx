@@ -22,11 +22,7 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
         });
 
     const onSubmit: SubmitHandler<IFiltroBonoBusqueda> = async (data) => {
-        console.log('___ DATA SUBMITED __')
-        console.log(data)
-
         handleBuscarFiltro(data)
-
     }
 
     return (

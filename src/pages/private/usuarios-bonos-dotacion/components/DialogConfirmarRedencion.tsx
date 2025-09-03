@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { redimirBono } from '../../../../actions/entidad_bono/entidad_bono';
+import { useUserStore } from '../../../../store/user/user';
 
 interface Props {
     openDialog: boolean;
@@ -24,6 +25,8 @@ export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, on
     const { handleSubmit, reset, control, formState: { isValid }, watch } = useForm<IRedencionBono>({
         // defaultValues: defaulValueProducto
     });
+
+    const session = useUserStore.getState().user
 
     const onSubmit: SubmitHandler<IRedencionBono> = async (data) => {
 
@@ -53,7 +56,11 @@ export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, on
     const handleRedimir = async (dataRedimir: { comentario_cierre: string, cod_usuario_bono_entrega: number }) => {
 
         setLoadingSpinner(true);
-        const response = await redimirBono(dataRedimir);
+        let data:any = {
+            ...dataRedimir,
+            cod_usuario: (session?.cod_usuario) ? session.cod_usuario : 0
+        }
+        const response = await redimirBono(data);
         setLoadingSpinner(false);
         if (response) {
             Swal.fire(response?.msg).then(() => {
