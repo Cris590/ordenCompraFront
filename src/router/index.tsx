@@ -26,6 +26,7 @@ import { DepositosPage } from '../pages/private/depositos/DepositosPage';
 import { ClientesPage } from '../pages/private/clientes/ClientesPage';
 import { ProveedoresPage } from '../pages/private/proveedores/ProveedoresPage';
 import { UsuariosDotacionPage } from '../pages/private/usuarios-bonos-dotacion/UsuariosDotacionPage';
+import { ReporteDotacionBonosPage } from '../pages/private/reporte-bonos-dotacion/ReporteDotacionBonos';
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -61,6 +62,7 @@ const AppRouter: React.FC = () => {
 
           {/* RUTAS COORDINADOR BONOS */}
           <Route path="/usuarios_bonos_dotacion" element={<RouteGuard element={<UsuariosDotacionPage />} />} />
+          <Route path="/reporte_bonos_dotacion" element={<RouteGuard element={<ReporteDotacionBonosPage />} />} />
 
 
           {/* RUTAS FABRICA */}

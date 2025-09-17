@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { IFiltroBonoBusqueda, IRespuestaBonoProductoUsuario, IRespuestaFiltroBonosBusqueda } from "../../interfaces/entidad_bonos.interface";
+import { IFiltroBonoBusqueda, IRespuestaBonoProductoUsuario, IRespuestaFiltroBonosBusqueda, IRespuestaReporteBonosRedimidos } from "../../interfaces/entidad_bonos.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 
 export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) => {
@@ -19,6 +19,28 @@ export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) 
         data:filtroBusqueda
       }
       const { data }: AxiosResponse<IRespuestaFiltroBonosBusqueda> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+  export const consultarReporteBonosRedimidos = async ( codUsuario:number) => {
+    try {
+  
+      let options = {
+        method: 'get',
+        url: actionsSettings.backendRoutes.reporteBonosEntregados + '/' + codUsuario,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IRespuestaReporteBonosRedimidos> = await axios(options);
       return data
     } catch (e) {
       handleHttpError(e);

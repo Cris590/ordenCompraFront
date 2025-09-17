@@ -55,8 +55,9 @@ export const actionsSettings  = {
         consultarBonosFiltro:`${apiUrl}/entidad_bono/consultar_bonos`,
         consultarBonoProducto:`${apiUrl}/entidad_bono/consultar_bono_usuario`,
         redimirBonoEntrega:`${apiUrl}/entidad_bono/redimir_bono_entrega`,
+       
         
-    
+        reporteBonosEntregados:`${apiUrl}/orden_compra/reporte_bonos_entregados`,
         validarOrdenUsuario:`${apiUrl}/orden_compra/validar_orden`,
         productosUsuario:`${apiUrl}/orden_compra/productos`,
         obtenerProductoDetalleCarro:`${apiUrl}/orden_compra/producto_detalle`,

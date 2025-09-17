@@ -44,3 +44,22 @@ export interface IBonoProductoUsuario{
     nombre_vendedor:string,
     tienda:string
 }
+
+export interface IRespuestaReporteBonosRedimidos extends IRespuestaGeneralAction{
+    usuarios:IBonoRedimido[]
+}
+
+export interface IBonoRedimido{
+    fecha_redimido:string,
+    comentario_cierre:string,
+    cedula_vendedor:string,
+    nombre_vendedor:string,
+    tienda:string,
+    sexo:'F' | 'M',    
+    nombre:string,
+    cedula:string,
+    codigo:boolean,
+    valor:string,
+    descripcion:string
+
+}

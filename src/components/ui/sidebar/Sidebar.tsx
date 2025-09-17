@@ -19,6 +19,7 @@ import {
   IoAccessibilitySharp,
   IoSkullSharp,
   IoPeopleSharp,
+  IoAnalyticsSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -41,7 +42,8 @@ const iconMapping: { [key: string]: IconType } = {
   "depositos":IoBriefcase,
   "clientes":IoAccessibilitySharp,
   "proveedores":IoSkullSharp,
-  "usuarios_bonos_dotacion":IoPeopleSharp
+  "usuarios_bonos_dotacion":IoPeopleSharp,
+  "reporte_bonos_dotacion":IoAnalyticsSharp
 };
 
 export const Sidebar = () => {
