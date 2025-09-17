@@ -28,7 +28,7 @@ export const ReporteDotacionBonosPage = () => {
             sortable: true
         },
         {
-            name: 'Nombre',
+            name: 'Nombre Cliente',
             selector: (row: IBonoRedimido) => row.nombre,
             sortable: true
         },
@@ -40,6 +40,16 @@ export const ReporteDotacionBonosPage = () => {
         {
             name: 'Detalle productos',
             selector: (row: IBonoRedimido) => row.descripcion,
+            sortable: true
+        },
+        {
+            name: 'Entidad',
+            selector: (row: IBonoRedimido) => row.entidad,
+            sortable: true
+        },
+        {
+            name: 'No Contrato',
+            selector: (row: IBonoRedimido) => row.no_contrato,
             sortable: true
         },
         {

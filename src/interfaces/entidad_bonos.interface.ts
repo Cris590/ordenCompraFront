@@ -60,6 +60,8 @@ export interface IBonoRedimido{
     cedula:string,
     codigo:boolean,
     valor:string,
-    descripcion:string
+    descripcion:string,
+    entidad: string,
+    no_contrato:string
 
 }
