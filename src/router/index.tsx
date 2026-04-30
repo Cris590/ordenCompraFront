@@ -27,6 +27,7 @@ import { ClientesPage } from '../pages/private/clientes/ClientesPage';
 import { ProveedoresPage } from '../pages/private/proveedores/ProveedoresPage';
 import { UsuariosDotacionPage } from '../pages/private/usuarios-bonos-dotacion/UsuariosDotacionPage';
 import { ReporteDotacionBonosPage } from '../pages/private/reporte-bonos-dotacion/ReporteDotacionBonos';
+import { ControlAccesosPage } from '../pages/private/control-accesos/ControlAccesosPage';
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -38,6 +39,7 @@ const AppRouter: React.FC = () => {
 
         {/* Private routes with layout */}
         <Route path="/" element={<PanelLayout />}>
+          <Route path="/control_accesos" element={<RouteGuard element={<ControlAccesosPage/>} />} />
           <Route path="/categorias" element={<RouteGuard element={<CategoriasPage />} />} />
           <Route path="/productos" element={<RouteGuard element={<ProductosPage />} />} />
           <Route path="/productos/editar-producto/:codProducto" element={<RouteGuard element={<EditarProducto />} />} />

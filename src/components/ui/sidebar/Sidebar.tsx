@@ -20,6 +20,7 @@ import {
   IoSkullSharp,
   IoPeopleSharp,
   IoAnalyticsSharp,
+  IoPersonCircleSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -27,12 +28,12 @@ import { useUserStore } from "../../../store/user/user";
 import { useCartStore } from "../../../store/cart/cart-store";
 
 const iconMapping: { [key: string]: IconType } = {
-  categorias: IoBarcode,
+  'categorias': IoBarcode,
   "ordenes-compra": IoTicketOutline,
-  productos: IoBagCheck,
-  tallajes: IoCreateSharp,
-  entidades: IoBusinessSharp,
-  reportes: IoLibraryOutline,
+  'productos': IoBagCheck,
+  'tallajes': IoCreateSharp,
+  'entidades': IoBusinessSharp,
+  'reportes': IoLibraryOutline,
   "guia-uso": IoBicycle,
   "solicitud-dotacion": IoCreate,
   "control-ordenes": IoClipboard,
@@ -43,7 +44,8 @@ const iconMapping: { [key: string]: IconType } = {
   "clientes":IoAccessibilitySharp,
   "proveedores":IoSkullSharp,
   "usuarios_bonos_dotacion":IoPeopleSharp,
-  "reporte_bonos_dotacion":IoAnalyticsSharp
+  "reporte_bonos_dotacion":IoAnalyticsSharp,
+  "control_accesos":IoPersonCircleSharp
 };
 
 export const Sidebar = () => {

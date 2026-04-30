@@ -71,6 +71,10 @@ export const actionsSettings  = {
         reporteComparativo:`${apiUrl}/reporte/reporte_comparativo`,
         bonosEntidad:`${apiUrl}/reporte/bonos_usuario`,
 
+        usuariosAplicacion:`${apiUrl}/control_accesos/usuarios`,
+        editarUsuarioAplicacion:`${apiUrl}/control_accesos/actualizar_usuario`,
+        
+
         login:`${apiUrl}/users/authentication`,
     }
 }
