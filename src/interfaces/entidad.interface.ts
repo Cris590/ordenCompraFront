@@ -1,185 +1,224 @@
 import { IRespuestaGeneralAction } from "./general.interface"
 
 export interface IEntidadResumen {
-    cod_entidad:number,
-    nombre:string,
-    activo:1|0,
-    nit:string,
-    gestionada:1|0,
-    fecha_gestionada?:string,
-    entrega_bonos:string,
-    tipo_entrega_contrato:number
+    cod_entidad: number,
+    nombre: string,
+    activo: 1 | 0,
+    nit: string,
+    gestionada: 1 | 0,
+    fecha_gestionada?: string,
+    entrega_bonos: string,
+    tipo_entrega_contrato: number
 }
 
 export interface IResponseEntidadResumen {
-    error:number,
-    entidades:IEntidadResumen[]
+    error: number,
+    entidades: IEntidadResumen[]
 }
 
 export interface IInformacionBasicaEntidad {
-    nombre:string,
-    activo:1|0,
-    nit:string,
-    info_contrato:string,
-    no_contrato:string,
-    fecha_inicio:string,
-    fecha_final:string,
-    tipo_entrega_contrato:number
+    nombre: string,
+    activo: 1 | 0,
+    nit: string,
+    info_contrato: string,
+    no_contrato: string,
+    fecha_inicio: string,
+    fecha_final: string,
+    tipo_entrega_contrato: number
 }
 
 export interface IInformacionBasicaEntidadGuardar {
-    nombre:string,
-    activo:1|0,
-    nit:string,
-    info_contrato:string,
-    no_contrato:string,
-    fecha_inicio:string,
-    fecha_final:string,
-    entrega_bonos?:'FISICO' | 'VIRTUAL',
-    fecha_gestionada?:string,
-    tipo_entrega_contrato:number
+    nombre: string,
+    activo: 1 | 0,
+    nit: string,
+    info_contrato: string,
+    no_contrato: string,
+    fecha_inicio: string,
+    fecha_final: string,
+    entrega_bonos?: 'FISICO' | 'VIRTUAL',
+    fecha_gestionada?: string,
+    tipo_entrega_contrato: number
 
 }
 
-export interface IResponseCreacionEntidad extends IRespuestaGeneralAction{
-    cod_entidad:number
+export interface IResponseCreacionEntidad extends IRespuestaGeneralAction {
+    cod_entidad: number
 }
 
-export interface IResponseCreacionCargoEntidad extends IRespuestaGeneralAction{
-    cod_cargo_entidad:number
+export interface IResponseCreacionCargoEntidad extends IRespuestaGeneralAction {
+    cod_cargo_entidad: number
 }
 
-export interface IResponseInformacionBasicaEntidad{
-    error:number,
-    entidad:IInformacionBasicaEntidadGuardar
+export interface IResponseInformacionBasicaEntidad {
+    error: number,
+    entidad: IInformacionBasicaEntidadGuardar
 }
 
-export interface IResponseUsuariosEntidadResumen extends IRespuestaGeneralAction{
-    usuarios:IUsuarioEntidadResumen[],
-    gestionada:1|0
+export interface IResponseUsuariosEntidadResumen extends IRespuestaGeneralAction {
+    usuarios: IUsuarioEntidadResumen[],
+    gestionada: 1 | 0
 }
 
-export interface IResponseUsuarioCoordinador extends IRespuestaGeneralAction{
-    usuario:IUsuarioEntidadResumen | null
+export interface IResponseUsuarioCoordinador extends IRespuestaGeneralAction {
+    usuario: IUsuarioEntidadResumen | null
 }
 
-export interface IUsuarioEntidadResumen{
-    cod_usuario:number,
-    email:string,
-    nombre:string,
-    activo:1|0,
-    sexo:'M' | 'F',
-    cedula:string,
-    password?:string,
-    cod_orden?:number,
-    cod_cargo_entidad:number,
-    cargo_entidad?:string,
-    redimido?:boolean,
-    codigo?:string
-}   
+export interface IUsuarioEntidadResumen {
+    cod_usuario: number,
+    email: string,
+    nombre: string,
+    activo: 1 | 0,
+    sexo: 'M' | 'F',
+    cedula: string,
+    password?: string,
+    cod_orden?: number,
+    cod_cargo_entidad: number,
+    cargo_entidad?: string,
+    redimido?: boolean,
+    codigo?: string
+}
 
-export interface IResponseResumenCargosEntidad extends IRespuestaGeneralAction{
-    cargos:{ cod_cargo_entidad:number, nombre:string, lote:number }[]
+export interface IResponseResumenCargosEntidad extends IRespuestaGeneralAction {
+    cargos: { cod_cargo_entidad: number, nombre: string, lote: number }[]
 }
 
 export interface ICargoEntidadDetalle {
-    cod_cargo_entidad:number,
-    nombre:string,
-    cod_entidad:number,
-    lote:number,
-    cod_categorias:{cod_categoria:number , cantidad:number}[],
-    cod_cargo_bonos_producto?:ICargoBonoProducto[],
+    cod_cargo_entidad: number,
+    nombre: string,
+    cod_entidad: number,
+    lote: number,
+    cod_categorias: { cod_categoria: number, cantidad: number }[],
+    cod_cargo_bonos_producto?: ICargoBonoProducto[],
 }
 
-export interface IResponseDetalleCargoEntidad{
-    error:1| 0
-    cargo:ICargoEntidadDetalle
+export interface IResponseDetalleCargoEntidad {
+    error: 1 | 0
+    cargo: ICargoEntidadDetalle
 }
 
 export interface ICargoBonoProducto {
-    cod_cargo_bonos_producto:number,
-    cod_cargo_entidad:number,
-    nombre:string,
-    descripcion:string,
-    valor:number,
+    cod_cargo_bonos_producto: number,
+    cod_cargo_entidad: number,
+    nombre: string,
+    descripcion: string,
+    valor: number,
 }
 
-export interface IResponseDetalleCargoBonoProducto{
-    error:1| 0
-    cargo_bono:ICargoBonoProducto
+export interface IResponseDetalleCargoBonoProducto {
+    error: 1 | 0
+    cargo_bono: ICargoBonoProducto
 }
 
 
 export interface IInformacionBasicaCargoGuardar {
-    nombre:string,
-    cod_entidad:number,
-    cod_categorias:{cod_categoria:number , cantidad:number}[]
-}
-    
-export interface IResponseInfoContrato extends IRespuestaGeneralAction{
-    info:IInfoContratoEntidad
+    nombre: string,
+    cod_entidad: number,
+    cod_categorias: { cod_categoria: number, cantidad: number }[]
 }
 
-export interface IInfoContratoEntidad{
-    cod_entidad:string, 
-    nombre:string,
-    nit:string,
-    info_contrato:string,
-    no_contrato:string,
-    fecha_inicio:string,
-    fecha_final:string, 
-    gestionada:string,
-    fecha_gestionada?:string,
-    entrega_bonos?:'FISICO' | 'VIRTUAL',
-    no_orden?:string,
-    direccion:string,
-    ciudad:string
+export interface IResponseInfoContrato extends IRespuestaGeneralAction {
+    info: IInfoContratoEntidad
 }
 
-export interface IResponseResumenProductosEntidad{
-    error:    number;
+export interface IInfoContratoEntidad {
+    cod_entidad: string,
+    nombre: string,
+    nit: string,
+    info_contrato: string,
+    no_contrato: string,
+    fecha_inicio: string,
+    fecha_final: string,
+    gestionada: string,
+    fecha_gestionada?: string,
+    entrega_bonos?: 'FISICO' | 'VIRTUAL',
+    no_orden?: string,
+    direccion: string,
+    ciudad: string
+}
+
+export interface IResponseResumenProductosEntidad {
+    error: number;
     response: IResumentProductos[];
 }
 
 
 export interface IResumentProductos {
-    cargo:      string;
+    cargo: string;
     categorias: ICategoriaResumen[];
 }
 
 export interface ICategoriaResumen {
     nombre: string;
-    cantidad:number;
-    sexos:  ISexoResumen[];
+    cantidad: number;
+    sexos: ISexoResumen[];
 }
 
 export interface ISexoResumen {
-    nombre:    string;
+    nombre: string;
     productos: IProductoResumen[];
 }
 
 export interface IProductoResumen {
-    cod_producto:  number;
+    cod_producto: number;
     cod_categoria: number;
-    nombre:        string;
-    descripcion:string;
-    tiene_talla:   number;
-    tiene_color:   number;
-    categoria:     string;
-    talla:        string[];
-    colores:      IResumenColores[];
+    nombre: string;
+    descripcion: string;
+    tiene_talla: number;
+    tiene_color: number;
+    categoria: string;
+    talla: string[];
+    colores: IResumenColores[];
 }
 
 export interface IResumenColores {
     cod_producto_color: number;
-    color:              string;
-    color_descripcion:  string;
-    imagenes:           string[];
+    color: string;
+    color_descripcion: string;
+    imagenes: string[];
 }
 
 export interface ICargoBonoProductoGuardar {
-    cod_cargo_entidad:number,
+    cod_cargo_entidad: number,
     nombre: string,
     descripcion: string,
     valor: number,
+}
+
+export interface IResponseCategoriasProductoCrm extends IRespuestaGeneralAction {
+    categorias: ICategoriaProductoCrm[]
+}
+
+export interface ICategoriaProductoCrm {
+    id: number,
+    categoria: string,
+    fecha: string
+}
+
+export interface IResponseSubCategoriasProductoCrm extends IRespuestaGeneralAction {
+    subcategorias: ISubCategoriaProductoCrm[]
+}
+
+export interface ISubCategoriaProductoCrm {
+    id: number,
+    id_categoria: number,
+    sub_categoria: string,
+    fecha: string,
+    consecutivo: number
+}
+
+export interface IResponseSubCategoriasAsociadasProductoCrm extends IRespuestaGeneralAction {
+    subcategorias_asociadas: ISubCategoriaASociada[]
+}
+
+export interface ISubCategoriaASociada {
+    cod_producto_asociado_subcategoria?:number,
+    cod_subcategoria: number,
+    nombre: string,
+    valor: number
+}
+
+export interface ISubCategoriaAAsociar {
+    cod_cargo_bonos_producto: number,
+    cod_subcategoria: number,
+    valor: number
 }

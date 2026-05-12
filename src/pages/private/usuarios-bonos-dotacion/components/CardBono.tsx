@@ -1,5 +1,5 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Card, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material'
 import { IBonoProductoUsuario } from '../../../../interfaces/entidad_bonos.interface'
 import { currencyFormat } from '../../../../utils/currencyFormat'
 import { DialogConfirmarRedencion } from './DialogConfirmarRedencion'

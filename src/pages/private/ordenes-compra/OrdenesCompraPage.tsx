@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ProductGrid } from "../../../components/products/product-grid/ProductGrid";
-import { ICategoriaUsuario, IProductoMostrar } from "../../../interfaces/orden_compra.interface";
+import { IProductoMostrar } from "../../../interfaces/orden_compra.interface";
 import { useUserStore } from "../../../store/user/user";
 import { obtenerProductosUsuario, validarOrdenUsuario } from "../../../actions/orden_compra/orden_compra";
 import Swal from "sweetalert2";

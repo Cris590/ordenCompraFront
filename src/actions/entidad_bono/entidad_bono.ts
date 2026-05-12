@@ -4,6 +4,7 @@ import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
 import { IFiltroBonoBusqueda, IRespuestaBonoProductoUsuario, IRespuestaFiltroBonosBusqueda, IRespuestaReporteBonosRedimidos } from "../../interfaces/entidad_bonos.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
+import { IResponseEntidadTarjetabono } from "../../interfaces/control_accesos.interface";
 
 export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) => {
     try {
@@ -41,6 +42,28 @@ export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) 
         maxRedirects: 21
       }
       const { data }: AxiosResponse<IRespuestaReporteBonosRedimidos> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+  export const consultarEntidadesEntregaBono = async () => {
+    try {
+  
+      let options = {
+        method: 'get',
+        url: actionsSettings.backendRoutes.consultarEntidadesEntregaBono + '/',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IResponseEntidadTarjetabono> = await axios(options);
       return data
     } catch (e) {
       handleHttpError(e);

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { ICargoBonoProductoGuardar, IInformacionBasicaCargoGuardar, IInformacionBasicaEntidadGuardar, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoBonoProducto, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
+import { ICargoBonoProductoGuardar, IInformacionBasicaCargoGuardar, IInformacionBasicaEntidadGuardar, IResponseCategoriasProductoCrm, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoBonoProducto, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseSubCategoriasAsociadasProductoCrm, IResponseSubCategoriasProductoCrm, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, ISubCategoriaAAsociar, ISubCategoriaASociada, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 
 export const obtenerEntidades = async () => {
@@ -99,7 +99,6 @@ export const obtenerEntidades = async () => {
       return null
     }
   }
-
 
   export const editarEntidad = async (entidad: Partial<IInformacionBasicaEntidadGuardar>, codEntidad: number) => {
     try {
@@ -423,4 +422,144 @@ export const obtenerProductosEntidadResumen = async ( codEntidad:number) => {
     return null
   }
 }
+
+
+export const obtenerCategoriasProductosCrm = async () => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerCategoriasCrm}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseCategoriasProductoCrm> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const obtenerSubCategoriasProductosCrm = async (idCategoria:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerSubCategoriasCrm}/${idCategoria}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseSubCategoriasProductoCrm> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+export const obtenerProductosAsociadosCrm = async (codCargoBonosProducto:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerProductosAsociadosCrm}/${codCargoBonosProducto}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseSubCategoriasAsociadasProductoCrm> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const asociarSubCategoriaCargoCrm = async (dataAsociar:ISubCategoriaAAsociar) => {
+  try {
+    let options = {
+        method: 'post',
+        url: `${actionsSettings.backendRoutes.asociarSubCategoriaBonosProducto}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21,
+        data:dataAsociar
+      }
+      const { data }: AxiosResponse<IResponseCreacionEntidad> = await axios(options);
+      return data
+    
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const editarAsociacionSubCategoriaBonosProducto = async (asociacion: Partial<ISubCategoriaASociada>, codProductoAsociadoCategoria: number) => {
+    try {
+  
+      let options = {
+        method: 'put',
+        url: `${actionsSettings.backendRoutes.editarAsociacionSubCategoriaBonosProducto}/${codProductoAsociadoCategoria}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21,
+        data: asociacion
+  
+      }
+      const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+
+  
+export const borrarAsociacionSubCategoriaBonosProducto = async (codProductoAsociadoCategoria: number) => {
+  try {
+
+    let options = {
+      method: 'delete',
+      url: `${actionsSettings.backendRoutes.borrarAsociacionSubCategoriaBonosProducto}/${codProductoAsociadoCategoria}`,
+      headers: {
+        'Authorization': getAuthToken(),
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+    const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
 

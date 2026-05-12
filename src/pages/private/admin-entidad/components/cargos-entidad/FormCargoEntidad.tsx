@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { ICategoriaActiva } from '../../../../interfaces/categoria.interface';
-import { obtenerCategoriasActivas } from '../../../../actions/categorias/categorias';
-import { crearCargoEntidad, detalleCargoEntidad, editarCargoEntidad } from '../../../../actions/entidad/entidad';
-import { BotonProductoCategoria } from './BotonProductoCategoria';
+import { ICategoriaActiva } from '../../../../../interfaces/categoria.interface';
+import { obtenerCategoriasActivas } from '../../../../../actions/categorias/categorias';
+import { crearCargoEntidad, detalleCargoEntidad, editarCargoEntidad } from '../../../../../actions/entidad/entidad';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { BotonProductoCategoria } from './BotonProductoCategoria';
 
 interface Props {
     openDialog: boolean;

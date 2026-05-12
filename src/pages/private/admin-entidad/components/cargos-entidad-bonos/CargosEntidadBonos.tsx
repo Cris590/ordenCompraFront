@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
-import { cargosPorEntidad } from '../../../../actions/entidad/entidad'
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
+import { cargosPorEntidad } from '../../../../../actions/entidad/entidad'
 import Swal from 'sweetalert2'
 import { Button, ButtonGroup } from '@mui/material'
 import { FormCargoEntidadBono } from './FormCargoEntidadBono'

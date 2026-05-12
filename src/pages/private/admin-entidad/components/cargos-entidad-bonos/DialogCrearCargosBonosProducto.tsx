@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, TextareaAutosize, TextField } from '@mui/material'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { crearCargoBonoProducto, detalleCargoBonoProducto, editarCargoBonoProducto} from '../../../../actions/entidad/entidad';
+import { crearCargoBonoProducto, detalleCargoBonoProducto, editarCargoBonoProducto} from '../../../../../actions/entidad/entidad';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 

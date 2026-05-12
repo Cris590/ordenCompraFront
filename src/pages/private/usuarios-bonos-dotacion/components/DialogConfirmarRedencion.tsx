@@ -22,7 +22,7 @@ interface IRedencionBono {
 export const DialogConfirmarRedencion = ({ codUsuarioBonoEntrega, openDialog, onClose }: Props) => {
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
     const [isFocused, setIsFocused] = useState(false);
-    const { handleSubmit, reset, control, formState: { isValid }, watch } = useForm<IRedencionBono>({
+    const { handleSubmit, control, formState: { isValid } } = useForm<IRedencionBono>({
         // defaultValues: defaulValueProducto
     });
 

@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import {
     Button,
-    Checkbox,
     InputLabel,
     MenuItem,
     Select,

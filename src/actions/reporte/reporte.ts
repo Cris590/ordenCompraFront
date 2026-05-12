@@ -1,8 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { actionsSettings } from '../settings';
 import { getAuthToken } from '../axios-helper/getToken';
-import { handleHttpError } from '../axios-helper/axiosError';
-import { IRespuestaGeneralAction } from '../../interfaces/general.interface';
 
 export const reporteGeneralEntidad = async (codEntidad: number) => {
     try {

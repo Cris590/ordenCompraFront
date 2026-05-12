@@ -17,7 +17,7 @@ export const ImagenTallajeCargada = ( { url }:Props) => {
         >
         <img
             src={url}
-            alt={`Image Imagen`}
+            alt={`Imagen Tallaje`}
             style={{ width: '300px', cursor: 'pointer' }}
             onClick={handleImageClick}
         />

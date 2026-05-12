@@ -3,7 +3,6 @@ import { Title } from '../../../components/title/Title';
 import { Button } from '@mui/material';
 import DataTable from 'react-data-table-component';
 import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
-import { useNavigate } from 'react-router-dom';
 import { useFilteredData } from '../../../hooks/useFilteredData';
 import { IFiltroBonoBusqueda, IUsuarioBonoBusqueda } from '../../../interfaces/entidad_bonos.interface';
 import { consultarBonosFiltro } from '../../../actions/entidad_bono/entidad_bono';
@@ -13,7 +12,7 @@ import clsx from 'clsx';
 import { DialogRedencionBonos } from './components/DialogRedencionBonos';
 
 export const UsuariosDotacionPage = () => {
-    const navigate = useNavigate()
+
     const [usuarios, setUsuarios] = useState<IUsuarioBonoBusqueda[]>([]);
     const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
     const { search, setSearch, filteredData } = useFilteredData(usuarios);

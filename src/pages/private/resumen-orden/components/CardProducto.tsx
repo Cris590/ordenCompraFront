@@ -1,6 +1,6 @@
 import React from 'react'
 import { CartProducto } from '../../../../interfaces/cart.interface'
-import { Card, CardContent, CardHeader, CardMedia, Typography } from '@mui/material'
+import { Card, CardContent, Typography } from '@mui/material'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { ColorCircle } from '../../../../components/product/color-circle/ColorCircle'
 

@@ -30,7 +30,7 @@ export const UsuariosEntidad = ({ codEntidad }: Props) => {
         {/* { mostrarCargaMasiva &&    <Button type="button" onClick={handleClickOpen}>Cargar Usuarios</Button> } */}
             
             <Button type="button" onClick={handleClickOpen}>Cargar Usuarios</Button>
-            <DataTableUsuarios 
+            <DataTableUsuarios
                 codEntidad={codEntidad}  
                 refreshUsuarios={refreshUsuarios}
                 sendTotalUsuarios = {(total)=>{setMostrarCargaMasiva(total === 0)}}

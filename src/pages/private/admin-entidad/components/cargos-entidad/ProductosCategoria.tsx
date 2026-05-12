@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { productosPorCategoria } from '../../../../actions/categorias/categorias'
-import { IProductoResumen } from '../../../../interfaces/producto.interface'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material'
-import { Title } from '../../../../components/title/Title'
+import { productosPorCategoria } from '../../../../../actions/categorias/categorias'
+import { IProductoResumen } from '../../../../../interfaces/producto.interface'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import DataTable from 'react-data-table-component'
-import { ColorCircle } from '../../../../components/product/color-circle/ColorCircle'
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
-import { useFilteredData } from '../../../../hooks/useFilteredData'
+import { ColorCircle } from '../../../../../components/product/color-circle/ColorCircle'
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
+import { useFilteredData } from '../../../../../hooks/useFilteredData'
 
 interface Props {
   codCategoria: number,

@@ -1,5 +1,5 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, TextField, Typography } from '@mui/material'
 import React from 'react'
+import { Accordion, AccordionDetails, AccordionSummary, Button, TextField, Typography } from '@mui/material'
 import { IoChevronUp } from 'react-icons/io5'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -15,7 +15,6 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
     const {
         handleSubmit,
         reset,
-        getValues,
         control,
         formState: { isValid } } = useForm<IFiltroBonoBusqueda>({
             mode: 'onChange',
@@ -99,7 +98,7 @@ export const FiltroBusquedaBonos = ({ handleBuscarFiltro }: Props) => {
 
                                 </div>
                                 <div>
-                                    <Button disabled={!isValid} type='submit' variant='contained' className='mt-5'>
+                                    <Button disabled={!isValid} type='submit' variant='contained' className='mt-5' sx={{ mr: 1 }}>
                                         Filtrar informacion!
                                     </Button>
                                     <Button type='button' variant='contained' color='warning' className='ms-1 mt-5' onClick={()=>reset()}>

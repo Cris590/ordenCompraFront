@@ -8,11 +8,11 @@ import dayjs from 'dayjs';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
-import { IInformacionBasicaEntidad } from '../../../../interfaces/entidad.interface';
-import { crearEntidad, editarEntidad, obtenerInfoBasicaEntidad } from '../../../../actions/entidad/entidad';
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
+import { IInformacionBasicaEntidad } from '../../../../../interfaces/entidad.interface';
+import { crearEntidad, editarEntidad, obtenerInfoBasicaEntidad } from '../../../../../actions/entidad/entidad';
 import { IoInformationCircleSharp } from 'react-icons/io5';
-import { useEntidadStore } from '../../../../store/entidad/entidad';
+import { useEntidadStore } from '../../../../../store/entidad/entidad';
 
 interface Props {
     codEntidad?: string

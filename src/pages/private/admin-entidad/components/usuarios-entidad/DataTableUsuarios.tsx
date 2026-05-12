@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Title } from '../../../../components/title/Title';
+import { Title } from '../../../../../components/title/Title';
 import { Button, Tooltip } from '@mui/material';
 import DataTable from 'react-data-table-component';
-import { obtenerUsuariosEntidad } from '../../../../actions/entidad/entidad';
-import { IUsuarioEntidadResumen } from '../../../../interfaces/entidad.interface';
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
-import { useFilteredData } from '../../../../hooks/useFilteredData';
+import { obtenerUsuariosEntidad } from '../../../../../actions/entidad/entidad';
+import { IUsuarioEntidadResumen } from '../../../../../interfaces/entidad.interface';
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
+import { useFilteredData } from '../../../../../hooks/useFilteredData';
 import { DialogEditarUsuarioEntidad } from './DialogEditarUsuarioEntidad';
 import Swal from 'sweetalert2';
 

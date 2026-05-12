@@ -1,11 +1,11 @@
-import { Button, Checkbox, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
+import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { IProductoInformacionBasica } from '../../../../interfaces/producto.interface';
 import { obtenerCategorias } from '../../../../actions/categorias/categorias';
 import { ICategories } from '../../../../interfaces/categoria.interface';
 import { crearProducto, editarProducto, obtenerInfoBasicaProducto } from '../../../../actions/producto/producto';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 
@@ -56,7 +56,7 @@ export const InformacionBasicaProducto = ({ codProducto }: Props) => {
         }
     }
 
-    const { register, handleSubmit, reset, control, formState: { isValid } } = useForm<IProductoInformacionBasica>({
+    const { handleSubmit, reset, control, formState: { isValid } } = useForm<IProductoInformacionBasica>({
         defaultValues: defaulValueProducto
     });
 

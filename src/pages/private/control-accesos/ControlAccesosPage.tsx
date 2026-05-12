@@ -5,7 +5,7 @@ import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/Loadi
 import { Title } from '../../../components/title/Title';
 import { Button, Tooltip } from '@mui/material';
 import { obtenerUsuariosAplicativo } from '../../../actions/control-accesos/control-accesos';
-import { IUsuarioAplicacionResumen } from '../../../interfaces/control_accesos.interface';
+import { IEntidadTarjetaBono, IUsuarioAplicacionResumen } from '../../../interfaces/control_accesos.interface';
 import { DialogEditarUsuario } from './components/DialogEditarUsuario';
 
 
@@ -15,13 +15,15 @@ const defaultUsuario: IUsuarioAplicacionResumen = {
     nombre: '',
     usuario: '',
     perfil: '',
-    cod_perfil: 0
+    cod_perfil: 0,
+    entidades:[]
 }
 
 
 export const ControlAccesosPage = () => {
   const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
   const [usuarios, setUsuarios] = useState<IUsuarioAplicacionResumen[]>([]);
+  const [entidades, setEntidades] = useState<IEntidadTarjetaBono[]>([]);
   const { search, setSearch, filteredData } = useFilteredData(usuarios);
 
   const [openEditUsuario, setOpenEditUsuario] = useState(false);
@@ -71,6 +73,7 @@ export const ControlAccesosPage = () => {
     setOpenLoadingSpinner(false)
     if (response?.error == 0) {
       setUsuarios(response.usuarios)
+      setEntidades(response.entidades)
     }
   }
 
@@ -117,6 +120,7 @@ export const ControlAccesosPage = () => {
         openDialog={openEditUsuario}
         onClose={handleCloseEditUsuario}
         usuario={usuarioEditar}
+        entidades={entidades}
       />
     </>
   )

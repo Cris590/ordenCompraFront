@@ -51,8 +51,15 @@ export const actionsSettings  = {
         editarCargo:`${apiUrl}/entidad/editar_cargo`,
         resumentProductosEntidad:`${apiUrl}/entidad/resumen_productos`,
         crearCargaBonoProducto:`${apiUrl}/entidad/crear_cargo_bono_producto`,
+        obtenerCategoriasCrm:`${apiUrl}/entidad/obtener_categorias_crm`,
+        obtenerSubCategoriasCrm:`${apiUrl}/entidad/obtener_subcategorias_crm`,
+        obtenerProductosAsociadosCrm:`${apiUrl}/entidad/obtener_productos_asociados_crm`,
+        asociarSubCategoriaBonosProducto:`${apiUrl}/entidad/asociar_subcategoria_bonos_producto`,
+        editarAsociacionSubCategoriaBonosProducto:`${apiUrl}/entidad/editar_asociacion`,
+        borrarAsociacionSubCategoriaBonosProducto:`${apiUrl}/entidad/borrar_asociacion`,
 
         consultarBonosFiltro:`${apiUrl}/entidad_bono/consultar_bonos`,
+        consultarEntidadesEntregaBono:`${apiUrl}/entidad_bono/consultar_entidades`,
         consultarBonoProducto:`${apiUrl}/entidad_bono/consultar_bono_usuario`,
         redimirBonoEntrega:`${apiUrl}/entidad_bono/redimir_bono_entrega`,
        

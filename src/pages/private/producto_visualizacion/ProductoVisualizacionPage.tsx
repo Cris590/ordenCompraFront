@@ -6,8 +6,6 @@ import { IProductoMostrar } from '../../../interfaces/orden_compra.interface';
 import { AddToCart } from '../producto/ui/AddToCart';
 import { useNavigate, useParams } from "react-router-dom";
 import { obtenerProductoDetalleCarro } from '../../../actions/orden_compra/orden_compra';
-import { BreadCrumbsCart } from '../producto/ui/BreadCrumbsCart';
-import { ControlCategorias } from '../cart/ui/ControlCategorias';
 import { Dialog, DialogContent } from '@mui/material';
 import { BreadCrumbsProduct } from './components/BreadCrumbsProduct';
 

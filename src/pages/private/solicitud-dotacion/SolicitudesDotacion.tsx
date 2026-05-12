@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { IOrdenPendiente } from '../../../interfaces/solicitud_dotacion.interface';
 import DataTable from 'react-data-table-component';
 import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
-import { formatDate } from '../../../utils/formatDate';
 import { Title } from '../../../components/title/Title';
 
 export const SolicitudesDotacion = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { TextField, Button, IconButton, Box, FormControlLabel, Switch, InputLabel, Select, MenuItem, Dialog, DialogContent } from '@mui/material';
+import { TextField, Button, IconButton, FormControlLabel, Switch, InputLabel, Select, MenuItem, Dialog, DialogContent } from '@mui/material';
 import { IoAddCircleOutline, IoClose, IoCloudUploadSharp, IoEye } from 'react-icons/io5';
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { editarProducto, obtenerTallasProducto } from '../../../../actions/producto/producto';

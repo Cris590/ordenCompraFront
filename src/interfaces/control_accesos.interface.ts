@@ -1,6 +1,7 @@
 export interface IResponseUsuariosAplicacion{
     error:number,
-    usuarios:IUsuarioAplicacionResumen[]
+    usuarios:IUsuarioAplicacionResumen[],
+    entidades:IEntidadTarjetaBono[]
 }
 
 export interface IUsuarioAplicacionResumen{
@@ -10,5 +11,16 @@ export interface IUsuarioAplicacionResumen{
     usuario: string,
     perfil: string,
     cod_perfil:number,
-    password?:string
+    password?:string,
+    entidades:number[]
+}
+
+export interface IEntidadTarjetaBono{
+    cod_entidad:number,
+    nombre:string
+}
+
+export interface IResponseEntidadTarjetabono{
+    error:number,
+    entidades:IEntidadTarjetaBono[]
 }

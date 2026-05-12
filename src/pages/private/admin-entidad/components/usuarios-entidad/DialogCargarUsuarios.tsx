@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
-import { cargarUsuariosEntidad } from '../../../../actions/entidad/entidad';
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
+import { cargarUsuariosEntidad } from '../../../../../actions/entidad/entidad';
 import Swal from 'sweetalert2';
 import { IoLocate } from 'react-icons/io5';
 

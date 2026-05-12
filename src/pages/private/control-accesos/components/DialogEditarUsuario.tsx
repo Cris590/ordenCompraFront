@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { actualizarUsuarioEntidad, cargosPorEntidad, crearUsuarioEntidad } from '../../../../actions/entidad/entidad';
 import Swal from 'sweetalert2';
 import { useEntidadStore } from '../../../../store/entidad/entidad';
-import { IUsuarioAplicacionResumen } from '../../../../interfaces/control_accesos.interface';
+import { IEntidadTarjetaBono, IUsuarioAplicacionResumen } from '../../../../interfaces/control_accesos.interface';
 import { editarUsuarioAplicativo } from '../../../../actions/control-accesos/control-accesos';
 
 
 interface Props {
     openDialog: boolean;
     usuario: IUsuarioAplicacionResumen;
+    entidades: IEntidadTarjetaBono[];
     onClose: (actualizarUsuario: boolean) => void;
 }
 
-export const DialogEditarUsuario = ({ openDialog, usuario, onClose }: Props) => {
+export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }: Props) => {
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
     const { handleSubmit, reset, control, formState: { isValid } } = useForm<IUsuarioAplicacionResumen>({
@@ -27,9 +28,6 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose }: Props) => 
     }, [usuario])
 
     const onSubmit: SubmitHandler<IUsuarioAplicacionResumen> = async (data) => {
-
-
-
         try {
 
             let dataAux: any = {
@@ -41,6 +39,8 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose }: Props) => 
 
             dataAux.cedula = dataAux.usuario
             delete dataAux.usuario
+
+            dataAux.entidades = JSON.stringify(dataAux.entidades)
 
             setLoadingSpinner(true)
             let res = await editarUsuarioAplicativo(data.cod_usuario, dataAux)
@@ -127,8 +127,6 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose }: Props) => 
                                 render={({ field }) => (
 
                                     <div className="my-2 w-96">
-
-
                                         <TextField
                                             fullWidth
                                             label="Nombre"
@@ -195,6 +193,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose }: Props) => 
                                             label="Contraseña"
                                             variant="outlined"
                                             type="password"
+                                            autoComplete='false'
                                             placeholder={field.value ? '' : '*******'}
                                             {...field}
                                             value={field.value || ''}
@@ -224,9 +223,41 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose }: Props) => 
                                 )}
                             />
 
+                            <br/>
+                            <Controller
+                                name="entidades"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field }) => {
+                                    return (
+                                        <Autocomplete
+                                            multiple
+                                            options={entidades}
+                                            getOptionLabel={(option) => option.nombre}
+
+                                            // 🔹 Mostrar seleccionados (form → UI)
+                                            value={entidades.filter(ent =>
+                                                field.value?.includes(ent.cod_entidad)
+                                            )}
+
+                                            // 🔹 Guardar en el form (UI → form)
+                                            onChange={(_, newValue) => {
+                                                field.onChange(newValue.map(v => v.cod_entidad));
+                                            }}
+
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    variant="standard"
+                                                    label="Entidades"
+                                                    placeholder="Buscar entidad"
+                                                />
+                                            )}
+                                        />
+                                    );
+                                }}
+                            />
                         </div>
-
-
 
                     </DialogContent>
 

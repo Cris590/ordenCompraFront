@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { IUsuarioEntidadResumen } from '../../../../interfaces/entidad.interface';
+import { IUsuarioEntidadResumen } from '../../../../../interfaces/entidad.interface';
 import Swal from 'sweetalert2';
-import { actualizarUsuarioEntidad, crearUsuarioEntidad, obtenerUsuariosCoordinador } from '../../../../actions/entidad/entidad';
-import { useEntidadStore } from '../../../../store/entidad/entidad';
+import { actualizarUsuarioEntidad, crearUsuarioEntidad, obtenerUsuariosCoordinador } from '../../../../../actions/entidad/entidad';
+import { useEntidadStore } from '../../../../../store/entidad/entidad';
 
 
 

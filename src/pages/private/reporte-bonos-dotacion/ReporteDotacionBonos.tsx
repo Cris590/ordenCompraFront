@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DataTable from 'react-data-table-component';
 import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { Title } from '../../../components/title/Title';
@@ -8,19 +8,17 @@ import { saveAs } from "file-saver";
 import { useFilteredData } from '../../../hooks/useFilteredData';
 import { IBonoRedimido } from '../../../interfaces/entidad_bonos.interface';
 import { consultarReporteBonosRedimidos } from '../../../actions/entidad_bono/entidad_bono';
-import { useUserStore } from '../../../store/user/user';
 import { formatDate } from '../../../utils/formatDate';
 import { currencyFormat } from '../../../utils/currencyFormat';
 import { IconButton, Tooltip } from '@mui/material';
 import { IoDownloadOutline } from 'react-icons/io5';
+import { FiltroBusquedaEntidad } from './components/FiltroBusquedaEntidad';
 
 export const ReporteDotacionBonosPage = () => {
 
     const [usuarios, setUsuarios] = useState<IBonoRedimido[]>([]);
     const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
     const { search, setSearch, filteredData } = useFilteredData(usuarios);
-    const session = useUserStore((state) => state.user)
-
     const columns = [
         {
             name: 'Codigo',
@@ -82,17 +80,10 @@ export const ReporteDotacionBonosPage = () => {
             selector: (row: IBonoRedimido) => formatDate(row.fecha_redimido)
         }
     ];
-
-    useEffect(() => {
-        obtenerReporte()
-    }, [])
-
-
-
-    const obtenerReporte = async () => {
-
+    const obtenerReporte = async (entidad: { entidad: number }) => {
+        setUsuarios([])
         setOpenLoadingSpinner(true)
-        let response = await consultarReporteBonosRedimidos(session?.cod_usuario || 0)
+        let response = await consultarReporteBonosRedimidos(entidad.entidad)
         setOpenLoadingSpinner(false)
         if (response?.error == 0) {
             setUsuarios(response.usuarios)
@@ -135,9 +126,9 @@ export const ReporteDotacionBonosPage = () => {
     return (
 
         <>
+
             <div className='m-6'>
-
-
+                <FiltroBusquedaEntidad handleBuscarFiltro={obtenerReporte} />
                 <div className="container mx-auto p-4">
                     <Title title="reporte redencion de bonos" />
                     <div className="mb-4">
@@ -151,9 +142,9 @@ export const ReporteDotacionBonosPage = () => {
 
 
                         <Tooltip title="Descargar Reporte" onClick={() => downloadExcelReport("bonos_reporte")}>
-                        <IconButton size="large">
-                            <IoDownloadOutline />
-                        </IconButton>
+                            <IconButton size="large">
+                                <IoDownloadOutline />
+                            </IconButton>
                         </Tooltip>
 
                     </div>
@@ -168,7 +159,7 @@ export const ReporteDotacionBonosPage = () => {
 
                 </div>
             </div>
-
+            <LoadingSpinnerScreen open={openLoadingSpinner} />
 
         </>
     )
