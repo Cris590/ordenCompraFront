@@ -1,0 +1,184 @@
+<div style="position:relative;font-family:Arial,Helvetica,sans-serif;background:#ffffff;overflow:hidden;padding:0;">
+
+    <!-- FONDO SUPERIOR -->
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 220"
+        style="position:absolute;top:0;left:0;width:100%;height:220px;z-index:0;"
+        preserveAspectRatio="none">
+
+        <g opacity="0.18">
+
+            <path d="M0,120 C120,20 240,200 360,100 C480,0 600,180 720,90 C840,10 960,180 1200,50"
+                  fill="none" stroke="#2563EB" stroke-width="2"/>
+
+            <path d="M0,135 C120,35 240,215 360,115 C480,15 600,195 720,105 C840,25 960,195 1200,65"
+                  fill="none" stroke="#2563EB" stroke-width="2"/>
+
+            <path d="M0,150 C120,50 240,230 360,130 C480,30 600,210 720,120 C840,40 960,210 1200,80"
+                  fill="none" stroke="#3B82F6" stroke-width="2"/>
+
+            <path d="M0,165 C120,65 240,245 360,145 C480,45 600,225 720,135 C840,55 960,225 1200,95"
+                  fill="none" stroke="#60A5FA" stroke-width="2"/>
+
+            <path d="M0,180 C120,80 240,260 360,160 C480,60 600,240 720,150 C840,70 960,240 1200,110"
+                  fill="none" stroke="#93C5FD" stroke-width="2"/>
+
+        </g>
+
+        <g opacity="0.10" transform="rotate(-8 600 110)">
+
+            <path d="M0,90 C180,180 360,20 540,110 C720,200 900,20 1200,130"
+                  fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+
+            <path d="M0,110 C180,200 360,40 540,130 C720,220 900,40 1200,150"
+                  fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+
+            <path d="M0,130 C180,220 360,60 540,150 C720,240 900,60 1200,170"
+                  fill="none" stroke="#60A5FA" stroke-width="1.5"/>
+
+        </g>
+
+    </svg>
+
+    <div style="position:relative;z-index:1;padding:25px;">
+
+        <div style="margin-bottom:10px;">
+
+            <img
+                src="https://res.cloudinary.com/cristian590/image/upload/v1781200889/Screenshot_3-removebg-preview_fd0asj.png"
+                alt="Logo"
+                style="
+                    width:210px;
+                    height:auto;
+                    display:block;
+                "
+            />
+
+        </div>
+
+        <div style="text-align:center;margin-top:10px;">
+
+            <strong>
+                {{entidad}} CONTRATO {{numero_contrato}}
+            </strong>
+
+            <h2 style="margin-top:10px;margin-bottom:20px;">
+                ORDEN DE RETIRO
+            </h2>
+
+        </div>
+
+        <p style="text-align:justify;line-height:1.8;">
+
+            EL CUAL SE ACREDITA A LA SEÑORA
+            <strong>{{nombre_funcionario}}</strong>
+            IDENTIFICADA CON C.C
+            <strong>{{cedula_funcionario}}</strong>
+            FUNCIONARIA DE
+            <strong>{{entidad}}</strong>
+            PARA RETIRAR DE LAS TIENDAS RELACIONADAS A CONTINUACIÓN:
+            <strong>{{descripcion_bono}}</strong>
+            POR VALOR DE
+            <strong>${{valor_bono}}</strong>
+            IVA INCLUIDO, EN HORARIO DE LUNES A SABADO DE 10:00 AM A 6:00 PM
+            Y DOMINGOS Y FESTIVOS DE 10:30 AM A 4:00 PM EN CUALQUIERA DE
+            NUESTRAS TIENDAS.
+
+        </p>
+
+        {{tabla_tiendas}}
+
+        <p style="text-align:justify;line-height:1.8;margin-top:20px;">
+
+            ESTA AUTORIZACION ES PERSONAL E INTRANSFERIBLE,
+            NO REDIMIBLE POR DINERO CANJEABLE UNICAMENTE POR
+            VESTUARIO Y CALZADO DE LABOR PARA FUNCIONARIOS DE
+            <strong>{{entidad}}</strong>.
+
+        </p>
+
+        <p style="text-align:justify;line-height:1.8;">
+
+            EN CASO DE PERDIDA COMUNICARSE AL TEL:
+            601 4 55 93 28.
+
+            <strong>
+                VIGENCIA {{fecha_inicio_vigencia}}
+                HASTA {{fecha_fin_vigencia}}
+            </strong>
+
+        </p>
+
+        <div style="margin-top:40px;">
+
+            <p>
+                <strong>FIRMA AUTORIZADA:</strong>
+                ______________________________
+            </p>
+
+            <br>
+
+            <p>
+                <strong>RECIBÍ CONFORME:</strong>
+                ______________________________
+                &nbsp;&nbsp;&nbsp;
+                C.C ____________________
+            </p>
+
+            <br>
+
+            <p>
+                <strong>VENDEDOR:</strong>
+                ______________________________
+            </p>
+
+        </div>
+
+        <div style="text-align:right;margin-top:30px;">
+
+            <strong>
+                AUTORIZACIÓN DE ENTREGA N.º
+                {{numero_autorizacion}}
+            </strong>
+
+        </div>
+
+    </div>
+
+    <!-- FONDO INFERIOR -->
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 220"
+        style="width:100%;height:220px;display:block;"
+        preserveAspectRatio="none">
+
+        <g opacity="0.18">
+
+            <path d="M0,100 C120,200 240,20 360,120 C480,220 600,40 720,130 C840,240 960,50 1200,170"
+                  fill="none" stroke="#2563EB" stroke-width="2"/>
+
+            <path d="M0,115 C120,215 240,35 360,135 C480,235 600,55 720,145 C840,255 960,65 1200,185"
+                  fill="none" stroke="#2563EB" stroke-width="2"/>
+
+            <path d="M0,130 C120,230 240,50 360,150 C480,250 600,70 720,160 C840,270 960,80 1200,200"
+                  fill="none" stroke="#3B82F6" stroke-width="2"/>
+
+            <path d="M0,145 C120,245 240,65 360,165 C480,265 600,85 720,175 C840,285 960,95 1200,215"
+                  fill="none" stroke="#60A5FA" stroke-width="2"/>
+
+        </g>
+
+        <g opacity="0.10" transform="rotate(8 600 110)">
+
+            <path d="M0,50 C180,150 360,0 540,90 C720,180 900,0 1200,110"
+                  fill="none" stroke="#1D4ED8" stroke-width="1.5"/>
+
+            <path d="M0,70 C180,170 360,20 540,110 C720,200 900,20 1200,130"
+                  fill="none" stroke="#60A5FA" stroke-width="1.5"/>
+
+        </g>
+
+    </svg>
+
+</div>

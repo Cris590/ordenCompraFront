@@ -242,7 +242,7 @@ export const FormCargoEntidad = ({ codCargoEntidad, codEntidad, openDialog, onCl
 
 
                             {/* Mapear los valores seleccionados */}
-                            <div className="my-7 flex row justify-start">
+                            <div className="my-7 flex flex-wrap row justify-start">
                                 {codCategorias.map((cod) => (
 
                                     <BotonProductoCategoria

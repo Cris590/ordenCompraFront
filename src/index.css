@@ -19,3 +19,15 @@ code {
 .swal2-container {
   z-index: 2100!important;
 }
+
+.ck-content {
+    width: 816px;
+    min-height: 528px;
+    max-height: 528px;
+
+    margin: 0 auto;
+    padding: 20px;
+
+    background: white;
+    border: 2px dashed #d1d5db;
+}

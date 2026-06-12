@@ -40,7 +40,7 @@ export const BotonProductoCategoria = ({
 
     return (
         <>
-            <div className='flex row justify-start items-center border-2 border-gray-100 mx-4 px-2 py-1 '>
+            <div className='flex row justify-start items-center border-2 border-gray-100 mx-4 px-2 py-1 my-2'>
                 <Typography> {categoria} </Typography>
 
                 <IconButton aria-label="delete" onClick={handleClickOpen}>
