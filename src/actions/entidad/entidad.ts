@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { ICargoBonoProductoGuardar, IInformacionBasicaCargoGuardar, IInformacionBasicaEntidadGuardar, IResponseCategoriasProductoCrm, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoBonoProducto, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseSubCategoriasAsociadasProductoCrm, IResponseSubCategoriasProductoCrm, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, ISubCategoriaAAsociar, ISubCategoriaASociada, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
+import { ICargoBonoProductoGuardar, IInformacionBasicaCargoGuardar, IInformacionBasicaEntidadGuardar, IResponseCategoriasProductoCrm, IResponseCreacionCargoEntidad, IResponseCreacionEntidad, IResponseDetalleCargoBonoProducto, IResponseDetalleCargoEntidad, IResponseEntidadResumen, IResponseGetTemplateBonoProducto, IResponseInfoContrato, IResponseInformacionBasicaEntidad, IResponseResumenCargosEntidad, IResponseResumenProductosEntidad, IResponseSaveTemplateBonoProducto, IResponseSubCategoriasAsociadasProductoCrm, IResponseSubCategoriasProductoCrm, IResponseUsuarioCoordinador, IResponseUsuariosEntidadResumen, ISubCategoriaAAsociar, ISubCategoriaASociada, ITemplateBono, IUsuarioEntidadResumen } from "../../interfaces/entidad.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 
 export const obtenerEntidades = async () => {
@@ -562,4 +562,73 @@ export const borrarAsociacionSubCategoriaBonosProducto = async (codProductoAsoci
 }
 
 
+export const obtenerTemplateCargoBono = async (codCargoBonosProducto:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerTemplateCargoBono}/${codCargoBonosProducto}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseGetTemplateBonoProducto> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+export const guardarTemplateCargoBono = async (codTemplate:number, template:ITemplateBono) => {
+ try {
+  
+      let options = {
+        method: 'put',
+        url: `${actionsSettings.backendRoutes.guardarTemplateCargoBono}/${codTemplate}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21,
+        data: template
+  
+      }
+      const { data }: AxiosResponse<IResponseSaveTemplateBonoProducto> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+}
+
+
+export const generarBonosTemplateCargoBono = async ( codTemplate:number) => {
+  try {
+    const response = await axios.get(`${actionsSettings.backendRoutes.generarBonosTemplateCargoBono}/${codTemplate}`,
+      {
+      responseType: 'blob', // Importante para recibir archivos binarios
+      headers: {
+        'Authorization': getAuthToken()
+      },
+    });
+
+    // Crear un enlace para descargar el archivo
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'BonosEntidad.pdf'); // Nombre del archivo
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error('Error al descargar el PDF:', error);
+  }
+};
 

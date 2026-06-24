@@ -210,6 +210,17 @@ export interface IResponseSubCategoriasAsociadasProductoCrm extends IRespuestaGe
     subcategorias_asociadas: ISubCategoriaASociada[]
 }
 
+export interface IResponseGetTemplateBonoProducto extends IRespuestaGeneralAction {
+    template:string,
+    cod_template_cargo_bonos_producto:number
+}
+
+export interface IResponseSaveTemplateBonoProducto extends IRespuestaGeneralAction {
+    template:string,
+    cod_template:number
+}
+
+
 export interface ISubCategoriaASociada {
     cod_producto_asociado_subcategoria?:number,
     cod_subcategoria: number,
@@ -221,4 +232,10 @@ export interface ISubCategoriaAAsociar {
     cod_cargo_bonos_producto: number,
     cod_subcategoria: number,
     valor: number
+}
+
+export interface ITemplateBono {
+    cod_template_cargo_bonos_producto?:number,
+    cod_cargo_bonos_producto?:number,
+    template:string
 }

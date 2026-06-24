@@ -43,17 +43,20 @@ import {
     ClassicEditor,
     GeneralHtmlSupport
 } from 'ckeditor5';
+import { Chip } from '@mui/material';
 
 interface Props {
     value: string;
     onChange: (value: string) => void;
     readOnly?: boolean;
+    tags?: string[];
 }
 
 export default function TemplateEditor({
     value,
     onChange,
-    readOnly = false
+    readOnly = false,
+    tags = []
 }: Props) {
 
     const toolbarRef = useRef<HTMLDivElement>(null);
@@ -98,106 +101,120 @@ export default function TemplateEditor({
     ];
 
     return (
-        <div className="bg-gray-200 p-8">
-
-            <div
-                className="mx-auto bg-white shadow-lg"
-                style={{
-                    width: '816px',
-                    minHeight: '528px'
-                }}
-            >
-
-                <CKEditor
-                    // editor={Editor}
-                    editor={ClassicEditor}
-                    config={{
-                        licenseKey: 'GPL',
-                        plugins: builtinPlugins,
-                        toolbar: ['heading',
-                            '|',
-
-                            'fontSize',
-                            'fontFamily',
-
-                            '|',
-
-                            'fontColor',
-                            'fontBackgroundColor',
-
-                            '|',
-
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strikethrough',
-
-                            '|',
-
-                            'alignment',
-
-                            '|',
-
-                            'numberedList',
-                            'bulletedList',
-
-                            '|',
-
-                            'outdent',
-                            'indent',
-
-                            '|',
-
-                            'todoList',
-                            'link',
-                            'blockQuote',
-
-                            '|',
-
-                            'imageUpload',
-                            'insertTable',
-
-                            '|',
-
-                            'undo',
-                            'redo',
-                            '|',
-                            'sourceEditing'],
-                        htmlSupport: {
-        allow: [
-            {
-                name: /.*/,
-                attributes: true,
-                classes: true,
-                styles: true
-            }
-        ]
-    }
-
+        <>
+            <div className='flex flex-wrap gap-2 my-3 p-3 bg-gray-50 border rounded'>
+                {tags.map((tag)=><Chip className='mx-1' color="primary" variant="outlined"  label={tag}/>)}
+            </div>
+                 
+            <div className="bg-gray-200 p-8">
+                
+                <div
+                    className="mx-auto bg-white shadow-lg"
+                    style={{
+                        width: '816px',
+                        minHeight: '528px'
                     }}
-                    data={value}
-                    disabled={readOnly}
-                    onReady={(editor: any) => {
+                >
 
-                        if (toolbarRef.current) {
+                    <CKEditor
+                        // editor={Editor}
+                        editor={ClassicEditor}
+                        config={{
+                            licenseKey: 'GPL',
+                            plugins: builtinPlugins,
+                            toolbar: ['heading',
+                                '|',
 
-                            toolbarRef.current.appendChild(
-                                editor.ui.view.toolbar.element
+                                'fontSize',
+                                'fontFamily',
+
+                                '|',
+
+                                'fontColor',
+                                'fontBackgroundColor',
+
+                                '|',
+
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strikethrough',
+
+                                '|',
+
+                                'alignment',
+
+                                '|',
+
+                                'numberedList',
+                                'bulletedList',
+
+                                '|',
+
+                                'outdent',
+                                'indent',
+
+                                '|',
+
+                                'todoList',
+                                'link',
+                                'blockQuote',
+
+                                '|',
+
+                                'imageUpload',
+                                'insertTable',
+
+                                '|',
+
+                                'undo',
+                                'redo',
+                                '|',
+                                'sourceEditing'],
+                            htmlSupport: {
+                                allow: [
+                                    {
+                                        name: /.*/,
+                                        attributes: true,
+                                        classes: true,
+                                        styles: true
+                                    }
+                                ]
+                            },
+                            mention: {
+                                feeds: [
+                                    {
+                                        marker: '@',
+                                        feed: tags.map((tag:string)=>'@'+tag),
+                                        minimumCharacters: 0
+                                    }
+                                ]
+                            }
+                        }}
+                        data={value}
+                        disabled={readOnly}
+                        onReady={(editor: any) => {
+
+                            if (toolbarRef.current) {
+
+                                toolbarRef.current.appendChild(
+                                    editor.ui.view.toolbar.element
+                                );
+
+                            }
+
+                        }}
+                        onChange={(_, editor) => {
+
+                            onChange(
+                                editor.getData()
                             );
 
-                        }
+                        }}
+                    />
+                </div>
 
-                    }}
-                    onChange={(_, editor) => {
-
-                        onChange(
-                            editor.getData()
-                        );
-
-                    }}
-                />
             </div>
-
-        </div>
+        </>
     );
 }

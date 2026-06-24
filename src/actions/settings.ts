@@ -62,7 +62,11 @@ export const actionsSettings  = {
         consultarEntidadesEntregaBono:`${apiUrl}/entidad_bono/consultar_entidades`,
         consultarBonoProducto:`${apiUrl}/entidad_bono/consultar_bono_usuario`,
         redimirBonoEntrega:`${apiUrl}/entidad_bono/redimir_bono_entrega`,
-       
+        
+        obtenerTemplateCargoBono:`${apiUrl}/entidad/obtener_template_cargo_bono`,
+        guardarTemplateCargoBono:`${apiUrl}/entidad/guardar_template_cargo_bono`,
+        generarBonosTemplateCargoBono:`${apiUrl}/entidad/generar_bonos_template`,
+        
         
         reporteBonosEntregados:`${apiUrl}/orden_compra/reporte_bonos_entregados`,
         validarOrdenUsuario:`${apiUrl}/orden_compra/validar_orden`,
