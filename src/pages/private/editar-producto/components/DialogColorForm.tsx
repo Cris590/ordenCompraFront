@@ -41,10 +41,12 @@ export const DialogColorForm = ({ open, onClose, onSubmit, colorInicial }: Props
         });
         onClose();
     };
+
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>Escoge un color</DialogTitle>
             <DialogContent>
+                <ChromePicker color={color} onChange={handleColorChange} />
                 <TextField
                     label="Color Description"
                     value={colorDescripcion}
@@ -52,7 +54,6 @@ export const DialogColorForm = ({ open, onClose, onSubmit, colorInicial }: Props
                     fullWidth
                     margin="dense"
                 />
-                <ChromePicker color={color} onChange={handleColorChange} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cancelar</Button>

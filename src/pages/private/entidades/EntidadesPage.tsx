@@ -26,6 +26,7 @@ export const EntidadesPage = () => {
     {
       name: 'Nombre',
       selector: (row: IEntidadResumen) => row.nombre,
+       wrap: true,
     },
     {
       name: 'NIT',
@@ -34,6 +35,7 @@ export const EntidadesPage = () => {
     {
       name: 'TIpo Entrega',
       selector: (row: IEntidadResumen) => (row.tipo_entrega_contrato == 1) ? 'Entrega física y virtual, acuerdo Marco' : 'Entrega por tarjeta magnetica / Bono Virtual',
+       wrap: true,
     },
     {
       name: 'Estado',

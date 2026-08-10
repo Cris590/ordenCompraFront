@@ -37,14 +37,25 @@ export const LoginForm = () => {
             setToken(result.token)
 
             let rutaRedirect = '/ordenes-compra'
-            if (result.user.cod_perfil === 1) {
-                rutaRedirect = '/entidades'
-            } else if (result.user.cod_perfil === 2) {
-                rutaRedirect = '/control-ordenes'
-            }else if (result.user.cod_perfil === 6) {
-                rutaRedirect = '/usuarios_bonos_dotacion'
+            
+            switch (result.user.cod_perfil) {
+                case 1:
+                    rutaRedirect = '/entidades'
+                    break;
+                case 2:
+                    rutaRedirect = '/control-ordenes'
+                    break;
+                case 6:
+                    rutaRedirect = '/usuarios_bonos_dotacion'
+                    break;
+                case 7:
+                    rutaRedirect = '/e-categorias'
+                    break;
+            
+                default:
+                    break;
             }
-
+           
             navigate(rutaRedirect);
         } else {
             setWronCredentials(false)

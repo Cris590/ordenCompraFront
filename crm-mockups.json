@@ -1,0 +1,281 @@
+[
+    {
+        "categoria": "categorias",
+        "servicios": [
+            {
+                "servicio": "crear_categoria",
+                "tipo": "post",
+                "endpoint": "/wp-json/wc/v3/products/categories",
+                "request": {
+                    "name": "Vestidos",
+                    "parent": 18
+                },
+                "response": {
+                    "id": 32
+                },
+                "observaciones": "El parent corresponde a la categoria padre en caso de que se cree una subcategoria, para nuestro caso si se crea una categoria no se envia el parent"
+            },
+            {
+                "servicio": "actualizar_categoria",
+                "tipo": "put",
+                "endpoint": "PUT /wp-json/wc/v3/products/categories/{woo_id}",
+                "request": {
+                    "name": "Electrónica y Tecnología"
+                },
+                "response": {
+                    "id": 32
+                },
+                "observaciones": "El parent corresponde a la categoria padre en caso de que se cree una subcategoria, para nuestro caso si se crea una categoria no se envia el parent"
+            },
+            {
+                "servicio": "obtener_categorias",
+                "tipo": "get",
+                "endpoint": "GET /wp-json/wc/v3/products/categories/{id}",
+                "response": {
+                    "id": 18,
+                    "name": "Electrónica",
+                    "slug": "electronica",
+                    "parent": 0,
+                    "count": 150
+                }
+            }
+        ]
+    },
+    {
+        "categoria": "productos",
+        "servicios": [
+            {
+                "categoria": "productos",
+                "servicio": "crear_producto_variable",
+                "tipo": "post",
+                "endpoint": "/wp-json/wc/v3/products",
+                "request": {
+                    "name": "Camiseta Polo Hombre",
+                    "type": "variable",
+                    "status": "publish",
+                    "featured": false,
+                    "catalog_visibility": "visible",
+                    "description": "<p>Camiseta tipo polo.</p>",
+                    "short_description": "Polo algodón.",
+                    "sku": "CAM001",
+                    "categories": [
+                        {
+                            "id": 25
+                        }
+                    ],
+                    "images": [
+                        {
+                            "src": "https://crm.midominio.com/uploads/camisa_principal.jpg"
+                        }
+                    ],
+                    "attributes": [
+                        {
+                            "id": 1,
+                            "variation": true,
+                            "visible": true,
+                            "options": [
+                                "Negro",
+                                "Blanco",
+                                "Azul"
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "variation": true,
+                            "visible": true,
+                            "options": [
+                                "S",
+                                "M",
+                                "L",
+                                "XL"
+                            ]
+                        }
+                    ]
+                },
+                "response": {
+                    "id": 458,
+                    "name": "Camiseta Polo Hombre",
+                    "type": "variable",
+                    "status": "publish"
+                }
+            },
+            {
+                "categoria": "productos",
+                "servicio": "crear_variacion_producto",
+                "tipo": "post",
+                "endpoint": "/wp-json/wc/v3/products/{product_id}/variations",
+                "request": {
+                    "regular_price": "85000",
+                    "sale_price": "79000",
+                    "sku": "POL001-NEG-M",
+                    "manage_stock": true,
+                    "stock_quantity": 15,
+                    "stock_status": "instock",
+                    "weight": "0.35",
+                    "dimensions": {
+                        "length": "30",
+                        "width": "20",
+                        "height": "2"
+                    },
+                    "image": {
+                        "src": "https://crm.midominio.com/uploads/polo-negro.jpg"
+                    },
+                    "attributes": [
+                        {
+                            "id": 1,
+                            "option": "Negro"
+                        },
+                        {
+                            "id": 2,
+                            "option": "M"
+                        }
+                    ]
+                },
+                "response": {
+                    "id": 845,
+                    "sku": "POL001-NEG-M",
+                    "price": "79000",
+                    "regular_price": "85000",
+                    "sale_price": "79000",
+                    "stock_quantity": 15,
+                    "stock_status": "instock"
+                }
+            },
+            {
+                "categoria": "productos",
+                "servicio": "crear_variaciones_batch",
+                "tipo": "post",
+                "endpoint": "/wp-json/wc/v3/products/{product_id}/variations/batch",
+                "request": {
+                    "create": [
+                        {
+                            "regular_price": "85000",
+                            "sku": "POL001-NEG-S",
+                            "manage_stock": true,
+                            "stock_quantity": 12,
+                            "attributes": [
+                                {
+                                    "id": 1,
+                                    "option": "Negro"
+                                },
+                                {
+                                    "id": 2,
+                                    "option": "S"
+                                }
+                            ]
+                        },
+                        {
+                            "regular_price": "85000",
+                            "sku": "POL001-NEG-M",
+                            "manage_stock": true,
+                            "stock_quantity": 8,
+                            "attributes": [
+                                {
+                                    "id": 1,
+                                    "option": "Negro"
+                                },
+                                {
+                                    "id": 2,
+                                    "option": "M"
+                                }
+                            ]
+                        },
+                        {
+                            "regular_price": "85000",
+                            "sku": "POL001-BLA-L",
+                            "manage_stock": true,
+                            "stock_quantity": 4,
+                            "attributes": [
+                                {
+                                    "id": 1,
+                                    "option": "Blanco"
+                                },
+                                {
+                                    "id": 2,
+                                    "option": "L"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "response": {
+                    "create": [
+                        {
+                            "id": 845,
+                            "sku": "POL001-NEG-S"
+                        },
+                        {
+                            "id": 846,
+                            "sku": "POL001-NEG-M"
+                        },
+                        {
+                            "id": 847,
+                            "sku": "POL001-BLA-L"
+                        }
+                    ]
+                }
+            },
+            {
+                "servicio": "actualizar_productos",
+                "tipo": "put",
+                "endpoint": "/wp-json/wc/v3/products/{woo_id}",
+                "request": {
+                    "name": "iPhone 16 Pro Max 256GB",
+                    "regular_price": "6100000",
+                    "sale_price": "5800000",
+                    "stock_quantity": 12
+                },
+                "response": {
+                    "id": 345,
+                    "name": "iPhone 16 Pro Max 256GB",
+                    "price": "5800000",
+                    "regular_price": "6100000",
+                    "sale_price": "5800000",
+                    "stock_quantity": 12,
+                    "date_modified": "2026-07-02T10:45:00"
+                }
+            },
+            {
+                "servicio": "obtener_productos",
+                "tipo": "get",
+                "endpoint": "/wp-json/wc/v3/products/{woo_id}",
+                "response": {
+                    "id": 345,
+                    "name": "iPhone 16 Pro Max",
+                    "slug": "iphone-16-pro-max",
+                    "sku": "IPH16PM-256-BLK",
+                    "status": "publish",
+                    "price": "5900000",
+                    "regular_price": "6200000",
+                    "sale_price": "5900000",
+                    "stock_quantity": 20,
+                    "stock_status": "instock",
+                    "categories": [
+                        {
+                            "id": 18,
+                            "name": "Celulares"
+                        }
+                    ],
+                    "images": [
+                        {
+                            "id": 90,
+                            "src": "https://tienda.com/wp-content/uploads/iphone1.jpg"
+                        }
+                    ]
+                }
+            },
+            {
+                "servicio": "obtener_productos_sku",
+                "tipo": "get",
+                "endpoint": "/wp-json/wc/v3/products?sku=IPH16PM-256-BLK",
+                "response": [
+                    {
+                        "id": 345,
+                        "sku": "IPH16PM-256-BLK",
+                        "name": "iPhone 16 Pro Max"
+                    }
+                ]
+            }
+        ]
+    }
+]

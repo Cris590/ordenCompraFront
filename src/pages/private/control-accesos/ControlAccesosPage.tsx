@@ -88,6 +88,20 @@ export const ControlAccesosPage = () => {
         }
         setOpenEditUsuario(false);
     };
+
+  const handleCrearUsuario = () => {
+    setUsuarioEditar({
+     cod_usuario: 0,
+      email: '',
+      nombre: '',
+      usuario: '',
+      perfil: '',
+      cod_perfil:0,
+      password:'',
+      entidades:[]
+    })
+    setOpenEditUsuario(true)
+  }
   return (
     <>
       <div className="container mx-auto p-4">
@@ -101,9 +115,9 @@ export const ControlAccesosPage = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          {/* <Button className='ml-4' variant="outlined" onClick={() => handleClickOpen()}>
-            Crear Producto
-          </Button> */}
+          <Button className='ml-4' variant="outlined" onClick={handleCrearUsuario}>
+            Crear Usuario
+          </Button>
 
         </div>
         <DataTable

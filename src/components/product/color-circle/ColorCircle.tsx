@@ -25,7 +25,7 @@ export const ColorCircle: React.FC<ColorCircleProps> = ({ color, description, si
             height: size + 'rem',
             backgroundColor: validColor,
           }}
-          className='rounded-full'
+          className='rounded-full border border-dotted'
         ></div>
       </div>
     </Tooltip>

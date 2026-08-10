@@ -34,6 +34,7 @@ export const CargosEntidadBonos = ({ codEntidad }: Props) => {
     if (actualizar) {
       getCargos()
     }
+    setCargoEntidad(0)
     setOpenFormCargoEntidad(false)
   }
 

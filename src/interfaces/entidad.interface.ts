@@ -191,7 +191,8 @@ export interface IResponseCategoriasProductoCrm extends IRespuestaGeneralAction 
 export interface ICategoriaProductoCrm {
     id: number,
     categoria: string,
-    fecha: string
+    fecha: string,
+    id_woo:number
 }
 
 export interface IResponseSubCategoriasProductoCrm extends IRespuestaGeneralAction {
@@ -203,7 +204,8 @@ export interface ISubCategoriaProductoCrm {
     id_categoria: number,
     sub_categoria: string,
     fecha: string,
-    consecutivo: number
+    consecutivo: number,
+    id_woo:number
 }
 
 export interface IResponseSubCategoriasAsociadasProductoCrm extends IRespuestaGeneralAction {

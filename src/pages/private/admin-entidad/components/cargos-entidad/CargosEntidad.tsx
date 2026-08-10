@@ -18,8 +18,8 @@ export const CargosEntidad = ({ codEntidad }: Props) => {
     }, [codEntidad])
 
     const handleCrearCargo = () =>{
-        setOpenFormCargoEntidad(true)
         setCargoEntidad(0)
+        setOpenFormCargoEntidad(true)
     }
 
     const handleEditarCargo = ( codCargoEntidad:number) =>{
@@ -31,6 +31,7 @@ export const CargosEntidad = ({ codEntidad }: Props) => {
         if(actualizar){
             getCargos()
         }
+        setCargoEntidad(0)
         setOpenFormCargoEntidad(false)
     }
 

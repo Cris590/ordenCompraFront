@@ -28,6 +28,10 @@ import { ProveedoresPage } from '../pages/private/proveedores/ProveedoresPage';
 import { UsuariosDotacionPage } from '../pages/private/usuarios-bonos-dotacion/UsuariosDotacionPage';
 import { ReporteDotacionBonosPage } from '../pages/private/reporte-bonos-dotacion/ReporteDotacionBonos';
 import { ControlAccesosPage } from '../pages/private/control-accesos/ControlAccesosPage';
+import { EcaterogiasPage } from '../pages/private/ecommerce/e-categorias/EcaterogiasPage';
+import { EproductosPage } from '../pages/private/ecommerce/e-productos/EproductosPage';
+import { EinventariosPage } from '../pages/private/ecommerce/e-inventarios/EinventariosPage';
+import { EtallajePage } from '../pages/private/ecommerce/e-tallaje/EtallajePage';
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -71,6 +75,13 @@ const AppRouter: React.FC = () => {
           <Route path="/depositos" element={<RouteGuard element={<DepositosPage />} />} />
           <Route path="/clientes" element={<RouteGuard element={<ClientesPage />} />} />
           <Route path="/proveedores" element={<RouteGuard element={<ProveedoresPage />} />} />
+
+           {/* RUTAS E-COMMERCE */}
+          <Route path="/e-categorias" element={<RouteGuard element={<EcaterogiasPage />} />} />
+          <Route path="/e-productos" element={<RouteGuard element={<EproductosPage />} />} />
+          <Route path="/e-inventarios" element={<RouteGuard element={<EinventariosPage />} />} />
+          
+          <Route path="/e-tallajes" element={<RouteGuard element={<EtallajePage />} />} />
 
 
 

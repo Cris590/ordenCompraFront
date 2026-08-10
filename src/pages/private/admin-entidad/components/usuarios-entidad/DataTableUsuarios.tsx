@@ -8,6 +8,7 @@ import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen
 import { useFilteredData } from '../../../../../hooks/useFilteredData';
 import { DialogEditarUsuarioEntidad } from './DialogEditarUsuarioEntidad';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     codEntidad: string,
@@ -27,7 +28,7 @@ const defaultUsuario: IUsuarioEntidadResumen = {
 
 export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuarios}: Props) => {
 
-
+    const navigate = useNavigate();
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false);
     const [openEditUsuario, setOpenEditUsuario] = useState(false);
     const [usuarios, setUsuarios] = useState<IUsuarioEntidadResumen[]>([]);
@@ -67,7 +68,7 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         {
             name: 'Orden',
             cell: (row: IUsuarioEntidadResumen) => ((!!row.cod_orden) ? (
-                <Button onClick={() => handleOpenOrden(row.cod_orden || 0)}>
+                <Button onClick={() => handleOpenOrden(row.cod_usuario || 0)}>
                     {row.cod_orden}
                 </Button>
             ) : (
@@ -94,6 +95,8 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         },
     ];
 
+    
+
 
     useEffect(() => {
         obtenerUsuarios()
@@ -116,8 +119,9 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         setOpenEditUsuario(true)
     }
 
-    const handleOpenOrden = async (codOrden: number) => {
-    
+    const handleOpenOrden = async (codUsuario: number) => {
+        console.log('---------', codUsuario)
+        navigate(`/resumen_orden/${codUsuario}`);
     }
 
     const handleClickCrearClienteEntidad = () => {

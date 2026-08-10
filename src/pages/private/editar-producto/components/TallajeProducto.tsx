@@ -25,11 +25,11 @@ export const TallajeProducto = ({ codProducto }: Props) => {
 
     useEffect(() => {
         obtenerTallajes()
-        coloresPorProducto()
+        tallasPorProducto()
     }, [codProducto])
 
 
-    const coloresPorProducto = async () => {
+    const tallasPorProducto = async () => {
         if (codProducto) {
             setLoadingSpinner(true)
             let response = await obtenerTallasProducto(codProducto)

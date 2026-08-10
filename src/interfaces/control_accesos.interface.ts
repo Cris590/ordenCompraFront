@@ -1,3 +1,5 @@
+import { IRespuestaGeneralAction } from "./general.interface"
+
 export interface IResponseUsuariosAplicacion{
     error:number,
     usuarios:IUsuarioAplicacionResumen[],
@@ -23,4 +25,13 @@ export interface IEntidadTarjetaBono{
 export interface IResponseEntidadTarjetabono{
     error:number,
     entidades:IEntidadTarjetaBono[]
+}
+
+export interface IResponsePerfilesAplicacion extends IRespuestaGeneralAction{
+    perfiles:IPerfilAplicacion[]
+}
+
+export interface IPerfilAplicacion{
+    cod_perfil: number,
+    nombre:string
 }

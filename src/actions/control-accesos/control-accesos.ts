@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { IResponseUsuariosAplicacion, IUsuarioAplicacionResumen } from "../../interfaces/control_accesos.interface";
+import { IResponsePerfilesAplicacion, IResponseUsuariosAplicacion, IUsuarioAplicacionResumen } from "../../interfaces/control_accesos.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 
 export const obtenerUsuariosAplicativo = async () => {
@@ -51,4 +51,49 @@ export const editarUsuarioAplicativo = async (codUsuario:number, usuarioActualiz
     }
 }
 
+export const obtenerPerfilesAplicativo = async () => {
+    try {
+  
+      let options = {
+        method: 'get',
+        url:`${actionsSettings.backendRoutes.obtenerPerfilesAplicacion}` ,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IResponsePerfilesAplicacion> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+}
+
+
+export const crearUsuarioAplicativo = async (usuarioActualizar:IUsuarioAplicacionResumen) => {
+    try {
+  
+      let options = {
+        method: 'post',
+        url:`${actionsSettings.backendRoutes.crearUsuarioAplicacion}` ,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21,
+        data: usuarioActualizar
+      }
+      const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+}
 

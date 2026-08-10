@@ -1,3 +1,5 @@
+import { sincronizarCategoriaEcommerce } from "./ecommerce/ecommerce";
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const actionsSettings  = {
@@ -84,8 +86,32 @@ export const actionsSettings  = {
 
         usuariosAplicacion:`${apiUrl}/control_accesos/usuarios`,
         editarUsuarioAplicacion:`${apiUrl}/control_accesos/actualizar_usuario`,
+        obtenerPerfilesAplicacion:`${apiUrl}/control_accesos/obtener_perfiles`,
+        crearUsuarioAplicacion:`${apiUrl}/control_accesos/crear_usuario`,
         
-
+        crearCategoriaCRM:`${apiUrl}/ecommerce/crear_categoria_crm`,
+        editarCategoriaCRM:`${apiUrl}/ecommerce/editar_categoria_crm`,
+        crearSubCategoriaCRM:`${apiUrl}/ecommerce/crear_sub_categoria_crm`,
+        editarSubCategoriaCRM:`${apiUrl}/ecommerce/editar_sub_categoria_crm`,
+        sincronizarCategoriaEcommerce:`${apiUrl}/ecommerce/sincronizar_categoria_ecommerce`,
+        sincronizarSubCategoriaEcommerce:`${apiUrl}/ecommerce/sincronizar_subcategoria_ecommerce`,
+        obtenerProductosCrm:`${apiUrl}/ecommerce/obtener_productos_crm`,
+        obtenerDetalleProductoCrm:`${apiUrl}/ecommerce/obtener_detalles_producto`,
+        
+        obtenerColoresProductoCrm:`${apiUrl}/ecommerce/obtener_colores_producto_crm`,
+        crearColorProductoCrm:`${apiUrl}/ecommerce/crear_color_producto_crm`,
+        actualizarColorProductoCrm:`${apiUrl}/ecommerce/editar_color_producto_crm`,
+        obtenerImagenesColoresCrm:`${apiUrl}/ecommerce/obtener_imagenes_colores`,
+        subirImagenCrm:`${apiUrl}/ecommerce/cargar_imagen_producto`,
+        borrarImagenCrm:`${apiUrl}/ecommerce/borrar_imagen_producto`,
+        obtenerTallasProductoCrm:`${apiUrl}/ecommerce/obtener_tallas`,
+        obtenerTallajesCrm:`${apiUrl}/ecommerce/obtener_tallajes`,
+        crearTallajeCrm:`${apiUrl}/ecommerce/crear-tallaje`,
+        editarTallajecrm:`${apiUrl}/ecommerce/editar-tallaje`,
+        obtenerTallajesActivosCrm:`${apiUrl}/ecommerce/obtener_tallajes_activas`,
+        editarProductoCrm:`${apiUrl}/ecommerce/editar_producto`,
+        crearProductoCrm:`${apiUrl}/ecommerce/crear_producto`,
+        
         login:`${apiUrl}/users/authentication`,
     }
 }

@@ -10,9 +10,10 @@ import { useCartStore } from '../../../store/cart/cart-store';
 import { formatDate } from '../../../utils/formatDate';
 import { TextField } from '@mui/material';
 import { BreadCrumbsResumen } from './components/BreadCrumbsResumen';
+import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 
 export const ResumenOrden = () => {
-
+  const [loadingSpinner,    setLoadingSpinner] = useState(false)
   const { codUsuario } = useParams<{ codUsuario: string }>();
   const [orden, setOrden] = useState<IOrdenValidar>()
   const {setCategorias, setInfoUsuarioOrden} = useCartStore((state) => state)
@@ -28,7 +29,7 @@ export const ResumenOrden = () => {
 
     if (
       (codUsuario && session?.cod_perfil === 3 && session?.cod_usuario === +codUsuario) ||
-      (session?.cod_perfil === 2)
+      (session?.cod_perfil === 2)  || (session?.cod_perfil === 1)
     ) {
       validarOrden()
     } else {
@@ -41,7 +42,9 @@ export const ResumenOrden = () => {
   const validarOrden = async () => {
     try {
       if (codUsuario && +codUsuario !== 0) {
+        setLoadingSpinner(true)
         let ordenUsuario = await validarOrdenUsuario(+codUsuario || 0)
+        setLoadingSpinner(false)
         if (ordenUsuario && ordenUsuario.error === 0 && (ordenUsuario.existe === 0)) {
           navigate('/ordenes-compra')
         } else if (ordenUsuario && ordenUsuario.existe === 1) {
@@ -123,6 +126,8 @@ export const ResumenOrden = () => {
           </div>
         </div>
       </div>
+
+       <LoadingSpinnerScreen open={loadingSpinner} />
     </>
   )
 }

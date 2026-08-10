@@ -5,8 +5,8 @@ import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle
 import { actualizarUsuarioEntidad, cargosPorEntidad, crearUsuarioEntidad } from '../../../../actions/entidad/entidad';
 import Swal from 'sweetalert2';
 import { useEntidadStore } from '../../../../store/entidad/entidad';
-import { IEntidadTarjetaBono, IUsuarioAplicacionResumen } from '../../../../interfaces/control_accesos.interface';
-import { editarUsuarioAplicativo } from '../../../../actions/control-accesos/control-accesos';
+import { IEntidadTarjetaBono, IPerfilAplicacion, IUsuarioAplicacionResumen } from '../../../../interfaces/control_accesos.interface';
+import { crearUsuarioAplicativo, editarUsuarioAplicativo, obtenerPerfilesAplicativo } from '../../../../actions/control-accesos/control-accesos';
 
 
 interface Props {
@@ -19,13 +19,38 @@ interface Props {
 export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }: Props) => {
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
-    const { handleSubmit, reset, control, formState: { isValid } } = useForm<IUsuarioAplicacionResumen>({
+    const [perfiles, setPerfiles] = useState<IPerfilAplicacion[]>([])
+    const { handleSubmit, watch, reset, control, formState: { isValid } } = useForm<IUsuarioAplicacionResumen>({
         defaultValues: usuario
     });
 
     useEffect(() => {
         reset(usuario)
+        // obtenerPerfiles()
     }, [usuario])
+
+    useEffect(() => {
+        obtenerPerfiles()
+    }, [openDialog])
+
+
+    const obtenerPerfiles = async () => {
+        try {
+
+            let res = await obtenerPerfilesAplicativo()
+            if (res?.error) {
+                Swal.fire(res.msg)
+            } else {
+                setPerfiles(res?.perfiles || [])
+            }
+
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                text: "Comuniquese con el administrador"
+            })
+        }
+    }
 
     const onSubmit: SubmitHandler<IUsuarioAplicacionResumen> = async (data) => {
         try {
@@ -33,15 +58,18 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
             let dataAux: any = {
                 ...data,
             }
-            delete dataAux.cod_usuario
-            delete dataAux.cod_perfil
-            delete dataAux.perfil
+           
 
             dataAux.cedula = dataAux.usuario
             delete dataAux.usuario
 
             dataAux.entidades = JSON.stringify(dataAux.entidades)
 
+            if(!!usuario.cod_usuario){
+                await updateUsuario(usuario.cod_usuario, dataAux)
+            }else{
+                await crearUsuario(dataAux)
+            }
             setLoadingSpinner(true)
             let res = await editarUsuarioAplicativo(data.cod_usuario, dataAux)
             setLoadingSpinner(false)
@@ -60,10 +88,12 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
         }
     }
 
-    const crearUsuario = async (data: Partial<IUsuarioAplicacionResumen>) => {
+    const crearUsuario = async (data: any) => {
         try {
+            delete data.cod_usuario
+            delete data.perfil
             setLoadingSpinner(true)
-            let res = await crearUsuarioEntidad(data)
+            let res = await crearUsuarioAplicativo(data)
             setLoadingSpinner(false)
             if (res) {
                 await Swal.fire(res.msg)
@@ -80,10 +110,13 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
         }
     }
 
-    const updateUsuarioEntidad = async (data: Partial<IUsuarioAplicacionResumen>) => {
+    const updateUsuario = async (cod_usuario:number, data: any) => {
         try {
+            delete data.cod_usuario
+            delete data.cod_perfil
+            delete data.perfil
             setLoadingSpinner(true)
-            let res = await actualizarUsuarioEntidad(usuario.cod_usuario, data)
+            let res = await editarUsuarioAplicativo(cod_usuario, data)
             setLoadingSpinner(false)
             if (res) {
                 Swal.fire(res.msg)
@@ -100,7 +133,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
         }
     }
 
-
+    const perfil = watch("cod_perfil");
 
     return (
         <>
@@ -115,7 +148,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                 <DialogTitle id="alert-dialog-title">
                     {usuario.cod_usuario ? 'Editar Usuario' : 'Crear Usuario'}
                 </DialogTitle>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                     <DialogContent>
 
 
@@ -151,6 +184,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                                             fullWidth
                                             label="Cédula"
                                             variant="outlined"
+                                            autoComplete="off"
                                             {...field}
                                             value={field.value || ''}
                                         />
@@ -182,7 +216,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                             <Controller
                                 name="password"
                                 control={control}
-                                rules={{ required: false }}
+                                rules={{ required: (!usuario.cod_usuario) }}
                                 render={({ field }) => (
 
                                     <div className="my-2 w-96">
@@ -193,7 +227,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                                             label="Contraseña"
                                             variant="outlined"
                                             type="password"
-                                            autoComplete='false'
+                                            autoComplete="off"
                                             placeholder={field.value ? '' : '*******'}
                                             {...field}
                                             value={field.value || ''}
@@ -203,60 +237,62 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                             />
 
                             <Controller
-                                name="perfil"
+                                name="cod_perfil"
                                 control={control}
-                                rules={{ required: false }}
+                                rules={{ required: true }}
                                 render={({ field }) => (
-
-                                    <div className="my-2 w-96">
-
-
-                                        <TextField
-                                            fullWidth
-                                            label="Perfil"
-                                            variant="outlined"
-                                            disabled={true}
+                                    <>
+                                        <InputLabel id="perfil" className='mt-4'>Perfil</InputLabel>
+                                        <Select
+                                            disabled={!!usuario.cod_usuario}
+                                            labelId="perfil"
                                             {...field}
-                                            value={field.value || ''}
-                                        />
-                                    </div>
+                                            label="perfil"
+                                        >
+                                            {perfiles.map((perfil) => (<MenuItem value={perfil.cod_perfil}>{perfil.nombre} </MenuItem>))}
+                                        </Select>
+                                    </>
                                 )}
                             />
 
-                            <br/>
-                            <Controller
-                                name="entidades"
-                                control={control}
-                                rules={{ required: true }}
-                                render={({ field }) => {
-                                    return (
-                                        <Autocomplete
-                                            multiple
-                                            options={entidades}
-                                            getOptionLabel={(option) => option.nombre}
 
-                                            // 🔹 Mostrar seleccionados (form → UI)
-                                            value={entidades.filter(ent =>
-                                                field.value?.includes(ent.cod_entidad)
-                                            )}
+                            <br />
+                            {
+                                [6].includes(perfil) &&
+                                <Controller
+                                    name="entidades"
+                                    control={control}
+                                    rules={{ required: true }}
+                                    render={({ field }) => {
+                                        return (
+                                            <Autocomplete
+                                                multiple
+                                                options={entidades}
+                                                getOptionLabel={(option) => option.nombre}
 
-                                            // 🔹 Guardar en el form (UI → form)
-                                            onChange={(_, newValue) => {
-                                                field.onChange(newValue.map(v => v.cod_entidad));
-                                            }}
+                                                // 🔹 Mostrar seleccionados (form → UI)
+                                                value={entidades.filter(ent =>
+                                                    field.value?.includes(ent.cod_entidad)
+                                                )}
 
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    variant="standard"
-                                                    label="Entidades"
-                                                    placeholder="Buscar entidad"
-                                                />
-                                            )}
-                                        />
-                                    );
-                                }}
-                            />
+                                                // 🔹 Guardar en el form (UI → form)
+                                                onChange={(_, newValue) => {
+                                                    field.onChange(newValue.map(v => v.cod_entidad));
+                                                }}
+
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        label="Entidades"
+                                                        placeholder="Buscar entidad"
+                                                    />
+                                                )}
+                                            />
+                                        );
+                                    }}
+                                />
+                            }
                         </div>
 
                     </DialogContent>
