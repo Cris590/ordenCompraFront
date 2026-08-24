@@ -38,6 +38,7 @@
     "react-inner-image-zoom": "^3.0.2",
     "react-lazy-load-image-component": "^1.6.2",
     "react-medium-image-zoom": "^5.2.9",
+    "react-number-format": "^5.4.5",
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
     "sweetalert2": "^11.12.4",

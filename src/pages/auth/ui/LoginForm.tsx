@@ -51,7 +51,21 @@ export const LoginForm = () => {
                 case 7:
                     rutaRedirect = '/e-categorias'
                     break;
+
+                case 1:
+                    rutaRedirect = '/entidades'
+                    break;
+                case 2:
+                    rutaRedirect = '/control-ordenes'
+                    break;
+                case 6:
+                    rutaRedirect = '/usuarios_bonos_dotacion'
+                    break;
+                case 8:
+                    rutaRedirect = '/crear_venta'
+                    break;
             
+
                 default:
                     break;
             }

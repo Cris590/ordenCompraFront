@@ -25,7 +25,7 @@ export const DialogEditarProducto = ({ open, onClose }: Props) => {
 
     useEffect(() => {
         setValue(producto.nuevo_producto ? "2" : "1");
-    }, []);
+    }, [open]);
 
     const handleClose = (
         event: {},

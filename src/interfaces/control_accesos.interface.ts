@@ -14,7 +14,9 @@ export interface IUsuarioAplicacionResumen{
     perfil: string,
     cod_perfil:number,
     password?:string,
-    entidades:number[]
+    entidades:number[],
+    id_bodega?:number,
+    id_usuario_crm?:number
 }
 
 export interface IEntidadTarjetaBono{

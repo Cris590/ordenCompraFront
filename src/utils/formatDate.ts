@@ -1,5 +1,9 @@
-export const formatDate = (dateString:string) =>{
+export const formatDate = (dateString: string,ocultarFechas: boolean = false) => {
+  const date = new Date(dateString);
 
-    let date = new Date(dateString)
-    return date.toLocaleString()
-}
+  if (ocultarFechas) {
+    return date.toISOString().substring(0, 10);
+  }
+
+  return date.toLocaleString();
+};

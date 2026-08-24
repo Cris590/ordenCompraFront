@@ -38,7 +38,7 @@ const defaultProductoGeneral: IActualizacionFormProductoGeneral = {
     lote: ''
 }
 
-export const StepConfiguracionProductoGeneral = ({ onChange , producto}: Props) => {
+export const StepConfiguracionProductoGeneral = ({ onChange, producto }: Props) => {
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
     const [esEdicionProducto, setEsEdicionProducto] = useState<boolean>(false)
@@ -111,13 +111,9 @@ export const StepConfiguracionProductoGeneral = ({ onChange , producto}: Props) 
     }, [values, isValid]);
 
     useEffect(() => {
-        console.log('------- Producto -------')
-        console.log(producto)
 
         const init = async () => {
-
             await getProductosCategorias();
-
             if (producto.nuevo_producto && !producto.id_categoria) {
                 setEsEdicionProducto(false);
                 inicializando.current = false;
@@ -371,14 +367,26 @@ export const StepConfiguracionProductoGeneral = ({ onChange , producto}: Props) 
                                         value: 1,
                                         message: "Debe ser mayor que cero"
                                     },
-                                    validate: value =>
-                                        !isNaN(Number(value)) || "Debe ser un número"
+                                    validate: value => {
+                                        if (isNaN(Number(value))) {
+                                            return "Debe ser un número";
+                                        }
+
+                                        const precioCompra = Number(watch("precio_compra"));
+                                        const precioVenta = Number(value);
+
+                                        if (precioVenta <= precioCompra) {
+                                            return "El precio de venta debe ser mayor que el precio de compra";
+                                        }
+
+                                        return true;
+                                    }
                                 }}
                                 render={({ field, fieldState }) => (
                                     <TextField
                                         fullWidth
                                         type="number"
-                                        label="Precio compra"
+                                        label="Precio venta"
                                         {...field}
                                         value={field.value || ""}
                                         error={!!fieldState.error}

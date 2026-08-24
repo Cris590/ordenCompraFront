@@ -32,6 +32,10 @@ import { EcaterogiasPage } from '../pages/private/ecommerce/e-categorias/Ecatero
 import { EproductosPage } from '../pages/private/ecommerce/e-productos/EproductosPage';
 import { EinventariosPage } from '../pages/private/ecommerce/e-inventarios/EinventariosPage';
 import { EtallajePage } from '../pages/private/ecommerce/e-tallaje/EtallajePage';
+import { VentaPOSPage } from '../pages/private/ventas-pos/VentaPOSPage';
+import { AdminVentasPosPage } from '../pages/private/admin-ventas-pos/AdminVentasPosPage';
+import { ClientesPosPage } from '../pages/private/clientes-pos/ClientesPosPage';
+
 
 const AppRouter: React.FC = () => {
   const basename = process.env.PUBLIC_URL || '';  
@@ -76,7 +80,13 @@ const AppRouter: React.FC = () => {
           <Route path="/clientes" element={<RouteGuard element={<ClientesPage />} />} />
           <Route path="/proveedores" element={<RouteGuard element={<ProveedoresPage />} />} />
 
-           {/* RUTAS E-COMMERCE */}
+          {/* RUTAS POST */}
+          <Route path="/crear_venta" element={<RouteGuard element={<VentaPOSPage />} />} />
+          <Route path="/admin_ventas" element={<RouteGuard element={<AdminVentasPosPage />} />} />
+          <Route path="/clientes_pos" element={<RouteGuard element={<ClientesPosPage />} />} />
+ 
+          
+          {/* RUTAS E-COMMERCE */}
           <Route path="/e-categorias" element={<RouteGuard element={<EcaterogiasPage />} />} />
           <Route path="/e-productos" element={<RouteGuard element={<EproductosPage />} />} />
           <Route path="/e-inventarios" element={<RouteGuard element={<EinventariosPage />} />} />

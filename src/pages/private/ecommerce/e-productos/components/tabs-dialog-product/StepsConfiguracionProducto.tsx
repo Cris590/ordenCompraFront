@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import { useProductoEdicionStore } from '../../../../../../store/ecommerce/producto-edicion';
 
 interface Props {
-    onClose: (actualizar:boolean) => void
+    onClose: (actualizar: boolean) => void
 }
 
 interface IActualizacionFormProductoGeneral {
@@ -87,7 +87,7 @@ export const StepsConfiguracionProducto = ({ onClose }: Props) => {
         setProductoEdicion(prev => ({
             ...prev,
             ...data,
-            codigo_modelo:producto.nuevo_producto ? nuevoCodigo : producto.codigo_modelo 
+            codigo_modelo: producto.nuevo_producto ? nuevoCodigo : producto.codigo_modelo
         }));
 
 
@@ -126,7 +126,7 @@ export const StepsConfiguracionProducto = ({ onClose }: Props) => {
         setProductoEdicion(prev => ({
             ...prev,
             tallas: data.tallas,
-            cod_tallaje:data.cod_tallaje
+            cod_tallaje: data.cod_tallaje
         }));
 
         console.log('Producto edicion -->', productoEdicion)
@@ -154,35 +154,73 @@ export const StepsConfiguracionProducto = ({ onClose }: Props) => {
     };
 
     const finalizarConfiguracion = async () => {
-        
-        
-        const  {
+        const {
             categoria,
             codigo_auxiliar,
             nuevo_producto,
             sub_categoria,
             total_colores,
             total_tallas,
+            id_woo_subcategoria,
             ...productoGuardar
-        } = productoEdicion
-      
+        } = productoEdicion;
 
-        if (nuevo_producto) {
-            setLoadingSpinner(true)
-            const editarProducto = await crearProductoCrm(productoGuardar)
-            setLoadingSpinner(false)
-            Swal.fire(editarProducto!.msg)
-            onClose(true)
+        try {
+            let sincronizar_ecommerce = false;
 
-        } else {
-            setLoadingSpinner(true)
-            const editarProducto = await editarProductoCrm(productoGuardar)
-            setLoadingSpinner(false)
-            Swal.fire(editarProducto!.msg)
-            onClose(true)
+            if (nuevo_producto) {
+                const confirmacion = await Swal.fire({
+                    title: '¿Sincronizar con el ecommerce?',
+                    text: '¿Deseas sincronizar este producto con el ecommerce al crearlo?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, sincronizar',
+                    cancelButtonText: 'No, solo guardar',
+                    reverseButtons: true,
+                });
 
+                sincronizar_ecommerce = confirmacion.isConfirmed;
+            }else if(id_woo_subcategoria){
+                const confirmacion = await Swal.fire({
+                    title: '¿Sincronizar con el ecommerce?',
+                    text: '¿Deseas sincronizar este producto con el ecommerce al editarlo?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, sincronizar',
+                    cancelButtonText: 'No, solo guardar',
+                    reverseButtons: true,
+                });
+
+                sincronizar_ecommerce = confirmacion.isConfirmed;
+            }
+
+            setLoadingSpinner(true);
+
+            const productoFinal = {
+                ...productoGuardar,
+                sincronizar_ecommerce,
+            };
+
+            const respuesta = nuevo_producto
+                ? await crearProductoCrm(productoFinal)
+                : await editarProductoCrm(productoFinal);
+
+            Swal.fire(respuesta!.msg);
+
+            onClose(true);
+
+        } catch (error) {
+            console.error('Error al finalizar configuración:', error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error al guardar el producto.',
+            });
+
+        } finally {
+            setLoadingSpinner(false);
         }
-        // Aquí puedes llamar tu API
     };
 
     const steps = [

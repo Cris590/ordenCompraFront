@@ -21,6 +21,7 @@ export interface IProductoResumenCrm{
     id_categoria:number,
     categoria:string,
     id_sub_categoria:number,
+    id_woo_subcategoria:number,
     sub_categoria:string,
     codigo_modelo:string,
     codigo_auxiliar:string,
@@ -30,7 +31,8 @@ export interface IProductoResumenCrm{
     lote:string,
     total_colores:number,
     total_tallas:number,
-    nuevo_producto:boolean
+    nuevo_producto:boolean,
+    sincronizar_ecommerce:boolean
 
 }
 

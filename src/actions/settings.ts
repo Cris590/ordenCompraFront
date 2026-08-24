@@ -111,6 +111,21 @@ export const actionsSettings  = {
         obtenerTallajesActivosCrm:`${apiUrl}/ecommerce/obtener_tallajes_activas`,
         editarProductoCrm:`${apiUrl}/ecommerce/editar_producto`,
         crearProductoCrm:`${apiUrl}/ecommerce/crear_producto`,
+
+        obtenerMediosPago:`${apiUrl}/pos/obtener_medios_pagos`,
+        obtenerClientePorDocumento:`${apiUrl}/pos/obtener_cliente_por_documento`,
+        obtenerTiendasPosUsuario:`${apiUrl}/pos/obtener_tiendas_pos_usuario`,
+        obtenerVendedoresCrm:`${apiUrl}/pos/vendedores_crm`,
+        obtenerVendedoresPorTiendaCrm:`${apiUrl}/pos/vendedores_por_tienda`,
+        obtenerInfoProductoVenta:`${apiUrl}/pos/obtener_info_producto`,
+        obtenerVentas:`${apiUrl}/pos/obtener_ventas_crm`,
+        obtenerVentaDetalle:`${apiUrl}/pos/obtener_venta_detalle`,
+        crearVentaPos:`${apiUrl}/pos/crear_venta`,
+        generarFacturaPdf:`${apiUrl}/pos/generar_factura_pdf`,
+        obtenerClientesCrm:`${apiUrl}/pos/obtener_clientes`,
+        actualizarClienteCrm:`${apiUrl}/pos/actualizar_cliente_crm`,
+        crearClienteCrm:`${apiUrl}/pos/crear_cliente_crm`,
+        obtenerTiposDocumento:`${apiUrl}/pos/obtener_tipos_documento`,
         
         login:`${apiUrl}/users/authentication`,
     }

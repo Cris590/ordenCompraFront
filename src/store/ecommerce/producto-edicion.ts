@@ -16,6 +16,7 @@ const productoDefault:IEditarProductoModeloCrm = {
    id_categoria:0,
     categoria:'',
     id_sub_categoria:0,
+    id_woo_subcategoria:0,
     sub_categoria:'',
     codigo_auxiliar:'',
     codigo_modelo:'',
@@ -29,7 +30,8 @@ const productoDefault:IEditarProductoModeloCrm = {
     colores:[],
     cod_tallaje:0,
     activo:1,
-    nuevo_producto:true
+    nuevo_producto:true,
+    sincronizar_ecommerce:false
 }
 
 

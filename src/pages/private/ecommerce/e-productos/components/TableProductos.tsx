@@ -18,6 +18,7 @@ const productoDefecto:IEditarProductoModeloCrm = {
    id_categoria:0,
     categoria:'',
     id_sub_categoria:0,
+    id_woo_subcategoria:0,
     sub_categoria:'',
     codigo_auxiliar:'',
     codigo_modelo:'',
@@ -31,7 +32,8 @@ const productoDefecto:IEditarProductoModeloCrm = {
     colores:[],
     cod_tallaje:0,
     activo:1,
-    nuevo_producto:true
+    nuevo_producto:true,
+    sincronizar_ecommerce:false
 }
 
 export const TableProductos = ({ filtros }: Props) => {
@@ -39,7 +41,6 @@ export const TableProductos = ({ filtros }: Props) => {
     const [loading, setLoading] = useState(false);
     const [totalRows, setTotal] = useState(0);
     const [perPage, setPerPage] = useState(10);
-    // const [selectedProducto, setSelectedProduct] = useState<IProductoResumenCrm>(productoDefecto);
     const [openDialogEditarProducto, setOpenDialogEditarProducto] = useState(false);
 
     /** Store producto */
@@ -137,7 +138,6 @@ export const TableProductos = ({ filtros }: Props) => {
             <DialogEditarProducto 
                 open={openDialogEditarProducto}
                 onClose={(actualizar)=>handleCloseEditarProducto(actualizar)}
-                // producto={selectedProducto}
             />
             <LoadingSpinnerScreen open={loading} />
         </>

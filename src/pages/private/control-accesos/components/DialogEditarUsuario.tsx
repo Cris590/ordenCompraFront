@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { useEntidadStore } from '../../../../store/entidad/entidad';
 import { IEntidadTarjetaBono, IPerfilAplicacion, IUsuarioAplicacionResumen } from '../../../../interfaces/control_accesos.interface';
 import { crearUsuarioAplicativo, editarUsuarioAplicativo, obtenerPerfilesAplicativo } from '../../../../actions/control-accesos/control-accesos';
+import { obtenerTiendasPosUsuario, obtenerVendedoresCrm } from '../../../../actions/pos/pos';
+import { IVendedorCrm } from '../../../../interfaces/pos.interface';
 
 
 interface Props {
@@ -20,6 +22,8 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
     const [perfiles, setPerfiles] = useState<IPerfilAplicacion[]>([])
+    const [tiendas, setTiendas] = useState<{id:number, nombre:string}[]>([])
+    const [vendedoresCrm, setVendedoresCrm] = useState<IVendedorCrm[]>([])
     const { handleSubmit, watch, reset, control, formState: { isValid } } = useForm<IUsuarioAplicacionResumen>({
         defaultValues: usuario
     });
@@ -31,6 +35,8 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
 
     useEffect(() => {
         obtenerPerfiles()
+        obtenerTiendas()
+        obtenerVendedores()
     }, [openDialog])
 
 
@@ -42,6 +48,42 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                 Swal.fire(res.msg)
             } else {
                 setPerfiles(res?.perfiles || [])
+            }
+
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                text: "Comuniquese con el administrador"
+            })
+        }
+    }
+
+    const obtenerTiendas = async () => {
+        try {
+
+            let res = await obtenerTiendasPosUsuario()
+            if (res?.error) {
+                Swal.fire(res.msg)
+            } else {
+                setTiendas(res?.bodegas || [])
+            }
+
+        } catch (e) {
+            Swal.fire({
+                icon: "error",
+                text: "Comuniquese con el administrador"
+            })
+        }
+    }
+
+    const obtenerVendedores = async () => {
+        try {
+
+            let res = await obtenerVendedoresCrm()
+            if (res?.error) {
+                Swal.fire(res.msg)
+            } else {
+                setVendedoresCrm(res?.vendedores || [])
             }
 
         } catch (e) {
@@ -65,20 +107,14 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
 
             dataAux.entidades = JSON.stringify(dataAux.entidades)
 
+            console.log('dataAux',dataAux)
+
             if(!!usuario.cod_usuario){
                 await updateUsuario(usuario.cod_usuario, dataAux)
             }else{
                 await crearUsuario(dataAux)
             }
-            setLoadingSpinner(true)
-            let res = await editarUsuarioAplicativo(data.cod_usuario, dataAux)
-            setLoadingSpinner(false)
-            if (res) {
-                await Swal.fire(res.msg)
-                if (res?.error == 0) {
-                    onClose(true)
-                }
-            }
+           
 
         } catch (e) {
             Swal.fire({
@@ -258,6 +294,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
 
                             <br />
                             {
+                                // Entidades para el perfil de atención de bonos
                                 [6].includes(perfil) &&
                                 <Controller
                                     name="entidades"
@@ -292,6 +329,50 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                                         );
                                     }}
                                 />
+                            }
+
+
+                            {
+                                [8].includes(perfil) &&<>
+                                <Controller
+                                    name="id_bodega"
+                                    control={control}
+                                    rules={{ required: true }}
+                                    render={({ field }) => (
+                                        <>
+                                            <InputLabel id="tienda" className='mt-1'>Tienda</InputLabel>
+                                            <Select
+                                                labelId="tienda"
+                                                {...field}
+                                                label="tienda"
+                                            >
+                                                {tiendas.map((bodega) => (<MenuItem value={bodega.id}>{bodega.nombre} </MenuItem>))}
+                                            </Select>
+                                        </>
+                                    )}
+                                />
+
+                                <Controller
+                                    name="id_usuario_crm"
+                                    control={control}
+                                    rules={{ required: true }}
+                                    render={({ field }) => (
+                                        <>
+                                            <InputLabel id="id_usuario_crm" className='mt-1'>Vendedor Crm</InputLabel>
+                                            <Select
+                                                labelId="id_usuario_crm"
+                                                {...field}
+                                                label="id_usuario_crm"
+                                            >
+                                                {vendedoresCrm.map((vendedor) => (<MenuItem value={vendedor.id}>{vendedor.usuario} - {vendedor.nombre} </MenuItem>))}
+                                            </Select>
+                                        </>
+                                    )}
+                                />
+
+                            </>
+
+                            
                             }
                         </div>
 

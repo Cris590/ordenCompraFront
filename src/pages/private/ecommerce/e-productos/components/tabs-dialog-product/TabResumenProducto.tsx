@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import { ColorCircle } from '../../../../../../components/product/color-circle/ColorCircle'
 import LoadingSpinnerScreen from '../../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen'
 import { useProductoEdicionStore } from '../../../../../../store/ecommerce/producto-edicion'
+import { Alert, AlertTitle, Typography } from '@mui/material'
 
 export const TabResumenProducto = () => {
     const [tallas, setTallas] = useState<ITallaProductoCrm[]>([])
@@ -72,6 +73,7 @@ export const TabResumenProducto = () => {
                         </div>
 
                         <div className="mt-2">
+
                             <span className="text-xs text-gray-500">
                                 Venta
                             </span>
@@ -130,6 +132,41 @@ export const TabResumenProducto = () => {
 
                     </div>
                 </div>
+
+                {!producto.id_woo_subcategoria ? (
+                    <Alert
+                        severity="warning"
+                        sx={{
+                            my: 3,
+                            borderRadius: 2,
+                        }}
+                    >
+                        <Typography variant="body2" sx={{ mb: 2 }}>
+                            Se detectó que la subCategoria del producto no está asociada al
+                            ecommerce. En caso que quieras asociar este producto debes asociar
+                            tanto la categoría{' '}
+                            <span className="font-semibold">
+                                {producto.categoria}
+                            </span>{' '}
+                            como la subCategoría{' '}
+                            <span className="font-semibold">
+                                {producto.sub_categoria}
+                            </span>
+                        </Typography>
+                    </Alert>
+                ) : (
+                    <Alert
+                        severity="success"
+                        sx={{
+                            my: 3,
+                            borderRadius: 2,
+                        }}
+                    >
+                        <Typography variant="body2">
+                            Producto válido para sincronizar con el ecommerce.
+                        </Typography>
+                    </Alert>
+                )}
             </div>
 
             <LoadingSpinnerScreen open={loading} />

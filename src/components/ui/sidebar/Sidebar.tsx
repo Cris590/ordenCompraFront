@@ -24,6 +24,9 @@ import {
   IoAppsSharp,
   IoCutOutline,
   IoAlbumsSharp,
+  IoCartOutline,
+  IoLibrarySharp,
+  IoPeopleCircleSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -53,6 +56,9 @@ const iconMapping: { [key: string]: IconType } = {
   "e-productos":IoCutOutline,
   "e-inventarios":IoAlbumsSharp,
   'e-tallajes': IoCreateSharp,
+  'crear_venta': IoCartOutline,
+  'admin_ventas': IoLibrarySharp,
+  'clientes_pos': IoPeopleCircleSharp,
 };
 
 export const Sidebar = () => {
