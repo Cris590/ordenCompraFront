@@ -14,7 +14,7 @@ import { VendedorSection } from "../vendedor/VendedorSection";
 interface VentaInfoSectionProps {
     documento: string;
     cliente: Cliente | null;
-
+    codigoNuevo:number,
     vendedores: IVendedorCrmTienda[];
     vendedor: IVendedorCrmTienda | null;
 
@@ -31,6 +31,7 @@ interface VentaInfoSectionProps {
 export const VentaInfoSection = ({
     documento,
     cliente,
+    codigoNuevo,
     vendedores,
     vendedor,
     onDocumentoChange,
@@ -70,10 +71,11 @@ export const VentaInfoSection = ({
                     </div>
 
                     {/* VENDEDOR */}
-                    <div className="w-full lg:w-[240px]">
+                    <div className="w-full lg:w-[340px]">
                         <VendedorSection
                             vendedores={vendedores}
                             vendedor={vendedor}
+                            codigoNuevo={codigoNuevo}
                             onVendedorChange={onVendedorChange}
                         />
                     </div>

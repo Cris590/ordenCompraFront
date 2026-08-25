@@ -64,6 +64,8 @@ export const VentaPOSPage = () => {
 
   const [vendedores, setVendedores] = useState<IVendedorCrmTienda[]>([]);
   const [vendedor, setVendedor] = useState<IVendedorCrmTienda | null>(null);
+  const [codigoNuevo, setCodigoNuevo] = useState<number>(0);
+  
 
   // ============================================================
   // PRODUCTOS
@@ -230,6 +232,7 @@ export const VentaPOSPage = () => {
         const resultado = await obtenerVendedoresPorTiendaCrm();
 
         setVendedores(resultado?.vendedores || []);
+        setCodigoNuevo(resultado?.codigoNuevo || 0)
 
         if (session?.cod_usuario) {
           setVendedor(resultado?.vendedores.filter((vendedor) => vendedor.cod_usuario == session.cod_usuario)[0] || null);
@@ -619,6 +622,7 @@ export const VentaPOSPage = () => {
             cliente={cliente}
             vendedores={vendedores}
             vendedor={vendedor}
+            codigoNuevo={codigoNuevo}
             onDocumentoChange={setDocumento}
             onDocumentoBlur={handleBuscarCliente}
             onCrearCliente={handleCrearCliente}

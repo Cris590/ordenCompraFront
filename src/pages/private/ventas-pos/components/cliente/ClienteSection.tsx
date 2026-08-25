@@ -53,7 +53,10 @@ export const ClienteSection = ({
   const handleCloseEditCliente = (actualizarCliente: boolean, documentoPos?:string) => {
     if(actualizarCliente && documentoPos){
       onDocumentoChange(documentoPos)
-      onDocumentoBlur()
+      setTimeout(() => {
+        onDocumentoBlur()
+      }, 1000);
+      
     }
     setOpenEditCliente(false);
   };
@@ -96,8 +99,7 @@ export const ClienteSection = ({
                     className="min-w-0 flex-1"
                 />
 
-
-
+                
                 <Button
                     variant="outlined"
                     onClick={handleOnCrearCliente}
