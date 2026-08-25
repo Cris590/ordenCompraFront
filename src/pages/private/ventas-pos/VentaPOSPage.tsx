@@ -32,7 +32,6 @@ const formatMoney = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-const IVA = 0.19;
 
 const emptyPayment = (): MedioPago => ({
   id_metodo_pago: Date.now() + Math.random(),
@@ -63,6 +62,8 @@ export const VentaPOSPage = () => {
   const [vendedores, setVendedores] = useState<IVendedorCrmTienda[]>([]);
   const [vendedor, setVendedor] = useState<IVendedorCrmTienda | null>(null);
   const [codigoNuevo, setCodigoNuevo] = useState<number>(0);
+  const [esBrt, setEsBrt] = useState<number|null>(0);
+  const IVA = (esBrt) ? 0.19 : 0;
   
 
   // ============================================================
@@ -231,7 +232,7 @@ export const VentaPOSPage = () => {
 
         setVendedores(resultado?.vendedores || []);
         setCodigoNuevo(resultado?.codigoNuevo || 0)
-
+        setEsBrt(resultado?.esBrt || null)
         if (session?.cod_usuario) {
           setVendedor(resultado?.vendedores.filter((vendedor) => vendedor.cod_usuario == session.cod_usuario)[0] || null);
         }
@@ -277,9 +278,8 @@ export const VentaPOSPage = () => {
   // ============================================================
 
   const handleBuscarCliente = async (documentoCliente:string) => {
-    console.log('Si señor si vamos a buscar ', documento)
+    
     const cedula = documentoCliente.trim();
-
     if (!cedula) {
       setCliente(null);
       return;

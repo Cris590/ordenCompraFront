@@ -209,7 +209,8 @@ export interface IResponseVendedoresCrm extends IRespuestaGeneralAction {
 
 export interface IResponseVendedoresPorTiendaCrm extends IRespuestaGeneralAction {
   vendedores: IVendedorCrmTienda[],
-  codigoNuevo:number
+  codigoNuevo:number,
+  esBrt?:0|1
 }
 
 export interface IResponseProductoVentaCrm extends IRespuestaGeneralAction {
