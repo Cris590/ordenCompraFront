@@ -40,7 +40,6 @@ export const AdminVentasPosPage = () => {
   const cargarVentas = async (filtrosBusqueda: IFiltrosVentasPOS) => {
     try {
 
-      console.log("Cargando ventas con filtros:",filtrosBusqueda);
       setOpenLoadingSpinner(true);
       try {
         const response = await obtenerVentasPos(filtrosBusqueda);
@@ -141,11 +140,9 @@ export const AdminVentasPosPage = () => {
                 />
 
             </div>
-            <TablaVentasPOS
+            <TablaVentasPOS 
+              actualizarVenta={()=>cargarVentas(filtros)}
               ventas={filteredData}
-              onAnularVenta={(venta) => {
-                console.log("Anular:", venta);
-              }}
             />
           </div>
 

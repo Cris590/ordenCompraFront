@@ -123,6 +123,8 @@ export const actionsSettings  = {
         obtenerVentaARetomar:`${apiUrl}/pos/obtener_venta_retomar`,   
         crearVentaPos:`${apiUrl}/pos/crear_venta`,
         actualizarVentaPos:`${apiUrl}/pos/editar_venta`,
+        cancelarVentaPos:`${apiUrl}/pos/cancelar_factura_pos`,
+    
         generarFacturaPdf:`${apiUrl}/pos/generar_factura_pdf`,
         obtenerClientesCrm:`${apiUrl}/pos/obtener_clientes`,
         actualizarClienteCrm:`${apiUrl}/pos/actualizar_cliente_crm`,

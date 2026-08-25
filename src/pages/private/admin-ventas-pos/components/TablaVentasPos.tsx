@@ -12,12 +12,12 @@ import { IVentaPOSAdmin } from "../../../../interfaces/pos.interface";
 import { ModalDetalleVenta } from "./ModalDetalleVenta";
 import { formatDate } from "../../../../utils/formatDate";
 import Swal from "sweetalert2";
-import { generarFacturaPdf } from "../../../../actions/pos/pos";
+import { cancelarVentaPos, generarFacturaPdf } from "../../../../actions/pos/pos";
 import LoadingSpinnerScreen from "../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen";
 
 interface Props {
   ventas: IVentaPOSAdmin[];
-  onAnularVenta: (venta: IVentaPOSAdmin) => void;
+  actualizarVenta:()=>void
 }
 
 const formatMoney = (value: number) =>
@@ -27,7 +27,7 @@ const formatMoney = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-export const TablaVentasPOS = ({ventas,onAnularVenta}: Props) => {
+export const TablaVentasPOS = ({ ventas, actualizarVenta }: Props) => {
 
   const [ventaSeleccionada, setVentaSeleccionada] = useState<IVentaPOSAdmin | null>(null);
 
@@ -60,6 +60,47 @@ export const TablaVentasPOS = ({ventas,onAnularVenta}: Props) => {
       })
     }
   }
+
+  const handleCancelarVentaPos = async (venta: IVentaPOSAdmin) => {
+    const resultado = await Swal.fire({
+      icon: "warning",
+      title: "¿Cancelar venta?",
+      text: "Si cancelas esta venta, ya no podrá ser consultada posteriormente. Esta acción no se puede deshacer.",
+      showCancelButton: true,
+      confirmButtonText: "Sí, cancelar venta",
+      cancelButtonText: "No, mantener venta",
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#64748b",
+      reverseButtons: true,
+    });
+
+    if (!resultado.isConfirmed) {
+      return;
+    }
+
+    try {
+      setOpenLoadingSpinner(true);
+
+      const res = await cancelarVentaPos(venta.id);
+      if(res?.error == 0){
+        actualizarVenta()
+      }
+      setOpenLoadingSpinner(false);
+
+      Swal.fire(res!.msg)
+
+    } catch (e) {
+      setOpenLoadingSpinner(false);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo cancelar la venta. Comuníquese con el administrador.",
+      });
+    }
+  };
+
+
   const columns = [
     {
       name: "#",
@@ -190,7 +231,7 @@ export const TablaVentasPOS = ({ventas,onAnularVenta}: Props) => {
             <Button
               variant="contained"
               size="small"
-              onClick={() => onAnularVenta(row)}
+              onClick={() => handleCancelarVentaPos(row)}
               sx={{
                 minWidth: 38,
                 width: 38,
