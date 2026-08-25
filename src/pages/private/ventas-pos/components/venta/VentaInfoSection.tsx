@@ -18,11 +18,9 @@ interface VentaInfoSectionProps {
     vendedores: IVendedorCrmTienda[];
     vendedor: IVendedorCrmTienda | null;
 
-    onDocumentoChange: (
-        documento: string
-    ) => void;
+    onDocumentoChange: (documento: string) => void;
 
-    onDocumentoBlur: () => void;
+    onDocumentoBlur: (documento:string) => void;
     onCrearCliente: () => void;
     onVendedorChange: (vendedorId: number) => void;
     documentoRef: React.RefObject<HTMLInputElement>;

@@ -130,6 +130,7 @@ export const actionsSettings  = {
         obtenerTiposDocumento:`${apiUrl}/pos/obtener_tipos_documento`,
         obtenerVentasPendientesPos:`${apiUrl}/pos/obtener_ventas_pendientes_pos`,
         obtenerInventariosPos:`${apiUrl}/pos/obtener_inventario_pos`,
+        buscarInventarioPorCodigo:`${apiUrl}/pos/busqueda_inventario_codigo`,
         
         obtenerProductoInventarioPorCodigoPos:`${apiUrl}/pos/inventario_codigo`,
         login:`${apiUrl}/users/authentication`,

@@ -12,7 +12,7 @@ interface ClienteSectionProps {
     documento: string;
     cliente: Cliente | null;
     onDocumentoChange: (documento: string) => void;
-    onDocumentoBlur: () => void;
+    onDocumentoBlur: (documento:string) => void;
     onCrearCliente: () => void;
     documentoRef: React.RefObject<HTMLInputElement>;
 }
@@ -51,11 +51,10 @@ export const ClienteSection = ({
 
     
   const handleCloseEditCliente = (actualizarCliente: boolean, documentoPos?:string) => {
+   
     if(actualizarCliente && documentoPos){
       onDocumentoChange(documentoPos)
-      setTimeout(() => {
-        onDocumentoBlur()
-      }, 1000);
+     onDocumentoBlur(documentoPos)
       
     }
     setOpenEditCliente(false);
@@ -76,7 +75,7 @@ export const ClienteSection = ({
                     size="small"
                     value={documento}
                     onChange={(event) =>onDocumentoChange(event.target.value)}
-                    onBlur={onDocumentoBlur}
+                    onBlur={(event) =>onDocumentoBlur(event.target.value)}
                     inputProps={{
                         inputMode: "numeric",
                     }}
@@ -103,6 +102,7 @@ export const ClienteSection = ({
                 <Button
                     variant="outlined"
                     onClick={handleOnCrearCliente}
+                    disabled={!!cliente?.nombre && cliente?.nombre.length > 0}
                     className="!min-w-0 !h-[40px]"
                     title="Crear cliente"
                 >

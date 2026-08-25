@@ -434,6 +434,30 @@ export const obtenerInventariosPos= async (filtro:IFiltroInventarios) => {
   }
 }
 
+export const buscarInventarioPorCodigo= async (codigo:string) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.buscarInventarioPorCodigo}/${codigo}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21
+    }
+    const { data }: AxiosResponse<IResponseInventariosPos> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+
 export const obtenerProductoInventarioPorCodigoPos= async (codigo:string, idTienda:number) => {
   try {
 

@@ -278,8 +278,9 @@ export const VentaPOSPage = () => {
   // CLIENTE
   // ============================================================
 
-  const handleBuscarCliente = async () => {
-    const cedula = documento.trim();
+  const handleBuscarCliente = async (documentoCliente:string) => {
+    console.log('Si señor si vamos a buscar ', documento)
+    const cedula = documentoCliente.trim();
 
     if (!cedula) {
       setCliente(null);
