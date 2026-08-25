@@ -131,8 +131,10 @@ export const actionsSettings  = {
         obtenerVentasPendientesPos:`${apiUrl}/pos/obtener_ventas_pendientes_pos`,
         obtenerInventariosPos:`${apiUrl}/pos/obtener_inventario_pos`,
         buscarInventarioPorCodigo:`${apiUrl}/pos/busqueda_inventario_codigo`,
-        
         obtenerProductoInventarioPorCodigoPos:`${apiUrl}/pos/inventario_codigo`,
+
+        transferirProductosEntreBodegas:`${apiUrl}/pos/transferir_producto_entre_bodegas`,
+        
         login:`${apiUrl}/users/authentication`,
     }
 }

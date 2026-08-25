@@ -26,13 +26,15 @@ import Swal from "sweetalert2";
 import {
     obtenerProductoInventarioPorCodigoPos,
     obtenerTiendasPosUsuario,
+    transferirProductosEntreBodegas,
 } from "../../../../actions/pos/pos";
 
 import { IProductoTraslado } from "../../../../interfaces/pos.interface";
+import LoadingSpinnerScreen from "../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen";
 
 interface TrasladoProductosModalProps {
     open: boolean;
-    onClose: () => void;
+    onClose: (actualizar?:boolean) => void;
 }
 
 const productoInicial = (): IProductoTraslado => ({
@@ -56,10 +58,9 @@ export const TrasladoProductosModal = ({
     >([]);
 
     const [tiendaVendedor, setTiendaVendedor] = useState(0);
-
-    const [productos, setProductos] = useState<IProductoTraslado[]>([
-        productoInicial(),
-    ]);
+    
+    const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false);
+    const [productos, setProductos] = useState<IProductoTraslado[]>([productoInicial(),]);
 
     const [buscandoProducto, setBuscandoProducto] = useState(false);
 
@@ -321,17 +322,32 @@ export const TrasladoProductosModal = ({
     // TRANSFERIR
     // ============================================================
 
-    const handleTransferir = () => {
+    const handleTransferir = async () => {
 
         if (!validar()) {
             return;
         }
 
-        console.log({
+        setOpenLoadingSpinner(true)
+        const transferencia = {
             bodegaSalida,
             bodegaEntrada,
             productos,
-        });
+        }
+        try {
+            const transferirProducto = await transferirProductosEntreBodegas(transferencia)
+            await Swal.fire(transferirProducto!.msg)
+            onClose(true)
+        } catch (error) {
+            Swal.fire({
+                icon:'error',
+                text:'Error en el traslado ' + error
+            })
+        } finally{
+            setOpenLoadingSpinner(false)
+        }
+
+        console.log();
     };
 
     // ============================================================
@@ -360,7 +376,7 @@ export const TrasladoProductosModal = ({
             fullWidth
             maxWidth="lg"
         >
-
+            <LoadingSpinnerScreen open={openLoadingSpinner} />
             <DialogTitle className="flex items-center justify-between">
                 <span className="font-semibold">
                     Traslado de productos

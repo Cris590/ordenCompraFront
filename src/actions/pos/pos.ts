@@ -434,6 +434,10 @@ export const obtenerInventariosPos= async (filtro:IFiltroInventarios) => {
   }
 }
 
+
+
+
+
 export const buscarInventarioPorCodigo= async (codigo:string) => {
   try {
 
@@ -480,4 +484,27 @@ export const obtenerProductoInventarioPorCodigoPos= async (codigo:string, idTien
   }
 }
 
+
+export const transferirProductosEntreBodegas= async (transferencia:any) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.transferirProductosEntreBodegas}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:transferencia
+    }
+    const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 

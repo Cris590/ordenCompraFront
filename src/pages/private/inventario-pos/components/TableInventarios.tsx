@@ -96,7 +96,11 @@ export const TableInventarios = ({ inventarios }: Props) => {
         <>
             <DataTable
                 columns={columns}
-                data={inventarios}
+                data={inventarios.map((inventario) => ({
+                    ...inventario,
+                    key: `${inventario.id}-${inventario.id_bodega}`,
+                }))}
+                keyField="key"
                 pagination
                 highlightOnHover
             />

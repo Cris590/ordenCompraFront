@@ -25,8 +25,6 @@ export const InventarioPosPage = () => {
 
   const cargarInventarios = async (filtrosBusqueda: IFiltroInventarios) => {
     try {
-
-      console.log("Cargando ventas con filtros:",filtrosBusqueda);
       setOpenLoadingSpinner(true);
       try {
         const response = await obtenerInventariosPos(filtrosBusqueda);
@@ -58,7 +56,7 @@ export const InventarioPosPage = () => {
     <>
 
       <Title title="Administrador de ventas" />
-
+     
       <div className="bg-slate-100 min-h-screen p-2 w-[98%]">
 
         <div className="bg-white border border-slate-200 rounded-sm shadow-sm">

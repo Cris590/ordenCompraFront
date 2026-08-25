@@ -46,8 +46,6 @@ export const VentaPOSPage = () => {
   // VALIDAR SI ES VENTA NUEVA O SE VA A RETOMAR
   // ============================================================
   const { idVenta } = useParams();
-  const esRetoma = Boolean(idVenta);
-  const [idVentaRetomar, setIdVentaRetomar] = useState<number | null>(null);
 
   const navigate = useNavigate();
   // ============================================================
