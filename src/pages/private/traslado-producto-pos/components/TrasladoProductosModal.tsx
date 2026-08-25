@@ -53,9 +53,7 @@ export const TrasladoProductosModal = ({
     const [bodegaSalida, setBodegaSalida] = useState<number | null>(null);
     const [bodegaEntrada, setBodegaEntrada] = useState<number | null>(null);
 
-    const [tiendas, setTiendas] = useState<
-        { id: number; nombre: string }[]
-    >([]);
+    const [tiendas, setTiendas] = useState<{ id: number; nombre: string }[]>([]);
 
     const [tiendaVendedor, setTiendaVendedor] = useState(0);
     
@@ -70,7 +68,7 @@ export const TrasladoProductosModal = ({
 
     useEffect(() => {
         obtenerTiendas();
-    }, []);
+    }, [open]);
 
     const obtenerTiendas = async () => {
         try {
@@ -337,6 +335,9 @@ export const TrasladoProductosModal = ({
         try {
             const transferirProducto = await transferirProductosEntreBodegas(transferencia)
             await Swal.fire(transferirProducto!.msg)
+            setBodegaSalida(null);
+            setBodegaEntrada(null);
+            setProductos([productoInicial()]);
             onClose(true)
         } catch (error) {
             Swal.fire({
@@ -391,7 +392,9 @@ export const TrasladoProductosModal = ({
             </DialogTitle>
 
             <DialogContent>
-
+                {`Bodega salida ${bodegaSalida}`}
+                {` Buscando Producto ${buscandoProducto}`}
+                
                 {/* BODEGAS */}
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-6 mt-3">
@@ -473,7 +476,7 @@ export const TrasladoProductosModal = ({
                                 label="Código producto"
                                 size="small"
                                 value={producto.codigo}
-                                disabled={!bodegaSalida ||buscandoProducto }
+                                disabled={!bodegaSalida || buscandoProducto }
                                 onChange={(e) => {
                                     const codigo = e.target.value;
                                     setProductos((actuales) =>

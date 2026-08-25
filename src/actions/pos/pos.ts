@@ -3,7 +3,7 @@ import { actionsSettings } from '../settings';
 import { getAuthToken } from '../axios-helper/getToken';
 import { handleHttpError } from '../axios-helper/axiosError';
 import { IRespuestaGeneralAction } from '../../interfaces/general.interface';
-import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltrosVentasPOS, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialVentas, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
+import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltrosVentasPOS, IFiltroTrasladosProductos, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialTraslados, IResponseHistorialVentas, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
 
 export const obtenerMediosPago = async () => {
   try {
@@ -507,4 +507,29 @@ export const transferirProductosEntreBodegas= async (transferencia:any) => {
     return null
   }
 }
+
+export const obtenerHistorialTraslados= async (filtros:IFiltroTrasladosProductos) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.obtenerHistorialTraslados}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:filtros
+    }
+    const { data }: AxiosResponse<IResponseHistorialTraslados> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
 

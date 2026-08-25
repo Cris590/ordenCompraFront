@@ -1,52 +1,115 @@
-import React, { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
-import { IoSwapHorizontalOutline } from "react-icons/io5";
+import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
+
 import { TrasladoProductosModal } from "./components/TrasladoProductosModal";
 import LoadingSpinnerScreen from "../../../components/loadingSpinnerScreen/LoadingSpinnerScreen";
-import { Title } from "../../../components/title/Title";
-import { FiltroInventarioPos } from "../inventario-pos/components/FiltroInventarioPos";
+import { FiltroTraslados } from "./components/FiltroTraslados";
+
+import {
+    IFiltroTrasladosProductos,
+    ITrasladoProducto,
+} from "../../../interfaces/pos.interface";
+
+import { obtenerRangoMesActual } from "../../../utils/obtenerRangoMesActual";
+import { obtenerHistorialTraslados } from "../../../actions/pos/pos";
+import { TablaTraslados } from "./components/TablaTraslados";
 
 export const TrasladoProductoPosPage = () => {
-  const [openTraslado, setOpenTraslado] = useState(false);
+    const rangoMesActual = obtenerRangoMesActual();
 
-  return (
-    <Box className="min-h-screen bg-slate-100 p-4 md:p-6">
-      <div className="mx-auto max-w-[1600px]">
+    const [openTraslado, setOpenTraslado] = useState(false);
+    const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false);
 
-        <div className="mb-5 flex items-center justify-between">
-          <div>
-            <Typography
-              variant="h5"
-              fontWeight={700}
-            >
-              Traslado de productos
-            </Typography>
+    const [traslados, setTraslados] = useState<ITrasladoProducto[]>([]);
 
-            <Typography
-              variant="body2"
-              color="text.secondary"
-            >
-              Gestión de movimientos entre bodegas
-            </Typography>
-          </div>
+    const [filtros, setFiltros] =
+        useState<IFiltroTrasladosProductos>({
+            fecha_inicial: rangoMesActual.fechaInicial,
+            fecha_final: rangoMesActual.fechaFinal,
+            id_bodega_salida: [],
+            id_bodega_entrada: [],
+            codigo_producto: "",
+        });
 
-        </div>
-         <Button
-            variant="contained"
-            startIcon={<IoSwapHorizontalOutline size={20} />}
-            onClick={() => setOpenTraslado(true)}
-          >
-            Nuevo traslado
-          </Button>
+    useEffect(() => {
+        obtenerTraslados(filtros);
+    }, []);
 
-        {/* Aquí posteriormente irá la tabla de traslados */}
+    const handleFiltrar = (nuevosFiltros: IFiltroTrasladosProductos) => {
+        setFiltros(nuevosFiltros);
+        obtenerTraslados(nuevosFiltros);
+    };
 
-        <TrasladoProductosModal
-          open={openTraslado}
-          onClose={() => setOpenTraslado(false)}
-        />
+    const obtenerTraslados = async (filtrosConsulta: IFiltroTrasladosProductos) => {
+        setOpenLoadingSpinner(true);
 
-      </div>
-    </Box>
-  );
-}
+        try {
+            const res = await obtenerHistorialTraslados(
+                filtrosConsulta
+            );
+
+            setTraslados(res?.traslados || []);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setOpenLoadingSpinner(false);
+        }
+    };
+
+    const handleCloseModalTraslado = (actualizar?:boolean)=>{
+      if(actualizar){
+        obtenerTraslados(filtros);
+      }
+      setOpenTraslado(false)
+    }
+
+    return (
+        <>
+            <LoadingSpinnerScreen open={openLoadingSpinner} />
+
+            <Box className="min-h-screen bg-slate-100 p-4 md:p-6">
+                <div className="mx-auto max-w-[1600px]">
+
+                    {/* HEADER */}
+                    <div className="mb-5">
+                        <Typography
+                            variant="h5"
+                            fontWeight={700}
+                            className="text-slate-800"
+                        >
+                            Traslado de productos
+                        </Typography>
+
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                        >
+                            Gestión de movimientos entre bodegas
+                        </Typography>
+                    </div>
+
+                    {/* FILTRO */}
+                    <FiltroTraslados
+                        filtros={filtros}
+                        onFiltrar={handleFiltrar}
+                        onNuevoTraslado={() =>
+                            setOpenTraslado(true)
+                        }
+                    />
+                    <TablaTraslados traslados={traslados} />
+
+                    {/* AQUÍ IRÁ LA TABLA */}
+                    <div className="mt-5">
+                        {/* <TableTraslados traslados={traslados} /> */}
+                    </div>
+
+                    {/* MODAL NUEVO TRASLADO */}
+                    <TrasladoProductosModal
+                        open={openTraslado}
+                        onClose={handleCloseModalTraslado}
+                    />
+                </div>
+            </Box>
+        </>
+    );
+};

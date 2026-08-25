@@ -187,6 +187,26 @@ export interface IInventarioProducto{
   categoria:string,
   sub_categoria:string
 }
+
+export interface IFiltroTrasladosProductos {
+    fecha_inicial: string;
+    fecha_final: string;
+    id_bodega_salida: number[];
+    id_bodega_entrada: number[];
+    codigo_producto: string;
+}
+
+export interface ITrasladoProducto {
+    id_log: number;
+    usuario: string;
+    producto: string;
+    codigo: string;
+    stock: number;
+    bodega_entrada: string;
+    bodega_salida: string;
+    fecha: string;
+}
+
 /**
  * Response de apis 
  */
@@ -270,6 +290,9 @@ export interface IProductoTraslado {
 
 export interface IResponseInventariosPorCodigoPos extends IRespuestaGeneralAction{ 
     producto:IProductoTraslado
+}
+export interface IResponseHistorialTraslados extends IRespuestaGeneralAction{ 
+    traslados:ITrasladoProducto[]
 }
 
 

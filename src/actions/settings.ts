@@ -134,6 +134,7 @@ export const actionsSettings  = {
         obtenerProductoInventarioPorCodigoPos:`${apiUrl}/pos/inventario_codigo`,
 
         transferirProductosEntreBodegas:`${apiUrl}/pos/transferir_producto_entre_bodegas`,
+        obtenerHistorialTraslados:`${apiUrl}/pos/obtener_historial_translados`,
         
         login:`${apiUrl}/users/authentication`,
     }
