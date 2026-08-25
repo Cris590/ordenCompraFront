@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Title } from "../../../components/title/Title";
 
-import { FiltroVentasPOS } from "./components/FiltrosVentasPos";
-import { TablaVentasPOS } from "./components/TablaVentasPos";
+import { TablaRetomarVentas } from "./components/TablaRetomarVentas";
 import {
   IFiltrosVentasPOS,
   IVentaPOSAdmin,
 } from "../../../interfaces/pos.interface";
-import { obtenerVentasPos } from "../../../actions/pos/pos";
+import { obtenerVentasPendientesPos, obtenerVentasPos } from "../../../actions/pos/pos";
 import LoadingSpinnerScreen from "../../../components/loadingSpinnerScreen/LoadingSpinnerScreen";
 import Swal from "sweetalert2";
 import { useFilteredData } from "../../../hooks/useFilteredData";
-import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../../../store/user/user";
+import { FiltroVentasPOS } from "../admin-ventas-pos/components/FiltrosVentasPos";
 
 const obtenerRangoMesActual = () => {
   const hoy = new Date();
@@ -27,12 +25,10 @@ const obtenerRangoMesActual = () => {
   };
 };
 
-export const AdminVentasPosPage = () => {
+export const RetomarVentaPosPage = () => {
 
   const rangoMesActual = obtenerRangoMesActual();
-  const navigate = useNavigate();
   const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false);
-  const session = useUserStore((state) => state.user);
   
   const [filtros, setFiltros] = useState<IFiltrosVentasPOS>({
     id_tienda: "",
@@ -40,8 +36,6 @@ export const AdminVentasPosPage = () => {
     fecha_final: rangoMesActual.fechaFinal,
     documento_cliente: "",
   });
-
-  
 
   const [ventas, setVentas] = useState<IVentaPOSAdmin[]>([]);
   const { search, setSearch, filteredData } = useFilteredData(ventas);
@@ -51,10 +45,9 @@ export const AdminVentasPosPage = () => {
   const cargarVentas = async (filtrosBusqueda: IFiltrosVentasPOS) => {
     try {
 
-      console.log("Cargando ventas con filtros:",filtrosBusqueda);
       setOpenLoadingSpinner(true);
       try {
-        const response = await obtenerVentasPos(filtrosBusqueda);
+        const response = await obtenerVentasPendientesPos(filtrosBusqueda);
         if(response?.error==0 && response?.ventas){
            setVentas(response?.ventas || []);
         }else{
@@ -94,10 +87,6 @@ export const AdminVentasPosPage = () => {
     cargarVentas(nuevosFiltros);
   };
 
-  const handleAgregarVenta = () => {
-    navigate("/crear_venta");
-  };
-
   return (
     <>
       <Title title="Administrador de ventas" />
@@ -106,32 +95,7 @@ export const AdminVentasPosPage = () => {
 
         <div className="bg-white border border-slate-200 rounded-sm shadow-sm">
 
-          {/* BOTÓN AGREGAR */}
-          {
-            (session?.cod_perfil == 8) && 
-              <div className="p-3">
-                <button
-                  type="button"
-                  onClick={handleAgregarVenta}
-                  className="
-                    bg-sky-600
-                    hover:bg-sky-700
-                    text-white
-                    px-4
-                    py-2
-                    rounded
-                    text-sm
-                    font-medium
-                    transition-colors
-                  "
-                >
-                  Agregar venta
-                </button>
-              </div>
-          }
-
           {/* FILTROS */}
-
           <div className="border-t border-slate-200">
             <FiltroVentasPOS
               filtros={filtros}
@@ -152,12 +116,7 @@ export const AdminVentasPosPage = () => {
                 />
 
             </div>
-            <TablaVentasPOS
-              ventas={filteredData}
-              onAnularVenta={(venta) => {
-                console.log("Anular:", venta);
-              }}
-            />
+            <TablaRetomarVentas ventas={filteredData}/>
           </div>
 
         </div>

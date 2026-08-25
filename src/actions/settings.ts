@@ -120,13 +120,18 @@ export const actionsSettings  = {
         obtenerInfoProductoVenta:`${apiUrl}/pos/obtener_info_producto`,
         obtenerVentas:`${apiUrl}/pos/obtener_ventas_crm`,
         obtenerVentaDetalle:`${apiUrl}/pos/obtener_venta_detalle`,
+        obtenerVentaARetomar:`${apiUrl}/pos/obtener_venta_retomar`,   
         crearVentaPos:`${apiUrl}/pos/crear_venta`,
+        actualizarVentaPos:`${apiUrl}/pos/editar_venta`,
         generarFacturaPdf:`${apiUrl}/pos/generar_factura_pdf`,
         obtenerClientesCrm:`${apiUrl}/pos/obtener_clientes`,
         actualizarClienteCrm:`${apiUrl}/pos/actualizar_cliente_crm`,
         crearClienteCrm:`${apiUrl}/pos/crear_cliente_crm`,
         obtenerTiposDocumento:`${apiUrl}/pos/obtener_tipos_documento`,
+        obtenerVentasPendientesPos:`${apiUrl}/pos/obtener_ventas_pendientes_pos`,
+        obtenerInventariosPos:`${apiUrl}/pos/obtener_inventario_pos`,
         
+        obtenerProductoInventarioPorCodigoPos:`${apiUrl}/pos/inventario_codigo`,
         login:`${apiUrl}/users/authentication`,
     }
 }

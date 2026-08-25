@@ -35,6 +35,10 @@ import { EtallajePage } from '../pages/private/ecommerce/e-tallaje/EtallajePage'
 import { VentaPOSPage } from '../pages/private/ventas-pos/VentaPOSPage';
 import { AdminVentasPosPage } from '../pages/private/admin-ventas-pos/AdminVentasPosPage';
 import { ClientesPosPage } from '../pages/private/clientes-pos/ClientesPosPage';
+import { RetomarVentaPosPage } from '../pages/private/retomar-venta-pos/RetomarVentaPosPage';
+import { InventarioPosPage } from '../pages/private/inventario-pos/InventarioPosPage';
+import { BuscarProductosPosPage } from '../pages/private/buscar-producto-pos/BuscarProductosPosPage';
+import { TrasladoProductoPosPage } from '../pages/private/traslado-producto-pos/TrasladoProductoPosPage';
 
 
 const AppRouter: React.FC = () => {
@@ -84,7 +88,12 @@ const AppRouter: React.FC = () => {
           <Route path="/crear_venta" element={<RouteGuard element={<VentaPOSPage />} />} />
           <Route path="/admin_ventas" element={<RouteGuard element={<AdminVentasPosPage />} />} />
           <Route path="/clientes_pos" element={<RouteGuard element={<ClientesPosPage />} />} />
- 
+          <Route path="/retomar_ventas" element={<RouteGuard element={<RetomarVentaPosPage />} />} />
+          <Route path="/inventario_pos" element={<RouteGuard element={<InventarioPosPage />} />} />
+          <Route path="/buscar_producto_pos" element={<RouteGuard element={<BuscarProductosPosPage />} />} />
+          <Route path="/traslado_producto_pos" element={<RouteGuard element={<TrasladoProductoPosPage />} />} />
+          <Route path="/retomar_venta/:idVenta" element={<RouteGuard element={<VentaPOSPage />} />} />
+          
           
           {/* RUTAS E-COMMERCE */}
           <Route path="/e-categorias" element={<RouteGuard element={<EcaterogiasPage />} />} />

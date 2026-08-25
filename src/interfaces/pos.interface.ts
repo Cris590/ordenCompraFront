@@ -97,6 +97,7 @@ export interface IVentaPOSAdmin {
   tienda: string;
   neto: number;
   total: number;
+  deuda:number;
   metodo_pago: string;
   fecha: string;
   factura_valida: number;
@@ -107,6 +108,10 @@ export interface IFiltrosVentasPOS {
   fecha_inicial: string;
   fecha_final: string;
   documento_cliente: string;
+}
+
+export interface IFiltroInventarios {
+  id_tienda: number[];
 }
 
 export interface IProductoVentaPOS {
@@ -129,6 +134,8 @@ export interface IVentaDetallePOS {
     factura_valida: string;
     descuento: string;
     cliente: string;
+    id_cliente:number,
+    dv:number,
     documento_cliente: string;
     sufijo: string;
     tipo_documento: string;
@@ -168,6 +175,17 @@ export interface ITipoDocumento{
   sufijo:string,
   descripcion:string,
   fe_tipodoc:number
+}
+
+export interface IInventarioProducto{
+  id:number,
+  codigo:string,
+  descripcion:string,
+  cantidad:string,
+  id_bodega:number,
+  bodega:string,
+  categoria:string,
+  sub_categoria:string
 }
 /**
  * Response de apis 
@@ -227,6 +245,30 @@ export interface IResponseCreacionClientePos extends IRespuestaGeneralAction {
   documento:string
 }
 
+export interface IResponseVentaRetomar extends IRespuestaGeneralAction {
+  descuento:number,
+  productos:ProductoVenta[],
+  cliente:Cliente,
+  vendedor:IVendedorCrmTienda,
+  mediosPago:MedioPago[]
+}
+
+
+export interface IResponseInventariosPos extends IRespuestaGeneralAction{
+  inventarios:IInventarioProducto[]
+}
+
+export interface IProductoTraslado {
+    id: number | null;
+    codigo: string;
+    descripcion: string;
+    cantidadDisponible: number;
+    cantidadTransferir:number
+}
+
+export interface IResponseInventariosPorCodigoPos extends IRespuestaGeneralAction{ 
+    producto:IProductoTraslado
+}
 
 
 

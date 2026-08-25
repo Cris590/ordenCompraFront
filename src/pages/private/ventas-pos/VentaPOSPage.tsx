@@ -17,10 +17,12 @@ import { VentaInfoSection } from "./components/venta/VentaInfoSection";
 import { ResumenSection } from "./components/resumen/ResumenSection";
 import { MediosPagoSection } from "./components/mediosPago/MediosPagoSection";
 import { DescuentoSection } from "./components/descuento/DescuentoSection";
-import { crearVentaPos, generarFacturaPdf, obtenerClientePorDocumento, obtenerInfoProductoVenta, obtenerVendedoresPorTiendaCrm } from "../../../actions/pos/pos";
+import { actualizarVentaPos, crearVentaPos, generarFacturaPdf, obtenerClientePorDocumento, obtenerInfoProductoVenta, obtenerVendedoresPorTiendaCrm, obtenerVentaARetomar, obtenerVentaDetalle } from "../../../actions/pos/pos";
 import { useUserStore } from "../../../store/user/user";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { BreadCrumsAdminVentas } from "./components/breadcrumbs/BreadCrumsAdminVentas";
+import { BreadCrumbsRetomarVenta } from "./components/breadcrumbs/BreadCrumbsRetomarVenta";
 
 
 const formatMoney = (value: number) =>
@@ -40,6 +42,12 @@ const emptyPayment = (): MedioPago => ({
 
 export const VentaPOSPage = () => {
 
+  // ============================================================
+  // VALIDAR SI ES VENTA NUEVA O SE VA A RETOMAR
+  // ============================================================
+  const { idVenta } = useParams();
+  const esRetoma = Boolean(idVenta);
+  const [idVentaRetomar, setIdVentaRetomar] = useState<number | null>(null);
 
   const navigate = useNavigate();
   // ============================================================
@@ -136,6 +144,80 @@ export const VentaPOSPage = () => {
   const restante = Math.max(0, total - totalPagado);
   const excedente = Math.max(0, totalPagado - total);
 
+
+
+  useEffect(() => {
+    if (!idVenta) {
+      // ============================================================
+      // LIMPIAR VENTA
+      // ============================================================
+
+      setCliente(null);
+      setDocumento("");
+      setVendedor(null);
+      setProductos([]);
+      setDescuento(0);
+      setUsarDescuento(false);
+      setMediosPago([emptyPayment()]);
+      setCodigo("");
+
+      return;
+    }
+
+    // ============================================================
+    // CARGAR VENDEDORES
+    // ============================================================
+
+    const cargarVenta = async () => {
+      setOpenLoadingSpinner(true);
+
+      try {
+        const response = await obtenerVentaARetomar(Number(idVenta));
+
+        if (response?.error) {
+          mostrarMensaje(
+            "No fue posible cargar la venta.",
+            "error"
+          );
+          return;
+        }
+        if (response) {
+
+
+          // const venta = response.venta;
+
+          // CLIENTE
+          setCliente(response.cliente);
+          setDocumento(response.cliente.documento);
+
+          // VENDEDOR
+          setVendedor(response.vendedor);
+
+          // PRODUCTOS
+          setProductos(response.productos);
+
+          // DESCUENTO
+          setDescuento(Number(response.descuento || 0));
+          setUsarDescuento(Number(response.descuento || 0) > 0);
+
+          // MEDIOS DE PAGO
+          setMediosPago(response.mediosPago?.length ? response.mediosPago : [emptyPayment()]);
+        }
+
+      } catch (error) {
+        console.error("Error cargando venta:", error);
+
+        mostrarMensaje(
+          "Ocurrió un error al cargar la venta.",
+          "error"
+        );
+      } finally {
+        setOpenLoadingSpinner(false);
+      }
+    };
+
+    cargarVenta();
+  }, [idVenta]);
   // ============================================================
   // CARGAR VENDEDORES
   // ============================================================
@@ -348,15 +430,6 @@ export const VentaPOSPage = () => {
           return null;
         }
 
-        // if (nuevaCantidad >producto.stock) {
-        //   mostrarMensaje(
-        //     `Stock máximo disponible: ${producto.stock}.`,
-        //     "warning"
-        //   );
-
-        //   return producto;
-        // }
-
         return {
           ...producto,
           cantidad: nuevaCantidad,
@@ -469,17 +542,28 @@ export const VentaPOSPage = () => {
     setOpenLoadingSpinner(true);
 
     try {
-      const response = await crearVentaPos(payload);
+      let response;
+
+      if (idVenta) {
+          response = await actualizarVentaPos(Number(idVenta),payload);
+      } else {
+          response = await crearVentaPos(payload);
+      }
 
       setOpenLoadingSpinner(false);
 
       if (response?.error === 0) {
-        generarFacturaPdf(response.ventaId)
+
         await Swal.fire(
           response.msg
         );
+        if (payload.deuda > 0) {
+          navigate("/retomar_ventas");
+        } else {
 
-        navigate("/admin_ventas");
+          await generarFacturaPdf(response.ventaId)
+          navigate("/admin_ventas");
+        }
       } else {
         await Swal.fire(response!.msg);
       }
@@ -513,7 +597,7 @@ export const VentaPOSPage = () => {
                 variant="h5"
                 fontWeight={700}
               >
-                Nueva venta
+               {idVenta ? 'Retomar venta':'Nueva venta'} 
               </Typography>
 
               <Typography
@@ -526,6 +610,8 @@ export const VentaPOSPage = () => {
 
             <IoCartOutline size={38} />
           </div>
+
+          {idVenta ? <BreadCrumbsRetomarVenta/> : <BreadCrumsAdminVentas/> }
 
           <VentaInfoSection
             documentoRef={documentoRef}

@@ -3,7 +3,7 @@ import { actionsSettings } from '../settings';
 import { getAuthToken } from '../axios-helper/getToken';
 import { handleHttpError } from '../axios-helper/axiosError';
 import { IRespuestaGeneralAction } from '../../interfaces/general.interface';
-import { CrearVentaRequest, IClienteCrm, IFiltrosVentasPOS, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialVentas, IResponseMediosPago, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle } from '../../interfaces/pos.interface';
+import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltrosVentasPOS, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialVentas, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
 
 export const obtenerMediosPago = async () => {
   try {
@@ -189,6 +189,30 @@ export const obtenerVentaDetalle= async (idVenta:number) => {
   }
 }
 
+export const obtenerVentaARetomar= async (idVenta:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerVentaARetomar}/${idVenta}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21
+    }
+    const { data }: AxiosResponse<IResponseVentaRetomar> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+
 export const obtenerTiposDocumento= async () => {
   try {
 
@@ -234,6 +258,31 @@ export const crearVentaPos= async (venta:CrearVentaRequest) => {
     return null
   }
 }
+
+export const actualizarVentaPos= async (idVenta:number,venta:CrearVentaRequest) => {
+  try {
+
+    let options = {
+      method: 'put',
+      url: `${actionsSettings.backendRoutes.actualizarVentaPos}/${idVenta}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:venta
+    }
+    const { data }: AxiosResponse<IResponseCrearVentaPos> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
 
 
 export const generarFacturaPdf = async (idVenta: number) => {
@@ -337,5 +386,74 @@ export const crearClientePos = async (clienteParcial: IClienteCrm) => {
   }
 }
 
+
+export const obtenerVentasPendientesPos= async (filtro:IFiltrosVentasPOS) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.obtenerVentasPendientesPos}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:filtro
+    }
+    const { data }: AxiosResponse<IResponseHistorialVentas> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+export const obtenerInventariosPos= async (filtro:IFiltroInventarios) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.obtenerInventariosPos}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:filtro
+    }
+    const { data }: AxiosResponse<IResponseInventariosPos> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const obtenerProductoInventarioPorCodigoPos= async (codigo:string, idTienda:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerProductoInventarioPorCodigoPos}/${codigo}/${idTienda}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseInventariosPorCodigoPos> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 
 

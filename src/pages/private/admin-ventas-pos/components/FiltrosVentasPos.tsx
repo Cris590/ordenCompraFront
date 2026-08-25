@@ -31,21 +31,21 @@ interface FiltrosVentasProps {
   onFiltrar: (nuevosFiltros: IFiltrosVentasPOS) => void;
 }
 
-export const FiltroVentasPOS = ({filtros,onFiltrar}: FiltrosVentasProps) => {
+export const FiltroVentasPOS = ({ filtros, onFiltrar }: FiltrosVentasProps) => {
 
   const [filtrosLocal, setFiltrosLocal] = useState<IFiltrosVentasPOS>(filtros);
-  const [tiendas, setTiendas] = useState<{id:number, nombre:string}[]>([])
+  const [tiendas, setTiendas] = useState<{ id: number, nombre: string }[]>([])
   const session = useUserStore((state) => state.user);
 
   useEffect(() => {
     obtenerTiendas()
   }, [])
-  
+
   useEffect(() => {
     setFiltrosLocal(filtros);
   }, [filtros]);
 
-  const handleChange = (campo: keyof IFiltrosVentasPOS,valor: string) => {
+  const handleChange = (campo: keyof IFiltrosVentasPOS, valor: string) => {
     setFiltrosLocal((actual) => ({
       ...actual,
       [campo]: valor,
@@ -56,25 +56,24 @@ export const FiltroVentasPOS = ({filtros,onFiltrar}: FiltrosVentasProps) => {
     onFiltrar(filtrosLocal);
   };
 
-   const obtenerTiendas = async () => {
-          try {
-  
-              let res = await obtenerTiendasPosUsuario()
-              if (res?.error) {
-                  Swal.fire(res.msg)
-              } else {
-                  setTiendas(res?.bodegas || [])
-                  if (res?.idTiendaObligatorio)
-                  filtrosLocal.id_tienda = String(res.idTiendaObligatorio)
-              }
-  
-          } catch (e) {
-              Swal.fire({
-                  icon: "error",
-                  text: "Comuniquese con el administrador"
-              })
-          }
+  const obtenerTiendas = async () => {
+    try {
+
+      let res = await obtenerTiendasPosUsuario()
+      if (res?.error) {
+        Swal.fire(res.msg)
+      } else {
+        setTiendas(res?.bodegas || [])
+        if (res?.idTiendaObligatorio) filtrosLocal.id_tienda = String(res.idTiendaObligatorio)
       }
+
+    } catch (e) {
+      Swal.fire({
+        icon: "error",
+        text: "Comuniquese con el administrador"
+      })
+    }
+  }
 
   return (
     <Box className="border-b border-slate-200 p-5">
@@ -98,7 +97,7 @@ export const FiltroVentasPOS = ({filtros,onFiltrar}: FiltrosVentasProps) => {
             fullWidth
             disabled={session?.cod_perfil == 8}
             value={filtrosLocal.id_tienda}
-            onChange={(event) =>handleChange("id_tienda",event.target.value)
+            onChange={(event) => handleChange("id_tienda", event.target.value)
             }
             InputProps={{
               startAdornment: (

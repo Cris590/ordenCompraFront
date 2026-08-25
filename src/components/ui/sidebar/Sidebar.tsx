@@ -27,6 +27,11 @@ import {
   IoCartOutline,
   IoLibrarySharp,
   IoPeopleCircleSharp,
+  IoFileTrayFull,
+  IoFileTrayStacked,
+  IoReceiptSharp,
+  IoScaleSharp,
+  IoSwapHorizontalOutline,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -59,6 +64,10 @@ const iconMapping: { [key: string]: IconType } = {
   'crear_venta': IoCartOutline,
   'admin_ventas': IoLibrarySharp,
   'clientes_pos': IoPeopleCircleSharp,
+  'retomar_ventas':IoReceiptSharp,
+  'inventario_pos':IoFileTrayStacked,
+  'buscar_producto_pos':IoScaleSharp,
+  'traslado_producto_pos':IoSwapHorizontalOutline
 };
 
 export const Sidebar = () => {
@@ -101,10 +110,10 @@ export const Sidebar = () => {
       {/* Sidebar */}
       <nav
         className={clsx(
-          "fixed left-0 top-0 h-screen bg-white shadow-2xl transform transition-all duration-300 group",
+          "fixed left-0 top-0 h-screen overflow-y-auto overflow-x-hidden bg-white shadow-2xl transform transition-all duration-300 group",
           isSideMenuOpen
-            ? "w-[350px] z-20" 
-            : "w-[45px] hover:w-[350px] hover:z-20 z-10"
+            ? "w-[350px] z-20"
+            : "w-[50px] hover:w-[350px] hover:z-20 z-10"
         )}
       >
 
