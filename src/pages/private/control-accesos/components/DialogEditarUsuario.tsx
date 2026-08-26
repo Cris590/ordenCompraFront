@@ -385,12 +385,8 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                         </Button>
                     </DialogActions>
                 </form>
-
+                 <LoadingSpinnerScreen open={openLoadingSpinner} />
             </Dialog>
-
-
-            <LoadingSpinnerScreen open={openLoadingSpinner} />
-
         </>
     )
 }
