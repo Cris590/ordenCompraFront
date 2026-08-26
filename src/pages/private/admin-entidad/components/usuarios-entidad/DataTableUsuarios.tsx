@@ -9,6 +9,7 @@ import { useFilteredData } from '../../../../../hooks/useFilteredData';
 import { DialogEditarUsuarioEntidad } from './DialogEditarUsuarioEntidad';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { wrap } from 'module';
 
 interface Props {
     codEntidad: string,
@@ -47,14 +48,17 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         {
             name: 'Nombre',
             selector: (row: IUsuarioEntidadResumen) => row.nombre,
+            wrap:true
         },
         {
             name: 'Email',
             selector: (row: IUsuarioEntidadResumen) => row.email,
+             wrap:true
         },
         {
             name: 'Cargo',
             selector: (row: IUsuarioEntidadResumen) => row.cargo_entidad || '',
+             wrap:true
         },
         {
             name: 'Sexo',

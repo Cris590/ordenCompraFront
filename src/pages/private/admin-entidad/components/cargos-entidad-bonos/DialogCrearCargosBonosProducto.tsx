@@ -44,7 +44,9 @@ export const DialogCrearCargosBonosProducto = ({ codCargoBonoProducto, codCargoE
 
     const obtenerInfoBonoProducto = async (codCargoBonoProducto: number) => {
         try {
+            setLoadingSpinner(true)
             let response = await detalleCargoBonoProducto(codCargoBonoProducto)
+            setLoadingSpinner(false)
             if (response?.error === 0) {
                 if (Object.keys(response.cargo_bono).length === 0) {
                     navigate('/entidades/admin-entidad/')
@@ -191,11 +193,8 @@ export const DialogCrearCargosBonosProducto = ({ codCargoBonoProducto, codCargoE
                         </Button>
                     </DialogActions>
                 </form>
-
+                <LoadingSpinnerScreen open={openLoadingSpinner} />
             </Dialog>
-
-
-            <LoadingSpinnerScreen open={openLoadingSpinner} />
         </>
     )
 }

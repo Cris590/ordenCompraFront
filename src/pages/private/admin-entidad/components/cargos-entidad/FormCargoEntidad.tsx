@@ -58,7 +58,9 @@ export const FormCargoEntidad = ({ codCargoEntidad, codEntidad, openDialog, onCl
 
     const obtenerInfoCargoEntidad = async (codCargoEntidad: number) => {
         try {
+            setLoadingSpinner(true)
             let response = await detalleCargoEntidad(codCargoEntidad)
+            setLoadingSpinner(false)
             if (response?.error === 0) {
                 if (Object.keys(response.cargo).length === 0) {
                     navigate('/entidades/admin-entidad/')
@@ -266,12 +268,10 @@ export const FormCargoEntidad = ({ codCargoEntidad, codEntidad, openDialog, onCl
                              {(!codCargoEntidad || +codCargoEntidad === 0) ? 'Crear Cargo' : 'Editar Cargo'}
                         </Button>
                     </DialogActions>
+                     <LoadingSpinnerScreen open={openLoadingSpinner} />
                 </form>
-
+               
             </Dialog>
-
-
-            <LoadingSpinnerScreen open={openLoadingSpinner} />
         </>
     )
 }
