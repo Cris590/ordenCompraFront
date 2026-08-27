@@ -30,6 +30,8 @@ export interface MedioPago {
   id_metodo_pago: number;
   nombre: string;
   valor: number;
+  codigo: 1| 0;
+  codigo_transaccion?: string;
 }
 
 
@@ -53,6 +55,7 @@ export interface ProductoVentaRequest {
 export interface PagoVentaRequest {
   metodo_pago: string;
   valor: number;
+  codigo_transaccion?: string;
 }
 
 /**
@@ -207,6 +210,20 @@ export interface ITrasladoProducto {
     fecha: string;
 }
 
+export interface IBodegaPos{
+   id: number, nombre: string
+}
+
+export type AccionInventario = "in" | "out";
+
+export interface IProductoMovimiento {
+    id: number;
+    codigo: string;
+    descripcion: string;
+    stock_actual: number;
+    cantidad: number;
+}
+
 /**
  * Response de apis 
  */
@@ -219,7 +236,7 @@ export interface IResponseClientePorDocumento extends IRespuestaGeneralAction {
 }
 
 export interface IResponseTiendasPosUsuario extends IRespuestaGeneralAction {
-  bodegas: { id: number, nombre: string}[],
+  bodegas:IBodegaPos[],
   idTiendaObligatorio?:number
 }
 

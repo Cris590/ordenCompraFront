@@ -37,6 +37,7 @@ const emptyPayment = (): MedioPago => ({
   id_metodo_pago: Date.now() + Math.random(),
   nombre: '',
   valor: 0,
+  codigo:0
 });
 
 export const VentaPOSPage = () => {
@@ -473,20 +474,25 @@ export const VentaPOSPage = () => {
 
   const actualizarMedioPago = (
     id: number,
-    campo: "nombre" | "valor",
+    campo:
+        | "nombre"
+        | "valor"
+        | "codigo"
+        | "codigo_transaccion",
     valor: string | number
-  ) => {
+) => {
+
     setMediosPago((actuales) =>
-      actuales.map((medio) =>
-        medio.id_metodo_pago === id
-          ? {
-            ...medio,
-            [campo]: valor,
-          }
-          : medio
-      )
+        actuales.map((medio) =>
+            medio.id_metodo_pago === id
+                ? {
+                    ...medio,
+                    [campo]: valor,
+                }
+                : medio
+        )
     );
-  };
+};
 
   // ============================================================
   // GUARDAR
@@ -537,6 +543,7 @@ export const VentaPOSPage = () => {
       pagos: mediosPago.map((medio) => ({
         metodo_pago: medio.nombre,
         valor: Number(medio.valor || 0),
+        codigo_transaccion:medio.codigo_transaccion
       })),
 
       deuda: restante,
@@ -629,7 +636,7 @@ export const VentaPOSPage = () => {
           />
 
           {/* CONTENIDO PRINCIPAL */}
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_400px]">
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_500px]">
 
             {/* ================================================= */}
             {/* IZQUIERDA - PRODUCTOS */}

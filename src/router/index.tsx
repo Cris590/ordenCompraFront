@@ -39,6 +39,7 @@ import { RetomarVentaPosPage } from '../pages/private/retomar-venta-pos/RetomarV
 import { InventarioPosPage } from '../pages/private/inventario-pos/InventarioPosPage';
 import { BuscarProductosPosPage } from '../pages/private/buscar-producto-pos/BuscarProductosPosPage';
 import { TrasladoProductoPosPage } from '../pages/private/traslado-producto-pos/TrasladoProductoPosPage';
+import { EntradaSalidaInventarioPage } from '../pages/private/entrada-salida-inventario/EntradaSalidaInventarioPage';
 
 
 const AppRouter: React.FC = () => {
@@ -93,6 +94,8 @@ const AppRouter: React.FC = () => {
           <Route path="/buscar_producto_pos" element={<RouteGuard element={<BuscarProductosPosPage />} />} />
           <Route path="/traslado_producto_pos" element={<RouteGuard element={<TrasladoProductoPosPage />} />} />
           <Route path="/retomar_venta/:idVenta" element={<RouteGuard element={<VentaPOSPage />} />} />
+          <Route path="/in_out_inventarios" element={<RouteGuard element={<EntradaSalidaInventarioPage />} />} />
+          
           
           
           {/* RUTAS E-COMMERCE */}

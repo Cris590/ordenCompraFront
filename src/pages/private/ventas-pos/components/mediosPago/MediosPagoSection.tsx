@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-    Alert,
     Button,
     Card,
     CardContent,
@@ -8,20 +7,28 @@ import {
     IconButton,
     MenuItem,
     Select,
-    Typography,
     TextField,
+    Typography,
 } from "@mui/material";
+
 import {
     IoAdd,
     IoTrashOutline,
 } from "react-icons/io5";
+
 import { NumericFormat } from "react-number-format";
 
-import { MedioPago } from "../../../../../interfaces/pos.interface";
-import { obtenerMediosPago } from "../../../../../actions/pos/pos";
+import {
+    MedioPago,
+} from "../../../../../interfaces/pos.interface";
+
+import {
+    obtenerMediosPago,
+} from "../../../../../actions/pos/pos";
 
 interface MediosPagoSectionProps {
     mediosPago: MedioPago[];
+
     totalPagado: number;
     restante: number;
     excedente: number;
@@ -34,13 +41,15 @@ interface MediosPagoSectionProps {
 
     onActualizarMedioPago: (
         id: number,
-        campo: "nombre" | "valor",
+        campo: "nombre" | "valor" | "codigo" | "codigo_transaccion",
         valor: string | number
     ) => void;
 
     onGuardar: () => void;
 
-    formatMoney: (value: number) => string;
+    formatMoney: (
+        value: number
+    ) => string;
 
     productosLength: number;
 }
@@ -48,8 +57,8 @@ interface MediosPagoSectionProps {
 export const MediosPagoSection = ({
     mediosPago,
     totalPagado,
-    excedente,
     restante,
+    excedente,
     onAgregarMedioPago,
     onEliminarMedioPago,
     onActualizarMedioPago,
@@ -58,108 +67,212 @@ export const MediosPagoSection = ({
     productosLength,
 }: MediosPagoSectionProps) => {
 
-    const [mediosPagoDisponibles, setMediosPagoDisponibles] = useState<MedioPago[]>([])
-    useEffect(() => {
-      cargarMedioPago()
-    }, [])
+    const [
+        mediosPagoDisponibles,
+        setMediosPagoDisponibles
+    ] = useState<MedioPago[]>([]);
 
-    const cargarMedioPago=async ()=> {
+    useEffect(() => {
+        cargarMediosPago();
+    }, []);
+
+    const cargarMediosPago = async () => {
         try {
-            const mediosPagoResponse = await obtenerMediosPago()
-            setMediosPagoDisponibles(mediosPagoResponse?.metodosPago || [])
+            const response = await obtenerMediosPago();
+
+            setMediosPagoDisponibles(
+                response?.metodosPago || []
+            );
+
         } catch (error) {
-            
+            console.error(
+                "Error cargando medios de pago:",
+                error
+            );
         }
-    }
-    
+    };
+
     return (
         <Card>
             <CardContent>
+
                 {/* HEADER */}
 
                 <div className="mb-4 flex items-center justify-between">
-                    <Typography
-                        variant="h6"
-                        fontWeight={700}
-                    >
-                        Medios de pago
-                    </Typography>
+
+                    <div>
+                        <Typography
+                            variant="h6"
+                            fontWeight={700}
+                        >
+                            Medios de pago
+                        </Typography>
+
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                        >
+                            Puedes agregar más de un medio de pago.
+                        </Typography>
+                    </div>
 
                     <Button
                         size="small"
                         variant="outlined"
-                        startIcon={<IoAdd size={18} />}
-                        onClick={onAgregarMedioPago}
+                        startIcon={
+                            <IoAdd size={18} />
+                        }
+                        onClick={
+                            onAgregarMedioPago
+                        }
                     >
                         Agregar
                     </Button>
+
                 </div>
 
-                {/* MEDIOS */}
+                {/* MEDIOS DE PAGO */}
 
                 <div className="space-y-3">
-                    {mediosPago.map((medio) => (
-                        <div
-                            key={medio.id_metodo_pago}
-                            className="flex gap-2"
-                        >
-                            <Select
-                                size="small"
-                                value={medio.nombre}
-                                onChange={(event) =>
-                                    onActualizarMedioPago(
-                                        medio.id_metodo_pago,
-                                        "nombre",
-                                        event.target.value
-                                    )
+
+                    {mediosPago.map((medio) => {
+
+                        /*
+                         * codigo = 1
+                         * significa que el medio requiere
+                         * código de transacción.
+                         */
+
+                        const requiereCodigo =
+                            Number(medio.codigo) === 1;
+
+                        return (
+                            <div
+                                key={
+                                    medio.id_metodo_pago
                                 }
-                                className="min-w-0 flex-1"
+                                className="rounded-lg border border-slate-200 bg-slate-50 p-3"
                             >
-                                {mediosPagoDisponibles.map(
-                                    (opcion) => (
-                                        <MenuItem
-                                            key={opcion.id_metodo_pago}
-                                            value={opcion.valor}
-                                        >
-                                            {opcion.nombre}
+
+                                <div className="flex gap-2">
+
+                                    {/* MEDIO */}
+
+                                    <Select
+                                        size="small"
+                                        value={medio.nombre || ""}
+                                        displayEmpty
+                                        onChange={(event) => {
+                                            const nombreSeleccionado = event.target.value;
+
+                                            const seleccionado =mediosPagoDisponibles.find((opcion) =>opcion.nombre === nombreSeleccionado);
+
+                                            onActualizarMedioPago(
+                                                medio.id_metodo_pago,
+                                                "nombre",
+                                                nombreSeleccionado
+                                            );
+
+                                            onActualizarMedioPago(
+                                                medio.id_metodo_pago,
+                                                "codigo",
+                                                Number(seleccionado?.codigo || 0)
+                                            );
+
+                                            if (Number(seleccionado?.codigo || 0) === 0 ) {
+                                                onActualizarMedioPago(
+                                                    medio.id_metodo_pago,
+                                                    "codigo_transaccion",
+                                                    ""
+                                                );
+                                            }
+                                        }}
+                                        className="min-w-0 flex-1"
+                                    >
+                                        <MenuItem value="" disabled>
+                                            Seleccionar medio
                                         </MenuItem>
-                                    )
+
+                                        {mediosPagoDisponibles.map((opcion) => (
+                                            <MenuItem
+                                                key={opcion.id_metodo_pago}
+                                                value={opcion.nombre}
+                                            >
+                                                {opcion.nombre}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+
+                                    {/* VALOR */}
+
+                                    <NumericFormat
+                                        customInput={TextField}
+                                        size="small"
+                                        value={medio.valor || ""}
+                                        thousandSeparator="."
+                                        decimalSeparator=","
+                                        prefix="$ "
+                                        allowNegative={false}
+                                        decimalScale={0}
+                                        className="w-40"
+                                        placeholder="$ 0"
+                                        onValueChange={(values) => {
+
+                                            onActualizarMedioPago(
+                                                medio.id_metodo_pago,
+                                                "valor",
+                                                values.floatValue ?? 0
+                                            );
+
+                                        }}
+                                    />
+
+                                    {/* ELIMINAR */}
+
+                                    <IconButton
+                                        color="error"
+                                        onClick={() =>
+                                            onEliminarMedioPago(
+                                                medio.id_metodo_pago
+                                            )
+                                        }
+                                        disabled={mediosPago.length === 1}
+                                    >
+                                        <IoTrashOutline size={20} />
+                                    </IconButton>
+
+                                </div>
+
+                                {/* CÓDIGO DE TRANSACCIÓN */}
+
+                                {requiereCodigo && (
+
+                                    <div className="mt-2">
+
+                                        <TextField
+                                            fullWidth
+                                            size="small"
+                                            label="Código de transacción"
+                                            placeholder="Ingrese el código de transacción"
+                                            value={ medio.codigo_transaccion || ""}
+                                            onChange={(event) =>
+                                                onActualizarMedioPago(
+                                                    medio.id_metodo_pago,
+                                                    "codigo_transaccion",
+                                                    event.target.value
+                                                )
+                                            }
+                                            inputProps={{maxLength: 50}}
+                                        />
+
+                                    </div>
+
                                 )}
-                            </Select>
 
-                            <NumericFormat
-                                customInput={TextField}
-                                size="small"
-                                value={
-                                    medio.valor || ""
-                                }
-                                thousandSeparator="."
-                                decimalSeparator=","
-                                prefix="$ "
-                                allowNegative={false}
-                                decimalScale={0}
-                                className="w-40"
-                                placeholder="$ 0"
-                                onValueChange={(values) => {
-                                    onActualizarMedioPago(
-                                        medio.id_metodo_pago,
-                                        "valor",
-                                        values.floatValue ?? 0
-                                    );
-                                }}
-                            />
+                            </div>
+                        );
+                    })}
 
-                            <IconButton
-                                color="error"
-                                onClick={() =>onEliminarMedioPago(medio.id_metodo_pago)}
-                                disabled={mediosPago.length ===1}
-                            >
-                                <IoTrashOutline
-                                    size={20}
-                                />
-                            </IconButton>
-                        </div>
-                    ))}
                 </div>
 
                 <Divider className="my-4" />
@@ -167,31 +280,68 @@ export const MediosPagoSection = ({
                 {/* TOTALES */}
 
                 <div className="space-y-2">
+
                     <div className="flex justify-between">
-                        <span>Total pagado</span>
-                        <strong>{formatMoney(totalPagado)}</strong>
+                        <span>
+                            Total pagado
+                        </span>
+
+                        <strong>
+                            {formatMoney(
+                                totalPagado
+                            )}
+                        </strong>
                     </div>
 
                     {restante > 0 && (
+
                         <div className="flex justify-between text-lg text-red-600">
-                            <span>Restante por pagar</span>
-                            <strong>{formatMoney(restante)}</strong>
+
+                            <span>
+                                Restante por pagar
+                            </span>
+
+                            <strong>
+                                {formatMoney(restante)}
+                            </strong>
+
                         </div>
+
                     )}
 
                     {excedente > 0 && (
+
                         <div className="flex justify-between text-lg text-green-600">
-                            <span>Excedente / cambio</span>
-                            <strong>{formatMoney(excedente)}</strong>
+
+                            <span>
+                                Excedente / cambio
+                            </span>
+
+                            <strong>
+                                {formatMoney(excedente)}
+                            </strong>
+
                         </div>
+
                     )}
 
-                    {restante === 0 && excedente === 0 && (
-                        <div className="flex justify-between text-lg text-green-600">
-                            <span>Estado</span>
-                            <strong>Pago completo</strong>
-                        </div>
-                    )}
+                    {restante === 0 &&
+                        excedente === 0 && (
+
+                            <div className="flex justify-between text-lg text-green-600">
+
+                                <span>
+                                    Estado
+                                </span>
+
+                                <strong>
+                                    Pago completo
+                                </strong>
+
+                            </div>
+
+                        )}
+
                 </div>
 
                 {/* GUARDAR */}
@@ -203,12 +353,11 @@ export const MediosPagoSection = ({
                     className="mt-5"
                     onClick={onGuardar}
                     disabled={productosLength === 0}
-                    color={restante > 0 ? "warning" : "primary"}
+                    color={restante > 0 ? "warning":"primary"}
                 >
-                    {restante > 0
-                        ? "Guardar venta con saldo"
-                        : "Guardar venta"}
+                    {restante > 0 ? "Guardar venta con saldo" : "Guardar venta"}
                 </Button>
+
             </CardContent>
         </Card>
     );

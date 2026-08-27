@@ -222,7 +222,10 @@ export const DialogClientePos = ({
                                         name="id_tipo_documento"
                                         control={control}
                                         rules={{
-                                            required: 'Seleccione el tipo de documento'
+                                            validate: (value) =>
+                                                value && value > 0
+                                                    ? true
+                                                    : 'Seleccione el tipo de documento'
                                         }}
                                         render={({ field, fieldState }) => (
                                             <TextField

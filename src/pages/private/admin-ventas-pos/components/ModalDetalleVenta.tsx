@@ -266,17 +266,6 @@ export const ModalDetalleVenta = ({
                                             {ventaDetalle?.documento_cliente}
                                         </p>
                                     </div>
-
-                                    <div>
-                                        <p className="mb-1 text-xs font-medium text-slate-400">
-                                            Sufijo
-                                        </p>
-
-                                        <p className="text-sm font-semibold text-slate-700">
-                                            {ventaDetalle?.sufijo}
-                                        </p>
-                                    </div>
-
                                 </div>
                             </div>
 
@@ -437,23 +426,32 @@ export const ModalDetalleVenta = ({
                                                     key={index}
                                                     className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-3"
                                                 >
+
                                                     <div className="flex items-center gap-3">
 
                                                         <div className="h-2 w-2 rounded-full bg-indigo-500" />
 
-                                                        <span className="text-sm font-medium capitalize text-slate-700">
-                                                            {
-                                                                metodo.metodo_pago
-                                                            }
-                                                        </span>
+                                                        <div>
+                                                            <span className="text-sm font-medium capitalize text-slate-700">
+                                                                {metodo.metodo_pago}
+                                                            </span>
+
+                                                            {metodo.codigo_transaccion && (
+                                                                <div className="mt-0.5 text-xs text-slate-500">
+                                                                    Código de venta:{" "}
+                                                                    <span className="font-medium text-slate-700">
+                                                                        {metodo.codigo_transaccion}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        </div>
 
                                                     </div>
 
                                                     <span className="text-sm font-bold text-slate-800">
-                                                        {formatMoney(
-                                                            metodo.valor
-                                                        )}
+                                                        {formatMoney(metodo.valor)}
                                                     </span>
+
                                                 </div>
                                             )
                                         )}
@@ -559,8 +557,8 @@ export const ModalDetalleVenta = ({
                     </div>
 
                 </div>
-                 {/* <div className="absolute inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm"> */}
-                    <LoadingSpinnerScreen open={openLoadingSpinner}/>
+                {/* <div className="absolute inset-0 z-[9999] flex items-center justify-center bg-white/80 backdrop-blur-sm"> */}
+                <LoadingSpinnerScreen open={openLoadingSpinner} />
                 {/* </div> */}
             </Dialog>
         </>
