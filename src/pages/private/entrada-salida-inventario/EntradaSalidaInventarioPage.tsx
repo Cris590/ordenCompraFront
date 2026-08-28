@@ -30,7 +30,7 @@ import { IBodegaPos, IProductoMovimiento, AccionInventario, IProductoTraslado } 
 // Cambiar por tus acciones reales
 
 import { ModalComentarioInventario } from "./components/ModalComentarioInventario";
-import { obtenerProductoInventarioPorCodigoPos, obtenerTiendasPosUsuario } from "../../../actions/pos/pos";
+import { crearMovimientoInventario, obtenerProductoInventarioPorCodigoPos, obtenerTiendasPosUsuario } from "../../../actions/pos/pos";
 import Swal from "sweetalert2";
 
 export const EntradaSalidaInventarioPage = () => {
@@ -41,6 +41,7 @@ export const EntradaSalidaInventarioPage = () => {
         message: "",
         severity: "warning" as "success" | "error" | "warning" | "info",
     });
+    
 
     const [idBodega, setIdBodega] = useState<number | "">("");
     const [accion, setAccion] = useState<AccionInventario | "">("");
@@ -363,16 +364,13 @@ export const EntradaSalidaInventarioPage = () => {
             };
 
             console.log('--- Payload a guardar ----', payload)
-            return
-            // await crearMovimientoInventario(payload);
+            const res = await crearMovimientoInventario(payload);
 
             setOpenComentario(false);
-
-            window.alert(
-                "Movimiento de inventario realizado correctamente."
-            );
-
-            reiniciar();
+            Swal.fire(res!.msg )
+            if(res?.error == 0){
+                reiniciar();
+            }   
 
         } catch (error) {
 
@@ -475,11 +473,11 @@ export const EntradaSalidaInventarioPage = () => {
                                 disabled={configuracionConfirmada}
                             >
 
-                                <MenuItem value="entrada">
+                                <MenuItem value="in">
                                     Entrada de inventario
                                 </MenuItem>
 
-                                <MenuItem value="salida">
+                                <MenuItem value="out">
                                     Salida de inventario
                                 </MenuItem>
 

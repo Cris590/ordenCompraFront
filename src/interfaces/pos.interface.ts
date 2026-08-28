@@ -224,6 +224,23 @@ export interface IProductoMovimiento {
     cantidad: number;
 }
 
+
+export interface IFiltroLogInventarios {
+    fecha_inicial: string;
+    fecha_final: string;
+    id_tienda: number[];
+}
+
+export interface IMovimientoInventario{
+  id_log_in_out:number,
+  tipo_operacion:string,
+  productos: IProductoMovimiento[],
+  bodega: string,
+  usuario: string,
+  comentario: string,
+  fecha:string
+}
+
 /**
  * Response de apis 
  */
@@ -312,5 +329,6 @@ export interface IResponseHistorialTraslados extends IRespuestaGeneralAction{
     traslados:ITrasladoProducto[]
 }
 
-
-
+export interface IResponseMovimientoInventarios extends IRespuestaGeneralAction{
+  movimientos:IMovimientoInventario[]
+}

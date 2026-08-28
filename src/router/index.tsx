@@ -40,6 +40,7 @@ import { InventarioPosPage } from '../pages/private/inventario-pos/InventarioPos
 import { BuscarProductosPosPage } from '../pages/private/buscar-producto-pos/BuscarProductosPosPage';
 import { TrasladoProductoPosPage } from '../pages/private/traslado-producto-pos/TrasladoProductoPosPage';
 import { EntradaSalidaInventarioPage } from '../pages/private/entrada-salida-inventario/EntradaSalidaInventarioPage';
+import LogInventariosPage from '../pages/private/log-in-out-pos/LogInventariosPage';
 
 
 const AppRouter: React.FC = () => {
@@ -95,6 +96,7 @@ const AppRouter: React.FC = () => {
           <Route path="/traslado_producto_pos" element={<RouteGuard element={<TrasladoProductoPosPage />} />} />
           <Route path="/retomar_venta/:idVenta" element={<RouteGuard element={<VentaPOSPage />} />} />
           <Route path="/in_out_inventarios" element={<RouteGuard element={<EntradaSalidaInventarioPage />} />} />
+          <Route path="/historial_in_out" element={<RouteGuard element={<LogInventariosPage />} />} />
           
           
           

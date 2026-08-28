@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { actualizarUsuarioEntidad, cargosPorEntidad, crearUsuarioEntidad } from '../../../../actions/entidad/entidad';
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField } from '@mui/material';
 import Swal from 'sweetalert2';
-import { useEntidadStore } from '../../../../store/entidad/entidad';
 import { IEntidadTarjetaBono, IPerfilAplicacion, IUsuarioAplicacionResumen } from '../../../../interfaces/control_accesos.interface';
 import { crearUsuarioAplicativo, editarUsuarioAplicativo, obtenerPerfilesAplicativo } from '../../../../actions/control-accesos/control-accesos';
 import { obtenerTiendasPosUsuario, obtenerVendedoresCrm } from '../../../../actions/pos/pos';
@@ -22,7 +20,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
 
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false)
     const [perfiles, setPerfiles] = useState<IPerfilAplicacion[]>([])
-    const [tiendas, setTiendas] = useState<{id:number, nombre:string}[]>([])
+    const [tiendas, setTiendas] = useState<{ id: number, nombre: string }[]>([])
     const [vendedoresCrm, setVendedoresCrm] = useState<IVendedorCrm[]>([])
     const { handleSubmit, watch, reset, control, formState: { isValid } } = useForm<IUsuarioAplicacionResumen>({
         defaultValues: usuario
@@ -100,21 +98,19 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
             let dataAux: any = {
                 ...data,
             }
-           
+
 
             dataAux.cedula = dataAux.usuario
             delete dataAux.usuario
 
             dataAux.entidades = JSON.stringify(dataAux.entidades)
 
-            console.log('dataAux',dataAux)
-
-            if(!!usuario.cod_usuario){
+            if (!!usuario.cod_usuario) {
                 await updateUsuario(usuario.cod_usuario, dataAux)
-            }else{
+            } else {
                 await crearUsuario(dataAux)
             }
-           
+
 
         } catch (e) {
             Swal.fire({
@@ -146,7 +142,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
         }
     }
 
-    const updateUsuario = async (cod_usuario:number, data: any) => {
+    const updateUsuario = async (cod_usuario: number, data: any) => {
         try {
             delete data.cod_usuario
             delete data.cod_perfil
@@ -187,193 +183,209 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                 <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
                     <DialogContent>
 
+                        <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:min-w-[700px]">
 
-                        <div className="flex flex-col mt-4 w-96">
+                            {/* NOMBRE */}
                             <Controller
                                 name="nombre"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field }) => (
-
-                                    <div className="my-2 w-96">
-                                        <TextField
-                                            fullWidth
-                                            label="Nombre"
-                                            variant="outlined"
-                                            {...field}
-                                            value={field.value || ''}
-                                        />
-                                    </div>
+                                    <TextField
+                                        fullWidth
+                                        label="Nombre"
+                                        variant="outlined"
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
                                 )}
                             />
 
+                            {/* CÉDULA */}
                             <Controller
                                 name="usuario"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field }) => (
-
-                                    <div className="my-2 w-96">
-
-
-                                        <TextField
-                                            fullWidth
-                                            label="Cédula"
-                                            variant="outlined"
-                                            autoComplete="off"
-                                            {...field}
-                                            value={field.value || ''}
-                                        />
-                                    </div>
+                                    <TextField
+                                        fullWidth
+                                        label="Cédula"
+                                        variant="outlined"
+                                        autoComplete="off"
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
                                 )}
                             />
 
+                            {/* EMAIL */}
                             <Controller
                                 name="email"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field }) => (
-
-                                    <div className="my-2 w-96">
-
-
-                                        <TextField
-                                            fullWidth
-                                            label="Email"
-                                            variant="outlined"
-                                            type="email"
-                                            {...field}
-                                            value={field.value || ''}
-                                        />
-                                    </div>
+                                    <TextField
+                                        fullWidth
+                                        label="Email"
+                                        variant="outlined"
+                                        type="email"
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
                                 )}
                             />
 
+                            {/* CONTRASEÑA */}
                             <Controller
                                 name="password"
                                 control={control}
-                                rules={{ required: (!usuario.cod_usuario) }}
+                                rules={{
+                                    required: !usuario.cod_usuario,
+                                }}
                                 render={({ field }) => (
-
-                                    <div className="my-2 w-96">
-
-
-                                        <TextField
-                                            fullWidth
-                                            label="Contraseña"
-                                            variant="outlined"
-                                            type="password"
-                                            autoComplete="off"
-                                            placeholder={field.value ? '' : '*******'}
-                                            {...field}
-                                            value={field.value || ''}
-                                        />
-                                    </div>
+                                    <TextField
+                                        fullWidth
+                                        label="Contraseña"
+                                        variant="outlined"
+                                        type="password"
+                                        autoComplete="new-password"
+                                        placeholder={
+                                            field.value
+                                                ? ""
+                                                : "*******"
+                                        }
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
                                 )}
                             />
 
+                            {/* PERFIL */}
                             <Controller
                                 name="cod_perfil"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field }) => (
-                                    <>
-                                        <InputLabel id="perfil" className='mt-4'>Perfil</InputLabel>
-                                        <Select
-                                            disabled={!!usuario.cod_usuario}
-                                            labelId="perfil"
-                                            {...field}
-                                            label="perfil"
-                                        >
-                                            {perfiles.map((perfil) => (<MenuItem value={perfil.cod_perfil}>{perfil.nombre} </MenuItem>))}
-                                        </Select>
-                                    </>
+                                    <TextField
+                                        {...field}
+                                        select
+                                        fullWidth
+                                        label="Perfil"
+                                        value={field.value ?? ""}
+                                        disabled={!!usuario.cod_usuario}
+                                    >
+                                        {perfiles.map((perfil) => (
+                                            <MenuItem
+                                                key={perfil.cod_perfil}
+                                                value={perfil.cod_perfil}
+                                            >
+                                                {perfil.nombre}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
                                 )}
                             />
 
-
-                            <br />
-                            {
-                                // Entidades para el perfil de atención de bonos
-                                [6].includes(perfil) &&
-                                <Controller
-                                    name="entidades"
-                                    control={control}
-                                    rules={{ required: true }}
-                                    render={({ field }) => {
-                                        return (
-                                            <Autocomplete
-                                                multiple
-                                                options={entidades}
-                                                getOptionLabel={(option) => option.nombre}
-
-                                                // 🔹 Mostrar seleccionados (form → UI)
-                                                value={entidades.filter(ent =>
-                                                    field.value?.includes(ent.cod_entidad)
-                                                )}
-
-                                                // 🔹 Guardar en el form (UI → form)
-                                                onChange={(_, newValue) => {
-                                                    field.onChange(newValue.map(v => v.cod_entidad));
-                                                }}
-
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        variant="standard"
-                                                        label="Entidades"
-                                                        placeholder="Buscar entidad"
-                                                    />
-                                                )}
-                                            />
-                                        );
-                                    }}
-                                />
-                            }
-
-
-                            {
-                                [8].includes(perfil) &&<>
+                            {/* TIENDA */}
+                            {[8].includes(perfil) && (
                                 <Controller
                                     name="id_bodega"
                                     control={control}
                                     rules={{ required: true }}
                                     render={({ field }) => (
-                                        <>
-                                            <InputLabel id="tienda" className='mt-1'>Tienda</InputLabel>
-                                            <Select
-                                                labelId="tienda"
-                                                {...field}
-                                                label="tienda"
-                                            >
-                                                {tiendas.map((bodega) => (<MenuItem value={bodega.id}>{bodega.nombre} </MenuItem>))}
-                                            </Select>
-                                        </>
+                                        <TextField
+                                            {...field}
+                                            select
+                                            fullWidth
+                                            label="Tienda"
+                                            value={field.value ?? ""}
+                                        >
+                                            {tiendas.map((bodega) => (
+                                                <MenuItem
+                                                    key={bodega.id}
+                                                    value={bodega.id}
+                                                >
+                                                    {bodega.nombre}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
                                     )}
                                 />
+                            )}
 
+                            {/* VENDEDORES */}
+                            {[8].includes(perfil) && (
                                 <Controller
                                     name="id_usuario_crm"
                                     control={control}
                                     rules={{ required: true }}
                                     render={({ field }) => (
-                                        <>
-                                            <InputLabel id="id_usuario_crm" className='mt-1'>Vendedor Crm</InputLabel>
-                                            <Select
-                                                labelId="id_usuario_crm"
-                                                {...field}
-                                                label="id_usuario_crm"
-                                            >
-                                                {vendedoresCrm.map((vendedor) => (<MenuItem value={vendedor.id}>{vendedor.usuario} - {vendedor.nombre} </MenuItem>))}
-                                            </Select>
-                                        </>
+                                        <TextField
+                                            {...field}
+                                            select
+                                            fullWidth
+                                            label="Vendedor CRM"
+                                            value={field.value ?? ""}
+                                        >
+                                            {vendedoresCrm.map((vendedor) => (
+                                                <MenuItem
+                                                    key={vendedor.id}
+                                                    value={vendedor.id}
+                                                >
+                                                    {vendedor.usuario} -{" "}
+                                                    {vendedor.nombre}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
                                     )}
                                 />
+                            )}
 
-                            </>
+                            {/* ENTIDADES */}
+                            {[6, 8].includes(perfil) && (
+                                <div className="md:col-span-2">
+                                    <Controller
+                                        name="entidades"
+                                        control={control}
+                                        rules={{ required: true }}
+                                        render={({ field }) => (
+                                            <Autocomplete
+                                                multiple
+                                                fullWidth
+                                                options={entidades}
+                                                getOptionLabel={(option) =>
+                                                    option.nombre
+                                                }
 
-                            
-                            }
+                                                value={entidades.filter(
+                                                    (ent) =>
+                                                        field.value?.includes(
+                                                            ent.cod_entidad
+                                                        )
+                                                )}
+
+                                                onChange={(_, newValue) => {
+                                                    field.onChange(
+                                                        newValue.map(
+                                                            (v) =>
+                                                                v.cod_entidad
+                                                        )
+                                                    );
+                                                }}
+
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        label="Entidades"
+                                                        placeholder="Buscar entidad"
+                                                    />
+                                                )}
+                                            />
+                                        )}
+                                    />
+                                </div>
+                            )}
+
                         </div>
 
                     </DialogContent>
@@ -385,7 +397,7 @@ export const DialogEditarUsuario = ({ openDialog, usuario, onClose, entidades }:
                         </Button>
                     </DialogActions>
                 </form>
-                 <LoadingSpinnerScreen open={openLoadingSpinner} />
+                <LoadingSpinnerScreen open={openLoadingSpinner} />
             </Dialog>
         </>
     )

@@ -134,10 +134,10 @@ export const actionsSettings  = {
         obtenerInventariosPos:`${apiUrl}/pos/obtener_inventario_pos`,
         buscarInventarioPorCodigo:`${apiUrl}/pos/busqueda_inventario_codigo`,
         obtenerProductoInventarioPorCodigoPos:`${apiUrl}/pos/inventario_codigo`,
-
+        crearMovimientoInventario:`${apiUrl}/pos/entrada_salida_inventario`,
         transferirProductosEntreBodegas:`${apiUrl}/pos/transferir_producto_entre_bodegas`,
         obtenerHistorialTraslados:`${apiUrl}/pos/obtener_historial_translados`,
-        
+        obtenerMovimientosInventarios:`${apiUrl}/pos/obtener_movimiento_inventarios`,
         login:`${apiUrl}/users/authentication`,
     }
 }

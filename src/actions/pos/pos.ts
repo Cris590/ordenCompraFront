@@ -3,7 +3,7 @@ import { actionsSettings } from '../settings';
 import { getAuthToken } from '../axios-helper/getToken';
 import { handleHttpError } from '../axios-helper/axiosError';
 import { IRespuestaGeneralAction } from '../../interfaces/general.interface';
-import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltrosVentasPOS, IFiltroTrasladosProductos, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialTraslados, IResponseHistorialVentas, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
+import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltroLogInventarios, IFiltrosVentasPOS, IFiltroTrasladosProductos, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialTraslados, IResponseHistorialVentas, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseMovimientoInventarios, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
 
 export const obtenerMediosPago = async () => {
   try {
@@ -553,6 +553,53 @@ export const cancelarVentaPos= async (idVenta:number) => {
     return null
   }
 }
+
+export const crearMovimientoInventario = async ( movimientoInventario:any ) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.crearMovimientoInventario}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:movimientoInventario
+    }
+    const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const obtenerMovimientosInventarios = async ( filtros:IFiltroLogInventarios ) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.obtenerMovimientosInventarios}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:filtros
+    }
+    const { data }: AxiosResponse<IResponseMovimientoInventarios> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
 
 
 

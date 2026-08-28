@@ -32,6 +32,8 @@ import {
   IoReceiptSharp,
   IoScaleSharp,
   IoSwapHorizontalOutline,
+  IoStorefront,
+  IoFileTrayFullSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -67,7 +69,9 @@ const iconMapping: { [key: string]: IconType } = {
   'retomar_ventas':IoReceiptSharp,
   'inventario_pos':IoFileTrayStacked,
   'buscar_producto_pos':IoScaleSharp,
-  'traslado_producto_pos':IoSwapHorizontalOutline
+  'traslado_producto_pos':IoSwapHorizontalOutline,
+  'in_out_inventarios':IoStorefront,
+  'historial_in_out':IoFileTrayFullSharp 
 };
 
 export const Sidebar = () => {

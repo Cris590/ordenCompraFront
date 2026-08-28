@@ -532,11 +532,7 @@ export const TrasladoProductosModal = ({
                                 label="Transferir"
                                 size="small"
                                 type="number"
-                                value={
-                                    producto.cantidadTransferir === 0
-                                        ? ""
-                                        : producto.cantidadTransferir
-                                }
+                                value={ producto.cantidadTransferir === 0 ? "" : producto.cantidadTransferir}
                                 disabled={!producto.id}
                                 onChange={(e) =>
                                     cambiarCantidad(

@@ -10,6 +10,7 @@ import { FiltroBusquedaBonos } from './components/FiltroBusquedaBonos';
 import Swal from 'sweetalert2';
 import clsx from 'clsx';
 import { DialogRedencionBonos } from './components/DialogRedencionBonos';
+import { wrap } from 'module';
 
 export const UsuariosDotacionPage = () => {
 
@@ -29,7 +30,8 @@ export const UsuariosDotacionPage = () => {
         {
             name: 'Nombre',
             selector: (row: IUsuarioBonoBusqueda) => row.nombre,
-            sortable: true
+            sortable: true,
+            wrap:true
         },
         {
             name: 'Cedula',
@@ -40,6 +42,7 @@ export const UsuariosDotacionPage = () => {
             name: 'Cargo',
             selector: (row: IUsuarioBonoBusqueda) => row.cargo_entidad,
             sortable: true,
+            wrap:true
         },
         {
             name: 'Sexo',
@@ -47,7 +50,8 @@ export const UsuariosDotacionPage = () => {
         },
         {
             name: 'Entidad',
-            selector: (row: IUsuarioBonoBusqueda) => row.entidad
+            selector: (row: IUsuarioBonoBusqueda) => row.entidad,
+            wrap:true
         },
         {
             name: 'NIT Entidad',
@@ -55,7 +59,8 @@ export const UsuariosDotacionPage = () => {
         },
         {
             name: 'No Contrato',
-            selector: (row: IUsuarioBonoBusqueda) => row.no_contrato
+            selector: (row: IUsuarioBonoBusqueda) => row.no_contrato,
+            wrap:true
         },
         {
             name: 'Estado',
