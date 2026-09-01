@@ -13,6 +13,7 @@ import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/Loadi
 import { CargosEntidadBonos } from './components/cargos-entidad-bonos/CargosEntidadBonos';
 import { ControlProductosEntidad } from './components/control-productos/ControlProductosEntidad';
 import { CreacionTemplateBono } from './components/edicion-bonos/CreacionTemplateBono';
+import { ReporteBonosEntregados } from './components/reporte-bonos-entregados/ReporteBonosEntregados';
 
 export const AdminEntidad = () => {
   const { codEntidad } = useParams<{ codEntidad: string }>();
@@ -60,7 +61,8 @@ export const AdminEntidad = () => {
           <Tab key="5" label="Cargos usuario bonos" value="5" disabled={!codEntidad || +codEntidad === 0} />,
           <Tab key="6" label="Control de productos" value="6" disabled={!codEntidad || +codEntidad === 0} />,
           <Tab key="3" label="Usuarios" value="3" disabled={!codEntidad || +codEntidad === 0} />,
-          <Tab key="7" label="Creación bonos" value="7" disabled={!codEntidad || +codEntidad === 0} />
+          <Tab key="7" label="Creación bonos" value="7" disabled={!codEntidad || +codEntidad === 0} />,
+          <Tab key="8" label="Reporte de bonos redimidos" value="8" disabled={!codEntidad || +codEntidad === 0} />
           
         ]
       }
@@ -124,6 +126,12 @@ export const AdminEntidad = () => {
             <TabPanel value="7">
               {(codEntidad && +codEntidad !== 0) && (
                 <CreacionTemplateBono codEntidad={+codEntidad} />
+              )}
+            </TabPanel>
+
+            <TabPanel value="8">
+              {(codEntidad && +codEntidad !== 0) && (
+                <ReporteBonosEntregados codEntidad={+codEntidad} />
               )}
             </TabPanel>
 

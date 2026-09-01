@@ -71,6 +71,8 @@ export const actionsSettings  = {
         
         
         reporteBonosEntregados:`${apiUrl}/orden_compra/reporte_bonos_entregados`,
+        reporteBonosEntregadosTotal:`${apiUrl}/orden_compra/reporte_bonos_entregados_total`,
+        
         validarOrdenUsuario:`${apiUrl}/orden_compra/validar_orden`,
         productosUsuario:`${apiUrl}/orden_compra/productos`,
         obtenerProductoDetalleCarro:`${apiUrl}/orden_compra/producto_detalle`,

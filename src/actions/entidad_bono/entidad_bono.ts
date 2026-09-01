@@ -29,12 +29,34 @@ export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) 
     }
   }
 
-  export const consultarReporteBonosRedimidos = async ( codUsuario:number) => {
+  export const consultarReporteBonosRedimidos = async ( codEntidad:number) => {
     try {
   
       let options = {
         method: 'get',
-        url: actionsSettings.backendRoutes.reporteBonosEntregados + '/' + codUsuario,
+        url: actionsSettings.backendRoutes.reporteBonosEntregados + '/' + codEntidad,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IRespuestaReporteBonosRedimidos> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+  export const consultarReporteBonosRedimidosTotal = async ( codEntidad:number) => {
+    try {
+  
+      let options = {
+        method: 'get',
+        url: actionsSettings.backendRoutes.reporteBonosEntregadosTotal + '/' + codEntidad,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': getAuthToken()
