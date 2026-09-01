@@ -10,11 +10,12 @@ import {
     Tooltip
 } from "@mui/material";
 import { debounce } from "@mui/material/utils";
-import { IoSearchCircleOutline, IoTrashBin } from "react-icons/io5";
+import { IoDownload , IoSearchCircleOutline, IoTrashBin } from "react-icons/io5";
 import { ICategoriaProductoCrm, ISubCategoriaProductoCrm } from "../../../../../interfaces/entidad.interface";
 import { IFiltroProductosCRM } from "../../../../../interfaces/ecommerce.interface";
 import { obtenerCategoriasProductosCrm, obtenerSubCategoriasProductosCrm } from "../../../../../actions/entidad/entidad";
 import Swal from "sweetalert2";
+import { descargarExcelImpresionProductosCrm } from "../../../../../actions/ecommerce/ecommerce";
 
 
 interface Props {
@@ -99,6 +100,15 @@ export const FiltroTablaProductos = ({ onChange }: Props) => {
         setBuscar('')
         setSubCategoria(undefined)
         setCategoria(undefined);
+    }
+
+    const handleDescargarExcelImpresion = async ()=>{
+        const filtro = {
+            buscar,
+            idCategoria,
+            idSubCategoria
+        }
+        await descargarExcelImpresionProductosCrm(filtro)
     }
 
     const emitir = useMemo(
@@ -201,6 +211,17 @@ export const FiltroTablaProductos = ({ onChange }: Props) => {
                                 onClick={handleReiniciarFiltro}
                             >
                                 <IoTrashBin />
+                            </IconButton>
+                        </Tooltip>
+                    </Grid>
+
+                     <Grid className="mx-3 flex items-center justify-center">
+                        <Tooltip title="Descargar productos para impresión">
+                            <IconButton
+                                color="primary"
+                                onClick={handleDescargarExcelImpresion}
+                            >
+                                <IoDownload  />
                             </IconButton>
                         </Tooltip>
                     </Grid>

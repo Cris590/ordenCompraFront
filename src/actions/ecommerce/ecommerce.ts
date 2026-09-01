@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
@@ -510,6 +510,42 @@ export const crearProductoCrm = async (producto: any) => {
     console.log(e)
     return null
   }
+}
+
+export const descargarExcelImpresionProductosCrm = async (filtros:{ buscar?:string, idCategoria?:number, idSubCategoria?:number}) => {
+    try {
+        const config: AxiosRequestConfig = {
+          method: 'post',
+          url: `${actionsSettings.backendRoutes.descargarExcelImpresionProductosCrm}`,
+          headers: {
+            'Authorization': getAuthToken()
+          },
+          responseType: 'blob', // Especifica que esperamos un blob (archivo binario) como respuesta
+          maxRedirects: 21,
+          data:filtros
+        };
+    
+        const { data, headers }: AxiosResponse<Blob> = await axios(config);
+    
+        // Crea un enlace para descargar el archivo
+        const fileName = headers['content-disposition']
+          ? headers['content-disposition'].split('filename=')[1].replace(/"/g, '')
+          : `reporte_productos_impresion.xlsx`;
+    
+        const url = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    
+        // Limpia el objeto URL creado
+        window.URL.revokeObjectURL(url);
+      } catch (e) {
+        console.error('Error al descargar el archivo:', e);
+        // Manejo del error
+      }
 }
 
 

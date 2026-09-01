@@ -96,6 +96,7 @@ export const actionsSettings  = {
         sincronizarCategoriaEcommerce:`${apiUrl}/ecommerce/sincronizar_categoria_ecommerce`,
         sincronizarSubCategoriaEcommerce:`${apiUrl}/ecommerce/sincronizar_subcategoria_ecommerce`,
         obtenerProductosCrm:`${apiUrl}/ecommerce/obtener_productos_crm`,
+        descargarExcelImpresionProductosCrm:`${apiUrl}/ecommerce/descargar_excel_impresion_productos`,
         obtenerDetalleProductoCrm:`${apiUrl}/ecommerce/obtener_detalles_producto`,
         
         obtenerColoresProductoCrm:`${apiUrl}/ecommerce/obtener_colores_producto_crm`,
