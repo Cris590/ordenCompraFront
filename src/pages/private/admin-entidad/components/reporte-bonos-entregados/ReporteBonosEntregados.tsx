@@ -25,6 +25,22 @@ export const ReporteBonosEntregados = ( { codEntidad }: Props ) => {
     const { search, setSearch, filteredData } = useFilteredData(usuarios);
     const columns = [
         {
+            name: 'Activo',
+            selector: (row: IBonoRedimido) => row.activo,
+            sortable: true,
+            cell: (row: IBonoRedimido) => (
+                <span
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                        (row.activo)
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-red-300 text-gray-500'
+                    }`}
+                >
+                    {(row.activo) ? 'Activo' : 'Inactivo'}
+                </span>
+            )
+        },
+        {
             name: 'Estado',
             selector: (row: IBonoRedimido) => row.cedula_vendedor !== 'PENDIENTE',
             sortable: true,
@@ -127,6 +143,7 @@ export const ReporteBonosEntregados = ( { codEntidad }: Props ) => {
     const downloadExcelReport = (fileName = "reporte") => {
         // Format the data
         const formattedData = usuarios.map(item => ({
+            activo: item.activo ? 'Activo':'Inactivo',
             fecha_redimido: formatDate(item.fecha_redimido), // format date
             comentario_cierre: item.comentario_cierre,
             cedula_vendedor: item.cedula_vendedor,

@@ -50,6 +50,7 @@ export interface IRespuestaReporteBonosRedimidos extends IRespuestaGeneralAction
 }
 
 export interface IBonoRedimido{
+    activo:1|0;
     fecha_redimido:string,
     comentario_cierre:string,
     cedula_vendedor:string,

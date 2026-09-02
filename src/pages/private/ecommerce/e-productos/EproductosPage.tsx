@@ -6,9 +6,7 @@ import { TableProductos } from './components/TableProductos';
 export const EproductosPage = () => {
 
 
-  const [filtros, setFiltros] = useState<IFiltroProductosCRM>({
-    buscar: ""
-  });
+  const [filtros, setFiltros] = useState<IFiltroProductosCRM>({buscar: ""});
 
   return (
     <>

@@ -241,6 +241,18 @@ export interface IMovimientoInventario{
   fecha:string
 }
 
+export interface IProductoListadoCrm {
+    categoria: string;
+    sub_categoria: string;
+    codigo: string;
+    descripcion: string;
+    color: string;
+    talla: string;
+    nombre_color: string | null;
+    codigo_color: string | null;
+    color_rgb: string | null;
+}
+
 /**
  * Response de apis 
  */
@@ -331,4 +343,8 @@ export interface IResponseHistorialTraslados extends IRespuestaGeneralAction{
 
 export interface IResponseMovimientoInventarios extends IRespuestaGeneralAction{
   movimientos:IMovimientoInventario[]
+}
+
+export interface IResponseListadoProductosCrm extends IRespuestaGeneralAction{
+  productos:IProductoListadoCrm[]
 }

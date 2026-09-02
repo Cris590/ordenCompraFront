@@ -14,7 +14,7 @@ import { wrap } from 'module';
 interface Props {
     codEntidad: string,
     refreshUsuarios: boolean,
-    sendTotalUsuarios:(total:number)=>void
+    sendTotalUsuarios: (total: number) => void
 }
 
 const defaultUsuario: IUsuarioEntidadResumen = {
@@ -24,19 +24,34 @@ const defaultUsuario: IUsuarioEntidadResumen = {
     activo: 1,
     sexo: 'M',
     cedula: '',
-    cod_cargo_entidad:0
+    cod_cargo_entidad: 0
 }
 
-export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuarios}: Props) => {
+export const DataTableUsuarios = ({ codEntidad, refreshUsuarios, sendTotalUsuarios }: Props) => {
 
     const navigate = useNavigate();
     const [openLoadingSpinner, setLoadingSpinner] = useState<boolean>(false);
     const [openEditUsuario, setOpenEditUsuario] = useState(false);
     const [usuarios, setUsuarios] = useState<IUsuarioEntidadResumen[]>([]);
-    const [entidadGestionada, setEntidadGestionada] = useState<1|0>(0);
+    const [entidadGestionada, setEntidadGestionada] = useState<1 | 0>(0);
     const [usuarioEditar, setUsuarioEditar] = useState<IUsuarioEntidadResumen>(defaultUsuario)
     const { search, setSearch, filteredData } = useFilteredData(usuarios);
     const columns = [
+        {
+            name: 'Activo',
+            selector: (row: IUsuarioEntidadResumen) => row.activo,
+            sortable: true,
+            cell: (row: IUsuarioEntidadResumen) => (
+                <span
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium ${row.activo === 1
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gray-100 text-gray-600'
+                        }`}
+                >
+                    {row.activo === 1 ? 'Activo' : 'Inactivo'}
+                </span>
+            ),
+        },
         {
             name: 'Código',
             selector: (row: IUsuarioEntidadResumen) => row.codigo || '',
@@ -48,26 +63,21 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         {
             name: 'Nombre',
             selector: (row: IUsuarioEntidadResumen) => row.nombre,
-            wrap:true
+            wrap: true
         },
         {
             name: 'Email',
             selector: (row: IUsuarioEntidadResumen) => row.email,
-             wrap:true
+            wrap: true
         },
         {
             name: 'Cargo',
             selector: (row: IUsuarioEntidadResumen) => row.cargo_entidad || '',
-             wrap:true
+            wrap: true
         },
         {
             name: 'Sexo',
             selector: (row: IUsuarioEntidadResumen) => (row.sexo === "F" ? "Femenino" : "Masculino"),
-        },
-        {
-            name: 'Activo',
-            selector: (row: IUsuarioEntidadResumen) => ((row.activo === 1) ? 'Si' : 'No'),
-            sortable: true,
         },
         {
             name: 'Orden',
@@ -86,20 +96,20 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
             name: 'Actions',
             cell: (row: IUsuarioEntidadResumen) => (
                 <Tooltip title={!!row.redimido && 'Al cliente ya se le redimio dotación'}>
-                <Button
-                    disabled={!!row.cod_orden || !!row.redimido}
-                    onClick={() => handleActionUsuario(row)}
-                    variant='outlined'
-                    size="small"
-                >
-                    {(!!row.cod_orden || !!row.redimido) ? 'Redimido' : 'Editar'} 
-                </Button>
+                    <Button
+                        disabled={!!row.cod_orden || !!row.redimido}
+                        onClick={() => handleActionUsuario(row)}
+                        variant='outlined'
+                        size="small"
+                    >
+                        {(!!row.cod_orden || !!row.redimido) ? 'Redimido' : 'Editar'}
+                    </Button>
                 </Tooltip>
             ),
         },
     ];
 
-    
+
 
 
     useEffect(() => {
@@ -117,8 +127,8 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
         }
     }
 
-    const handleActionUsuario = async (usuario:IUsuarioEntidadResumen ) => {
-      
+    const handleActionUsuario = async (usuario: IUsuarioEntidadResumen) => {
+
         setUsuarioEditar(usuario)
         setOpenEditUsuario(true)
     }
@@ -129,19 +139,19 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
     }
 
     const handleClickCrearClienteEntidad = () => {
-        if(!!entidadGestionada){
+        if (!!entidadGestionada) {
             Swal.fire({
-                icon:'warning',
-                text:'El coordinador ya gestiono la orden, por lo que no puede crear más usuarios asociados a esta entidad'
+                icon: 'warning',
+                text: 'El coordinador ya gestiono la orden, por lo que no puede crear más usuarios asociados a esta entidad'
             })
-        }else{   
+        } else {
             setUsuarioEditar(defaultUsuario)
             setOpenEditUsuario(true)
         }
     };
 
     const handleCloseEditUsuario = (actualizarUsuarios: boolean) => {
-        if(actualizarUsuarios){
+        if (actualizarUsuarios) {
             obtenerUsuarios()
         }
         setOpenEditUsuario(false);
@@ -170,7 +180,7 @@ export const DataTableUsuarios = ({ codEntidad, refreshUsuarios ,sendTotalUsuari
                 highlightOnHover
             />
 
-            <DialogEditarUsuarioEntidad 
+            <DialogEditarUsuarioEntidad
                 openDialog={openEditUsuario}
                 onClose={handleCloseEditUsuario}
                 codEntidad={+codEntidad}

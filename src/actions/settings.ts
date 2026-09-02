@@ -100,6 +100,7 @@ export const actionsSettings  = {
         obtenerProductosCrm:`${apiUrl}/ecommerce/obtener_productos_crm`,
         descargarExcelImpresionProductosCrm:`${apiUrl}/ecommerce/descargar_excel_impresion_productos`,
         obtenerDetalleProductoCrm:`${apiUrl}/ecommerce/obtener_detalles_producto`,
+        obtenerProductosListadoCrm:`${apiUrl}/ecommerce/obtener_productos_listado`,
         
         obtenerColoresProductoCrm:`${apiUrl}/ecommerce/obtener_colores_producto_crm`,
         crearColorProductoCrm:`${apiUrl}/ecommerce/crear_color_producto_crm`,

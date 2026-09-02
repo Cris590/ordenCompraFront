@@ -6,6 +6,7 @@ import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 import { IActualizarProductoColorCrm, IColorProductoCrm, ICrearColorProductoCrm, IFiltroProductosCRM, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
 import { IResponseColorImagenes } from "../../interfaces/producto.interface";
 import { ITallajeResumenResponse } from "../../interfaces/tallaje.interface";
+import { IResponseListadoProductosCrm } from "../../interfaces/pos.interface";
 
 
 export const crearCategoriaCRM = async (categoria: { categoria: string }) => {
@@ -199,6 +200,30 @@ export const obtenerDetalleProductoCrm = async (codigoModelo: string) => {
     return null
   }
 }
+
+export const obtenerProductosListadoCrm = async (codigoModelo: string) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerProductosListadoCrm}/${codigoModelo}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseListadoProductosCrm> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
 
 
 

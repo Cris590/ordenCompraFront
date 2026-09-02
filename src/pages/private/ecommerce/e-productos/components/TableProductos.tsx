@@ -1,39 +1,40 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
 import DataTable, { type TableColumn } from 'react-data-table-component';
 import { IEditarProductoModeloCrm, IFiltroProductosCRM, IProductoResumenCrm } from '../../../../../interfaces/ecommerce.interface';
 import { obtenerProductosCrm } from '../../../../../actions/ecommerce/ecommerce';
-import Swal from 'sweetalert2';
 import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { currencyFormat } from '../../../../../utils/currencyFormat';
 import { Button, IconButton, Tooltip } from '@mui/material';
-import { IoGrid } from 'react-icons/io5';
+import { IoExpandOutline, IoGrid } from 'react-icons/io5';
 import { DialogEditarProducto } from './DialogEditarProducto';
 import { useProductoEdicionStore } from '../../../../../store/ecommerce/producto-edicion';
+import ProductosListadoDialog from './ProductosListadoDialog';
 
 interface Props {
     filtros: IFiltroProductosCRM;
 }
 
-const productoDefecto:IEditarProductoModeloCrm = {
-   id_categoria:0,
-    categoria:'',
-    id_sub_categoria:0,
-    id_woo_subcategoria:0,
-    sub_categoria:'',
-    codigo_auxiliar:'',
-    codigo_modelo:'',
-    descripcion:'',
-    precio_compra:0,
-    precio_venta:0,
-    lote:'',
-    total_colores:0,
-    total_tallas:0,
-    tallas:[],
-    colores:[],
-    cod_tallaje:0,
-    activo:1,
-    nuevo_producto:true,
-    sincronizar_ecommerce:false
+const productoDefecto: IEditarProductoModeloCrm = {
+    id_categoria: 0,
+    categoria: '',
+    id_sub_categoria: 0,
+    id_woo_subcategoria: 0,
+    sub_categoria: '',
+    codigo_auxiliar: '',
+    codigo_modelo: '',
+    descripcion: '',
+    precio_compra: 0,
+    precio_venta: 0,
+    lote: '',
+    total_colores: 0,
+    total_tallas: 0,
+    tallas: [],
+    colores: [],
+    cod_tallaje: 0,
+    activo: 1,
+    nuevo_producto: true,
+    sincronizar_ecommerce: false
 }
 
 export const TableProductos = ({ filtros }: Props) => {
@@ -42,6 +43,9 @@ export const TableProductos = ({ filtros }: Props) => {
     const [totalRows, setTotal] = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [openDialogEditarProducto, setOpenDialogEditarProducto] = useState(false);
+
+    const [openProductos, setOpenProductos] = useState(false);
+    const [codigoModelo, setCodigoModelo] = useState('');
 
     /** Store producto */
     const resetProducto = useProductoEdicionStore((state) => state.resetProducto)
@@ -67,9 +71,18 @@ export const TableProductos = ({ filtros }: Props) => {
                 <Tooltip title="Editar Producto">
                     <IconButton
                         color="primary"
-                        onClick={() =>handleEditarProducto(row)}
+                        onClick={() => handleEditarProducto(row)}
                     >
                         <IoGrid />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Ver productos del modelo" arrow>
+                    <IconButton
+                        onClick={() => abrirListadoProductos(row.codigo_modelo)}
+                        color='secondary'
+                    >
+                        <IoExpandOutline size={18} />
                     </IconButton>
                 </Tooltip>
             </>)
@@ -98,23 +111,32 @@ export const TableProductos = ({ filtros }: Props) => {
         load(1, perPage, filtros);
     }, [filtros, perPage, load]);
 
-    const handleEditarProducto=(producto:IProductoResumenCrm)=>{
+    const handleEditarProducto = (producto: IProductoResumenCrm) => {
 
-        setProductoSeleccionado({...producto, nuevo_producto:false})
+        setProductoSeleccionado({ ...producto, nuevo_producto: false })
         setOpenDialogEditarProducto(true)
     }
 
-     const handleCloseEditarProducto = async (actualizar:boolean) => {
+    const abrirListadoProductos = async (codigoModelo: string) => {
+        try {
+            setCodigoModelo(codigoModelo);
+            setOpenProductos(true);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleCloseEditarProducto = async (actualizar: boolean) => {
 
         resetProducto();
         setOpenDialogEditarProducto(false);
 
-        if(actualizar){
+        if (actualizar) {
             cargarProductos();
         }
     }
 
-    const handleCrearProducto =()=>{
+    const handleCrearProducto = () => {
         resetProducto()
         setOpenDialogEditarProducto(true)
     }
@@ -135,9 +157,15 @@ export const TableProductos = ({ filtros }: Props) => {
                 highlightOnHover
             />
 
-            <DialogEditarProducto 
+            <DialogEditarProducto
                 open={openDialogEditarProducto}
-                onClose={(actualizar)=>handleCloseEditarProducto(actualizar)}
+                onClose={(actualizar) => handleCloseEditarProducto(actualizar)}
+            />
+
+            <ProductosListadoDialog
+                open={openProductos}
+                codigoModelo={codigoModelo}
+                onClose={() => setOpenProductos(false)}
             />
             <LoadingSpinnerScreen open={loading} />
         </>
