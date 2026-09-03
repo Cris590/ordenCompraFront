@@ -149,6 +149,7 @@ export const VentaPOSPage = () => {
 
 
   useEffect(() => {
+    cargarVendedores();
     if (!idVenta) {
       // ============================================================
       // LIMPIAR VENTA
@@ -220,16 +221,19 @@ export const VentaPOSPage = () => {
 
     cargarVenta();
   }, [idVenta]);
+  
   // ============================================================
   // CARGAR VENDEDORES
   // ============================================================
   const session = useUserStore.getState().user;
-  useEffect(() => {
-    const cargarVendedores = async () => {
+
+
+  const cargarVendedores = async () => {
       setOpenLoadingSpinner(true);
 
       try {
-        const resultado = await obtenerVendedoresPorTiendaCrm();
+        const idVentaValida = idVenta ? idVenta : ''
+        const resultado = await obtenerVendedoresPorTiendaCrm(idVentaValida);
 
         setVendedores(resultado?.vendedores || []);
         setCodigoNuevo(resultado?.codigoNuevo || 0)
@@ -248,10 +252,6 @@ export const VentaPOSPage = () => {
         setOpenLoadingSpinner(false);
       }
     };
-
-    cargarVendedores();
-  }, []);
-
   // ============================================================
   // FOCUS INICIAL SCANNER
   // ============================================================

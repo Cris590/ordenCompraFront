@@ -97,12 +97,12 @@ export const obtenerVendedoresCrm= async () => {
   }
 }
 
-export const obtenerVendedoresPorTiendaCrm= async () => {
+export const obtenerVendedoresPorTiendaCrm= async (idVenta?:string) => {
   try {
 
     let options = {
       method: 'get',
-      url: `${actionsSettings.backendRoutes.obtenerVendedoresPorTiendaCrm}`,
+      url: `${actionsSettings.backendRoutes.obtenerVendedoresPorTiendaCrm}/${idVenta}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': getAuthToken()
