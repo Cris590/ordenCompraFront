@@ -369,7 +369,7 @@ export const TableLogInventarios = ({ movimientos }: Props) => {
                                                                 </TableCell>
 
                                                                 <TableCell align="center">
-                                                                    <strong>Stock actual</strong>
+                                                                    <strong>Nuevo Stock</strong>
                                                                 </TableCell>
 
                                                             </TableRow>
