@@ -50,10 +50,11 @@ export const TablaVentasPOS = ({ ventas, actualizarVenta }: Props) => {
   const handleImprimirVenta = async (venta: IVentaPOSAdmin) => {
     try {
       setOpenLoadingSpinner(true)
-      await generarFacturaPdf(venta.id)
-      setOpenLoadingSpinner(false)
+      await generarFacturaPdf(venta.id,setOpenLoadingSpinner)
+      
 
     } catch (e) {
+      setOpenLoadingSpinner(false)
       Swal.fire({
         icon: 'error',
         text: 'Error al crear la factura PDF'

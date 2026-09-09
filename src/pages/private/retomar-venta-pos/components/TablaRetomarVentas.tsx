@@ -3,6 +3,7 @@ import { Button, Tooltip } from "@mui/material";
 import DataTable from "react-data-table-component";
 
 import {
+  IoEyeOutline,
   IoHandLeftSharp,
 } from "react-icons/io5";
 
@@ -10,6 +11,7 @@ import { IVentaPOSAdmin } from "../../../../interfaces/pos.interface";
 import { formatDate } from "../../../../utils/formatDate";
 import LoadingSpinnerScreen from "../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen";
 import { useNavigate } from "react-router-dom";
+import { ModalDetalleVenta } from "../../admin-ventas-pos/components/ModalDetalleVenta";
 
 interface Props {
   ventas: IVentaPOSAdmin[];
@@ -22,13 +24,27 @@ const formatMoney = (value: number) =>
     maximumFractionDigits: 0,
   }).format(value);
 
-export const TablaRetomarVentas = ({ventas}: Props) => {
+export const TablaRetomarVentas = ({ ventas }: Props) => {
 
- 
+
   const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false);
+  const [ventaSeleccionada, setVentaSeleccionada] = useState<IVentaPOSAdmin | null>(null);
+  const [modalDetalleOpen, setModalDetalleOpen] = useState(false);
+
   const navigate = useNavigate();
   const handleRetomarVenta = (venta: IVentaPOSAdmin) => {
     navigate('/retomar_venta/' + venta.id.toString())
+  };
+
+   const handleVerVenta = (venta: IVentaPOSAdmin) => {
+      setVentaSeleccionada(venta);
+      setModalDetalleOpen(true);
+    };
+
+    
+  const handleCerrarDetalle = () => {
+    setModalDetalleOpen(false);
+    setVentaSeleccionada(null);
   };
 
 
@@ -121,7 +137,29 @@ export const TablaRetomarVentas = ({ventas}: Props) => {
     {
       name: "Acciones",
       cell: (row: IVentaPOSAdmin) => (
-        <div className="flex items-center">
+        <div className="flex items-center align-middle">
+
+          {/* VER */}
+          <Tooltip title="Ver venta">
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => handleVerVenta(row)}
+              sx={{
+                minWidth: 38,
+                width: 38,
+                height: 36,
+                marginRight:2,
+                borderRadius: 0,
+                backgroundColor: "#45AAE6",
+                "&:hover": {
+                  backgroundColor: "34A2E3",
+                },
+              }}
+            >
+              <IoEyeOutline size={19} />
+            </Button>
+          </Tooltip>
 
           {/* RETOMAR VENTA */}
           <Tooltip title="Retomar Venta">
@@ -144,7 +182,7 @@ export const TablaRetomarVentas = ({ventas}: Props) => {
             </Button>
           </Tooltip>
 
-      
+
 
         </div>
       ),
@@ -159,7 +197,11 @@ export const TablaRetomarVentas = ({ventas}: Props) => {
         pagination
         highlightOnHover
       />
-
+      <ModalDetalleVenta
+        open={modalDetalleOpen}
+        venta={ventaSeleccionada}
+        onClose={handleCerrarDetalle}
+      />
       <LoadingSpinnerScreen open={openLoadingSpinner} />
     </>
   );

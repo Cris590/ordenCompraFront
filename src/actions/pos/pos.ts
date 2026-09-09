@@ -285,8 +285,12 @@ export const actualizarVentaPos= async (idVenta:number,venta:CrearVentaRequest) 
 
 
 
-export const generarFacturaPdf = async (idVenta: number) => {
+export const generarFacturaPdf = async (
+  idVenta: number,
+  setOpenLoadingSpinner: (value: boolean) => void
+) => {
   try {
+    setOpenLoadingSpinner(true);
     const response = await axios.get(
       `${actionsSettings.backendRoutes.generarFacturaPdf}/${idVenta}`,
       {
@@ -312,6 +316,8 @@ export const generarFacturaPdf = async (idVenta: number) => {
 
   } catch (error) {
     console.error('Error al abrir el PDF:', error);
+  }finally {
+    setOpenLoadingSpinner(false);
   }
 };
 

@@ -559,21 +559,20 @@ export const VentaPOSPage = () => {
           response = await crearVentaPos(payload);
       }
 
-      setOpenLoadingSpinner(false);
 
       if (response?.error === 0) {
 
-        await Swal.fire(
-          response.msg
-        );
+        await Swal.fire(response.msg);
         if (payload.deuda > 0) {
+          setOpenLoadingSpinner(false);
           navigate("/retomar_ventas");
         } else {
 
-          await generarFacturaPdf(response.ventaId)
+          await generarFacturaPdf(response.ventaId, setOpenLoadingSpinner)
           navigate("/admin_ventas");
         }
       } else {
+        setOpenLoadingSpinner(false);
         await Swal.fire(response!.msg);
       }
 

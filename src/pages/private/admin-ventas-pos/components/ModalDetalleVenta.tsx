@@ -13,6 +13,7 @@ import {
     IoCalendarOutline,
     IoCardOutline,
     IoReceiptOutline,
+    IoAlertCircleOutline,
 } from "react-icons/io5";
 
 import { IVentaDetallePOS, IVentaPOSAdmin } from "../../../../interfaces/pos.interface";
@@ -458,6 +459,33 @@ export const ModalDetalleVenta = ({
 
                                     </div>
 
+                                    {ventaDetalle && ventaDetalle.deuda > 0 && (
+                                        <div className="mt-4 flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100">
+                                                    <IoAlertCircleOutline
+                                                        size={18}
+                                                        className="text-amber-600"
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <p className="text-sm font-semibold text-slate-700">
+                                                        Saldo pendiente
+                                                    </p>
+
+                                                    <p className="text-xs text-slate-500">
+                                                        Valor pendiente por pagar
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <span className="text-base font-bold text-amber-700">
+                                                {formatMoney(ventaDetalle.deuda)}
+                                            </span>
+                                        </div>
+                                    )}
+
                                 </div>
 
 
@@ -520,9 +548,15 @@ export const ModalDetalleVenta = ({
                                                 </p>
                                             </div>
 
-                                            <div className="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-400">
-                                                PAGADO
-                                            </div>
+                                            {
+                                                (ventaDetalle && ventaDetalle.deuda > 0) ?
+                                                    <div className="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-amber-700">
+                                                        PENDIENTE POR CANCELAR
+                                                    </div> :
+                                                    <div className="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-400">
+                                                        PAGADO
+                                                    </div>
+                                            }
 
                                         </div>
 

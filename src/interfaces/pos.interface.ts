@@ -147,6 +147,7 @@ export interface IVentaDetallePOS {
     bono: string | null;
     total_sin_descuento: string;
     total_productos: number;
+    deuda:number
 }
 
 export interface IClienteCrm {

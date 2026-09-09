@@ -67,10 +67,7 @@ export const MediosPagoSection = ({
     productosLength,
 }: MediosPagoSectionProps) => {
 
-    const [
-        mediosPagoDisponibles,
-        setMediosPagoDisponibles
-    ] = useState<MedioPago[]>([]);
+    const [ mediosPagoDisponibles,setMediosPagoDisponibles] = useState<MedioPago[]>([]);
 
     useEffect(() => {
         cargarMediosPago();
@@ -80,9 +77,7 @@ export const MediosPagoSection = ({
         try {
             const response = await obtenerMediosPago();
 
-            setMediosPagoDisponibles(
-                response?.metodosPago || []
-            );
+            setMediosPagoDisponibles(response?.metodosPago || []);
 
         } catch (error) {
             console.error(
@@ -94,6 +89,9 @@ export const MediosPagoSection = ({
 
     return (
         <Card>
+             {/* <pre className="text-xs bg-gray-100 p-4 rounded-lg overflow-auto">
+                {JSON.stringify(mediosPago, null, 2)}
+            </pre>         */}
             <CardContent>
 
                 {/* HEADER */}
@@ -119,12 +117,8 @@ export const MediosPagoSection = ({
                     <Button
                         size="small"
                         variant="outlined"
-                        startIcon={
-                            <IoAdd size={18} />
-                        }
-                        onClick={
-                            onAgregarMedioPago
-                        }
+                        startIcon={<IoAdd size={18} />}
+                        onClick={onAgregarMedioPago}
                     >
                         Agregar
                     </Button>
@@ -132,7 +126,7 @@ export const MediosPagoSection = ({
                 </div>
 
                 {/* MEDIOS DE PAGO */}
-
+              
                 <div className="space-y-3">
 
                     {mediosPago.map((medio) => {
@@ -143,28 +137,23 @@ export const MediosPagoSection = ({
                          * código de transacción.
                          */
 
-                        const requiereCodigo =
-                            Number(medio.codigo) === 1;
+                        const requiereCodigo = Number(medio.codigo) === 1;
 
                         return (
                             <div
-                                key={
-                                    medio.id_metodo_pago
-                                }
+                                key={medio.id_metodo_pago}
                                 className="rounded-lg border border-slate-200 bg-slate-50 p-3"
                             >
 
                                 <div className="flex gap-2">
 
                                     {/* MEDIO */}
-
                                     <Select
                                         size="small"
                                         value={medio.nombre || ""}
                                         displayEmpty
                                         onChange={(event) => {
                                             const nombreSeleccionado = event.target.value;
-
                                             const seleccionado =mediosPagoDisponibles.find((opcion) =>opcion.nombre === nombreSeleccionado);
 
                                             onActualizarMedioPago(
@@ -196,7 +185,7 @@ export const MediosPagoSection = ({
                                         {mediosPagoDisponibles.map((opcion) => (
                                             <MenuItem
                                                 key={opcion.id_metodo_pago}
-                                                value={opcion.nombre}
+                                                value={opcion.valor}
                                             >
                                                 {opcion.nombre}
                                             </MenuItem>
