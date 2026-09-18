@@ -23,20 +23,22 @@ interface ProductosListadoDialogProps {
 }
 
 const ProductosListadoDialog: React.FC<ProductosListadoDialogProps> = ({
-        open,
-        codigoModelo,
-        onClose,
-    }) => {
-   
-    
+    open,
+    codigoModelo,
+    onClose,
+}) => {
+
+
     const [productos, setProductos] = useState<IProductoListadoCrm[]>([]);
     const { search, setSearch, filteredData } = useFilteredData(productos);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-      cargarListado()
+       if(codigoModelo)  {
+        cargarListado()
+       }
     }, [codigoModelo])
-    
+
 
     const columns: TableColumn<IProductoListadoCrm>[] = [
         {
@@ -55,12 +57,12 @@ const ProductosListadoDialog: React.FC<ProductosListadoDialogProps> = ({
         {
             name: 'Color',
             cell: row => (
-            row.color_rgb ? (
-                <ColorCircle
-                    color={row.color_rgb}
-                    description={`${row.codigo_color} - ${row.nombre_color}`}
-                    size="2"
-                />
+                row.color_rgb ? (
+                    <ColorCircle
+                        color={row.color_rgb}
+                        description={`${row.codigo_color} - ${row.nombre_color}`}
+                        size="2"
+                    />
                 ) : (
                     <span className="text-gray-400">Sin color</span>
                 )
@@ -89,17 +91,17 @@ const ProductosListadoDialog: React.FC<ProductosListadoDialogProps> = ({
         },
     ];
 
-     const cargarListado = async () => {
-            try {
-                setLoading(true)
-                const response = await obtenerProductosListadoCrm(codigoModelo);
-                setLoading(false)
-                setProductos(response?.productos || []);
-    
-            } catch (error) {
-                console.error(error);
-            }
-        };
+    const cargarListado = async () => {
+        try {
+            setLoading(true)
+            const response = await obtenerProductosListadoCrm(codigoModelo);
+            setLoading(false)
+            setProductos(response?.productos || []);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <Dialog
@@ -136,15 +138,15 @@ const ProductosListadoDialog: React.FC<ProductosListadoDialogProps> = ({
 
             <Box sx={{ px: 2, pb: 2 }}>
                 <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Buscar..."
-                className="border rounded p-2"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
+                    <input
+                        type="text"
+                        placeholder="Buscar..."
+                        className="border rounded p-2"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
 
-            </div>
+                </div>
                 <DataTable
                     columns={columns}
                     data={filteredData}

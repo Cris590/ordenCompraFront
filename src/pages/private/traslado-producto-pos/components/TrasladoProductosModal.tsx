@@ -8,7 +8,6 @@ import {
     FormControl,
     IconButton,
     InputLabel,
-    ListItemText,
     MenuItem,
     Select,
     TextField,
@@ -43,6 +42,9 @@ const productoInicial = (): IProductoTraslado => ({
     descripcion: "",
     cantidadDisponible: 0,
     cantidadTransferir: 0,
+    talla:'',
+    nombre_color: '',
+    color_rgb:''
 });
 
 export const TrasladoProductosModal = ({
@@ -512,6 +514,17 @@ export const TrasladoProductosModal = ({
                                 label="Descripción"
                                 size="small"
                                 value={producto.descripcion}
+                                disabled
+                            />
+
+                            
+                            {/* TALLA */}
+
+                            <TextField
+                                fullWidth
+                                label="Talla"
+                                size="small"
+                                value={producto.talla}
                                 disabled
                             />
 

@@ -41,6 +41,8 @@ import { BuscarProductosPosPage } from '../pages/private/buscar-producto-pos/Bus
 import { TrasladoProductoPosPage } from '../pages/private/traslado-producto-pos/TrasladoProductoPosPage';
 import { EntradaSalidaInventarioPage } from '../pages/private/entrada-salida-inventario/EntradaSalidaInventarioPage';
 import LogInventariosPage from '../pages/private/log-in-out-pos/LogInventariosPage';
+import { PedidosEcommercePage } from '../pages/private/pedidos_ecommerce/PedidosEcommercePage';
+import { GestionarPedidoEcommercePage } from '../pages/private/ecommerce/gestionar-pedido-ecommerce/GestionarPedidoEcommercePage';
 
 
 const AppRouter: React.FC = () => {
@@ -104,11 +106,11 @@ const AppRouter: React.FC = () => {
           <Route path="/e-categorias" element={<RouteGuard element={<EcaterogiasPage />} />} />
           <Route path="/e-productos" element={<RouteGuard element={<EproductosPage />} />} />
           <Route path="/e-inventarios" element={<RouteGuard element={<EinventariosPage />} />} />
-          
           <Route path="/e-tallajes" element={<RouteGuard element={<EtallajePage />} />} />
-
-
-
+          <Route path="/pedidos_ecommerce" element={<RouteGuard element={<PedidosEcommercePage />} />} />
+          <Route path="/gestionar_pedido/:codPedido" element={<RouteGuard element={<GestionarPedidoEcommercePage />} />} />
+          
+          
           <Route path="/404" element={<PageNotFound />} />
           <Route path="/*" element={<PageNotFound />} />
         </Route>

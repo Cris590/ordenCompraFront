@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import {
-  IoCloseOutline,
   IoLogOutOutline,
   IoTicketOutline,
   IoBarcode,
@@ -27,13 +26,13 @@ import {
   IoCartOutline,
   IoLibrarySharp,
   IoPeopleCircleSharp,
-  IoFileTrayFull,
   IoFileTrayStacked,
   IoReceiptSharp,
   IoScaleSharp,
   IoSwapHorizontalOutline,
   IoStorefront,
   IoFileTrayFullSharp,
+  IoBagHandleSharp,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -71,7 +70,8 @@ const iconMapping: { [key: string]: IconType } = {
   'buscar_producto_pos':IoScaleSharp,
   'traslado_producto_pos':IoSwapHorizontalOutline,
   'in_out_inventarios':IoStorefront,
-  'historial_in_out':IoFileTrayFullSharp 
+  'historial_in_out':IoFileTrayFullSharp,
+  'pedidos_ecommerce':IoBagHandleSharp
 };
 
 export const Sidebar = () => {

@@ -7,6 +7,7 @@ import {
     DialogTitle,
     TextField,
 } from "@mui/material";
+import LoadingSpinnerScreen from "../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen";
 
 interface Props {
     open: boolean;
@@ -47,7 +48,7 @@ export const ModalComentarioInventario = ({
             fullWidth
             maxWidth="sm"
         >
-
+            <LoadingSpinnerScreen open={loading} />
             <DialogTitle>
                 Confirmar movimiento de inventario
             </DialogTitle>

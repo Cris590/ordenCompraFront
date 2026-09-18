@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import { IoPeopleOutline } from "react-icons/io5";
 
-import { Cliente, IVendedorCrmTienda, Vendedor } from "../../../../../interfaces/pos.interface";
+import { Cliente, IVendedorCrmTienda } from "../../../../../interfaces/pos.interface";
 
 import { ClienteSection } from "../cliente/ClienteSection";
 import { VendedorSection } from "../vendedor/VendedorSection";

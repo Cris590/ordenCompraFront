@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IInventarioProducto } from '../../../../interfaces/pos.interface';
 import DataTable from 'react-data-table-component';
+import { DialogImagenesProducto } from '../../../../components/product/dialog-imagenes-producto/DialogImagenesProducto';
+import { IoImagesOutline } from 'react-icons/io5';
+import { IconButton } from '@mui/material';
+import { ColorCircle } from '../../../../components/product/color-circle/ColorCircle';
 
 interface Props {
     inventarios: IInventarioProducto[];
 }
 
 export const TableInventarios = ({ inventarios }: Props) => {
-
+    const [productoSeleccionado, setProductoSeleccionado] = useState<IInventarioProducto | null>(null);
     const columns = [
         {
             name: "#",
@@ -37,6 +41,41 @@ export const TableInventarios = ({ inventarios }: Props) => {
             selector: (row: IInventarioProducto) => row.descripcion,
             sortable: true,
             wrap: true,
+        },
+        {
+            name: "Talla",
+            selector: (row: IInventarioProducto) => row.talla,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: "Color",
+            selector: (row: IInventarioProducto) => row.cantidad,
+            sortable: true,
+            wrap: true,
+            cell: (row: IInventarioProducto) => {
+
+                return (
+                    <ColorCircle color={row.color_rgb || ''} size='1' description={row.nombre_color} />
+                );
+            },
+        },
+        {
+            name: "Imagenes",
+            selector: (row: IInventarioProducto) => row.cantidad,
+            sortable: true,
+            wrap: true,
+            cell: (row: IInventarioProducto) => {
+
+                return (
+                    <IconButton
+                        color="primary"
+                        onClick={() =>setProductoSeleccionado(row)}
+                    >
+                        <IoImagesOutline />
+                    </IconButton>
+                );
+            },
         },
         {
             name: "Tienda",
@@ -103,6 +142,16 @@ export const TableInventarios = ({ inventarios }: Props) => {
                 keyField="key"
                 pagination
                 highlightOnHover
+            />
+
+            <DialogImagenesProducto
+                images={productoSeleccionado?.imagenes || []}
+                open={productoSeleccionado !== null}
+                onClose={() => setProductoSeleccionado(null)}
+                descripcion={productoSeleccionado?.descripcion}
+                color={productoSeleccionado?.color_rgb || ''}
+                nombreColor={productoSeleccionado?.nombre_color || ''}
+                talla={productoSeleccionado?.talla || ''}
             />
         </>
     )

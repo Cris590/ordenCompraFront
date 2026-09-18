@@ -364,6 +364,10 @@ export const TableLogInventarios = ({ movimientos }: Props) => {
                                                                     <strong>Descripción</strong>
                                                                 </TableCell>
 
+                                                                <TableCell>
+                                                                    <strong>Talla</strong>
+                                                                </TableCell>
+
                                                                 <TableCell align="center">
                                                                     <strong>Cantidad</strong>
                                                                 </TableCell>
@@ -403,6 +407,17 @@ export const TableLogInventarios = ({ movimientos }: Props) => {
                                                                                 className="text-slate-700"
                                                                             >
                                                                                 {producto.descripcion}
+                                                                            </Typography>
+
+                                                                        </TableCell>
+
+                                                                        <TableCell>
+
+                                                                            <Typography
+                                                                                variant="body2"
+                                                                                className="text-slate-700"
+                                                                            >
+                                                                                {producto.talla}
                                                                             </Typography>
 
                                                                         </TableCell>

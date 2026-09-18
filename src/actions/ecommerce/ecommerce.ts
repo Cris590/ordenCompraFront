@@ -3,7 +3,7 @@ import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
-import { IActualizarProductoColorCrm, IColorProductoCrm, ICrearColorProductoCrm, IFiltroProductosCRM, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
+import { FiltroBusquedaPedidosEcommerce, IActualizarProductoColorCrm, IColorProductoCrm, ICrearColorProductoCrm, IFiltroProductosCRM, INuevoSeguimientoPedidoEcommerce, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseGestionarPedidoEcommerce, IResponseInventarioDisponibleTienda, IResponseListadoPedidosEcommerce, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
 import { IResponseColorImagenes } from "../../interfaces/producto.interface";
 import { ITallajeResumenResponse } from "../../interfaces/tallaje.interface";
 import { IResponseListadoProductosCrm } from "../../interfaces/pos.interface";
@@ -574,10 +574,102 @@ export const descargarExcelImpresionProductosCrm = async (filtros:{ buscar?:stri
 }
 
 
+export const obtenerListadoPedidosEcommerce= async (page: number, pp: number, filtros: FiltroBusquedaPedidosEcommerce) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerListadoPedidosEcommerce}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      params: {
+        page,
+        pp,
+        ...filtros
+      },
+      maxRedirects: 21,
+
+    }
+    const { data }: AxiosResponse<IResponseListadoPedidosEcommerce> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 
 
+export const obtenerDetallePedidoEcommerce = async (codPedido: number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerDetallePedidoEcommerce}/${codPedido}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+
+    }
+    const { data }: AxiosResponse<IResponseGestionarPedidoEcommerce> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const crearSeguimientoPedidoEcommerce = async (dataActualizar: INuevoSeguimientoPedidoEcommerce) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.crearSeguimientoPedidoEcommerce}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data:dataActualizar
+    }
+    const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 
 
+export const obtenerInventarioDisponiblePedidoEcommerce = async (codPedido: number) => {
+  try {
 
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerInventarioDisponiblePedidoEcommerce}/${codPedido}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
 
+    }
+    const { data }: AxiosResponse<IResponseInventarioDisponibleTienda> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 

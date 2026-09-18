@@ -32,6 +32,7 @@ import { IBodegaPos, IProductoMovimiento, AccionInventario, IProductoTraslado } 
 import { ModalComentarioInventario } from "./components/ModalComentarioInventario";
 import { crearMovimientoInventario, obtenerProductoInventarioPorCodigoPos, obtenerTiendasPosUsuario } from "../../../actions/pos/pos";
 import Swal from "sweetalert2";
+import { ColorCircle } from "../../../components/product/color-circle/ColorCircle";
 
 export const EntradaSalidaInventarioPage = () => {
 
@@ -209,7 +210,10 @@ export const EntradaSalidaInventarioPage = () => {
                             codigo: producto.codigo,
                             descripcion: producto.descripcion,
                             cantidadDisponible: producto.cantidadDisponible,
-                            cantidadTransferir: nuevaCantidad
+                            cantidadTransferir: nuevaCantidad,
+                            talla:producto.talla,
+                            nombre_color: producto.nombre_color,
+                            color_rgb:producto.color_rgb
                         };
                     });
                 }
@@ -221,7 +225,10 @@ export const EntradaSalidaInventarioPage = () => {
                         codigo: producto.codigo,
                         descripcion: producto.descripcion,
                         cantidadDisponible: producto.cantidadDisponible,
-                        cantidadTransferir: 0
+                        cantidadTransferir: 0,
+                        talla:producto.talla,
+                        nombre_color: producto.nombre_color,
+                        color_rgb:producto.color_rgb
                     },
                 ];
             });
@@ -602,6 +609,14 @@ export const EntradaSalidaInventarioPage = () => {
                                             Descripción
                                         </TableCell>
 
+                                        <TableCell>
+                                            Talla
+                                        </TableCell>
+
+                                        <TableCell>
+                                            Color
+                                        </TableCell>
+
                                         <TableCell align="right">
                                             Stock actual
                                         </TableCell>
@@ -640,6 +655,19 @@ export const EntradaSalidaInventarioPage = () => {
                                                 <TableCell>
                                                     {producto.descripcion}
                                                 </TableCell>
+
+                                                <TableCell>
+                                                    {producto.talla}
+                                                </TableCell>
+
+                                                <TableCell>
+                                                   <ColorCircle 
+                                                        color={producto.color_rgb || '000000'} 
+                                                        size="1"
+                                                        description={producto.nombre_color}
+                                                    />
+                                                </TableCell>
+                                                
 
                                                 <TableCell align="right">
                                                     {producto.cantidadDisponible}

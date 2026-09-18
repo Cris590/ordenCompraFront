@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Swiper as SwiperObject } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 
 

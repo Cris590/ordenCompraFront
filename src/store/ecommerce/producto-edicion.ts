@@ -2,7 +2,6 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware';
-import { IInformacionBasicaEntidad } from '../../interfaces/entidad.interface';
 import { IEditarProductoModeloCrm } from '../../interfaces/ecommerce.interface';
 
 interface State {

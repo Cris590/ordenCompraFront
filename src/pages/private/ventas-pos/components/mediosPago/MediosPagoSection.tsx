@@ -41,7 +41,7 @@ interface MediosPagoSectionProps {
 
     onActualizarMedioPago: (
         id: number,
-        campo: "nombre" | "valor" | "codigo" | "codigo_transaccion",
+        campo: "nombre" | "valor" | "codigo" | "codigo_transaccion" | "necesita_codigo",
         valor: string | number
     ) => void;
 
@@ -67,7 +67,7 @@ export const MediosPagoSection = ({
     productosLength,
 }: MediosPagoSectionProps) => {
 
-    const [ mediosPagoDisponibles,setMediosPagoDisponibles] = useState<MedioPago[]>([]);
+    const [mediosPagoDisponibles, setMediosPagoDisponibles] = useState<MedioPago[]>([]);
 
     useEffect(() => {
         cargarMediosPago();
@@ -87,11 +87,44 @@ export const MediosPagoSection = ({
         }
     };
 
+    const handleOnChangeSectMEdioPago =(event:any, medio:MedioPago) => {
+        const nombreSeleccionado = event.target.value;
+        const seleccionado = mediosPagoDisponibles.find((opcion) => opcion.valor === nombreSeleccionado);
+
+        onActualizarMedioPago(
+            medio.id_metodo_pago,
+            "nombre",
+            nombreSeleccionado
+        );
+
+        onActualizarMedioPago(
+            medio.id_metodo_pago,
+            "codigo",
+            Number(seleccionado?.codigo || 0)
+        );
+
+        if (Number(seleccionado?.codigo || 0) === 0) {
+            onActualizarMedioPago(
+                medio.id_metodo_pago,
+                "codigo_transaccion",
+                ""
+            );
+        }
+
+        console.log('---- >', seleccionado)
+        onActualizarMedioPago(
+            medio.id_metodo_pago,
+            "necesita_codigo",
+            seleccionado?.necesita_codigo || "0"
+        );
+
+    }
+
     return (
         <Card>
-             {/* <pre className="text-xs bg-gray-100 p-4 rounded-lg overflow-auto">
+            <pre className="text-xs bg-gray-100 p-4 rounded-lg overflow-auto">
                 {JSON.stringify(mediosPago, null, 2)}
-            </pre>         */}
+            </pre>
             <CardContent>
 
                 {/* HEADER */}
@@ -126,7 +159,7 @@ export const MediosPagoSection = ({
                 </div>
 
                 {/* MEDIOS DE PAGO */}
-              
+
                 <div className="space-y-3">
 
                     {mediosPago.map((medio) => {
@@ -137,7 +170,7 @@ export const MediosPagoSection = ({
                          * código de transacción.
                          */
 
-                        const requiereCodigo = Number(medio.codigo) === 1;
+                        const requiereCodigo = Number(medio.necesita_codigo) === 1;
 
                         return (
                             <div
@@ -152,30 +185,7 @@ export const MediosPagoSection = ({
                                         size="small"
                                         value={medio.nombre || ""}
                                         displayEmpty
-                                        onChange={(event) => {
-                                            const nombreSeleccionado = event.target.value;
-                                            const seleccionado =mediosPagoDisponibles.find((opcion) =>opcion.nombre === nombreSeleccionado);
-
-                                            onActualizarMedioPago(
-                                                medio.id_metodo_pago,
-                                                "nombre",
-                                                nombreSeleccionado
-                                            );
-
-                                            onActualizarMedioPago(
-                                                medio.id_metodo_pago,
-                                                "codigo",
-                                                Number(seleccionado?.codigo || 0)
-                                            );
-
-                                            if (Number(seleccionado?.codigo || 0) === 0 ) {
-                                                onActualizarMedioPago(
-                                                    medio.id_metodo_pago,
-                                                    "codigo_transaccion",
-                                                    ""
-                                                );
-                                            }
-                                        }}
+                                        onChange={(event)=>handleOnChangeSectMEdioPago(event,medio)}
                                         className="min-w-0 flex-1"
                                     >
                                         <MenuItem value="" disabled>
@@ -241,9 +251,10 @@ export const MediosPagoSection = ({
                                         <TextField
                                             fullWidth
                                             size="small"
+                                            className="my-2"
                                             label="Código de transacción"
                                             placeholder="Ingrese el código de transacción"
-                                            value={ medio.codigo_transaccion || ""}
+                                            value={medio.codigo_transaccion || ""}
                                             onChange={(event) =>
                                                 onActualizarMedioPago(
                                                     medio.id_metodo_pago,
@@ -251,7 +262,7 @@ export const MediosPagoSection = ({
                                                     event.target.value
                                                 )
                                             }
-                                            inputProps={{maxLength: 50}}
+                                            inputProps={{ maxLength: 50 }}
                                         />
 
                                     </div>
@@ -342,7 +353,7 @@ export const MediosPagoSection = ({
                     className="mt-5"
                     onClick={onGuardar}
                     disabled={productosLength === 0}
-                    color={restante > 0 ? "warning":"primary"}
+                    color={restante > 0 ? "warning" : "primary"}
                 >
                     {restante > 0 ? "Guardar venta con saldo" : "Guardar venta"}
                 </Button>

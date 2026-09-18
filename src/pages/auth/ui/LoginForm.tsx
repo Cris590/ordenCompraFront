@@ -39,6 +39,7 @@ export const LoginForm = () => {
             let rutaRedirect = '/ordenes-compra'
             
             switch (result.user.cod_perfil) {
+                
                 case 1:
                     rutaRedirect = '/entidades'
                     break;
@@ -49,17 +50,7 @@ export const LoginForm = () => {
                     rutaRedirect = '/usuarios_bonos_dotacion'
                     break;
                 case 7:
-                    rutaRedirect = '/e-categorias'
-                    break;
-
-                case 1:
-                    rutaRedirect = '/entidades'
-                    break;
-                case 2:
-                    rutaRedirect = '/control-ordenes'
-                    break;
-                case 6:
-                    rutaRedirect = '/usuarios_bonos_dotacion'
+                    rutaRedirect = '/pedidos_ecommerce'
                     break;
                 case 8:
                     rutaRedirect = '/crear_venta'

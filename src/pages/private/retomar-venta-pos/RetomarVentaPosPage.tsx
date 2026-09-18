@@ -89,7 +89,7 @@ export const RetomarVentaPosPage = () => {
 
   return (
     <>
-      <Title title="Administrador de ventas" />
+      <Title title="Retomar ventas" />
     
       <div className="bg-slate-100 min-h-screen p-2 w-[98%]">
 

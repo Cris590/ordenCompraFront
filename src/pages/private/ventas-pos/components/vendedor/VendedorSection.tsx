@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import { IVendedorCrmTienda, Vendedor } from "../../../../../interfaces/pos.interface";
+import { IVendedorCrmTienda } from "../../../../../interfaces/pos.interface";
 
 interface VendedorSectionProps {
   vendedores: IVendedorCrmTienda[];

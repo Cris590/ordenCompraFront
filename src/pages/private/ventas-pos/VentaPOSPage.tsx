@@ -17,7 +17,7 @@ import { VentaInfoSection } from "./components/venta/VentaInfoSection";
 import { ResumenSection } from "./components/resumen/ResumenSection";
 import { MediosPagoSection } from "./components/mediosPago/MediosPagoSection";
 import { DescuentoSection } from "./components/descuento/DescuentoSection";
-import { actualizarVentaPos, crearVentaPos, generarFacturaPdf, obtenerClientePorDocumento, obtenerInfoProductoVenta, obtenerVendedoresPorTiendaCrm, obtenerVentaARetomar, obtenerVentaDetalle } from "../../../actions/pos/pos";
+import { actualizarVentaPos, crearVentaPos, generarFacturaPdf, obtenerClientePorDocumento, obtenerInfoProductoVenta, obtenerVendedoresPorTiendaCrm, obtenerVentaARetomar } from "../../../actions/pos/pos";
 import { useUserStore } from "../../../store/user/user";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
@@ -37,7 +37,8 @@ const emptyPayment = (): MedioPago => ({
   id_metodo_pago: Date.now() + Math.random(),
   nombre: '',
   valor: 0,
-  codigo:0
+  codigo:0,
+  necesita_codigo:"0"
 });
 
 export const VentaPOSPage = () => {
@@ -478,7 +479,8 @@ export const VentaPOSPage = () => {
         | "nombre"
         | "valor"
         | "codigo"
-        | "codigo_transaccion",
+        | "codigo_transaccion"
+        | "necesita_codigo",
     valor: string | number
 ) => {
 

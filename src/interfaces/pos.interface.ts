@@ -31,6 +31,7 @@ export interface MedioPago {
   nombre: string;
   valor: number;
   codigo: 1| 0;
+  necesita_codigo:string;
   codigo_transaccion?: string;
 }
 
@@ -189,7 +190,11 @@ export interface IInventarioProducto{
   id_bodega:number,
   bodega:string,
   categoria:string,
-  sub_categoria:string
+  sub_categoria:string,
+  talla:string,
+  color_rgb:string,
+  nombre_color:string,
+  imagenes:string[]
 }
 
 export interface IFiltroTrasladosProductos {
@@ -223,6 +228,7 @@ export interface IProductoMovimiento {
     descripcion: string;
     stock_actual: number;
     cantidad: number;
+    talla:string,
 }
 
 
@@ -332,7 +338,10 @@ export interface IProductoTraslado {
     codigo: string;
     descripcion: string;
     cantidadDisponible: number;
-    cantidadTransferir:number
+    cantidadTransferir:number,
+    talla:string,
+    nombre_color:string,
+    color_rgb:string
 }
 
 export interface IResponseInventariosPorCodigoPos extends IRespuestaGeneralAction{ 
