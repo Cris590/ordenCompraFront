@@ -122,9 +122,9 @@ export const MediosPagoSection = ({
 
     return (
         <Card>
-            <pre className="text-xs bg-gray-100 p-4 rounded-lg overflow-auto">
+            {/* <pre className="text-xs bg-gray-100 p-4 rounded-lg overflow-auto">
                 {JSON.stringify(mediosPago, null, 2)}
-            </pre>
+            </pre> */}
             <CardContent>
 
                 {/* HEADER */}
