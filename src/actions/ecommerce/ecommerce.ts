@@ -3,7 +3,7 @@ import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
-import { FiltroBusquedaPedidosEcommerce, IActualizarProductoColorCrm, IColorProductoCrm, ICrearColorProductoCrm, IFiltroProductosCRM, INuevoSeguimientoPedidoEcommerce, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseGestionarPedidoEcommerce, IResponseInventarioDisponibleTienda, IResponseListadoPedidosEcommerce, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
+import { FiltroBusquedaPedidosEcommerce, IActualizarProductoColorCrm, ICrearColorProductoCrm, IFiltroProductosCRM, INuevoSeguimientoPedidoEcommerce, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseGestionarPedidoEcommerce, IResponseInventarioDisponibleTienda, IResponseListadoPedidosEcommerce, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
 import { IResponseColorImagenes } from "../../interfaces/producto.interface";
 import { ITallajeResumenResponse } from "../../interfaces/tallaje.interface";
 import { IResponseListadoProductosCrm } from "../../interfaces/pos.interface";

@@ -1,5 +1,3 @@
-import { sincronizarCategoriaEcommerce } from "./ecommerce/ecommerce";
-
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const actionsSettings  = {

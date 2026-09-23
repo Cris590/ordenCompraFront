@@ -35,7 +35,6 @@ export const FiltroBusquedaEntidad = ({ handleBuscarFiltro }: Props) => {
     const {
         handleSubmit,
         reset,
-        getValues,
         control,
         formState: { isValid } } = useForm<IEntidad>({
             mode: 'onChange',
