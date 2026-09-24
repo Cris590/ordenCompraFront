@@ -183,6 +183,8 @@ export const StepColoresImagesProducto = ({ onChange, producto}: Props) => {
 
       getImagenesPorColores(currentColor!.cod_producto_color)
       setSelectedFile(null)
+    }else{
+      Swal.fire(response!.msg)
     }
   };
 

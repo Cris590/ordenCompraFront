@@ -31,6 +31,7 @@ export const CargosEntidadBonos = ({ codEntidad }: Props) => {
   }
 
   const onclose = (actualizar?: boolean) => {
+    
     if (actualizar) {
       getCargos()
     }
@@ -60,7 +61,7 @@ export const CargosEntidadBonos = ({ codEntidad }: Props) => {
   return (
     <>
       <div>
-        <Button onClick={handleCrearCargo}>Crear Cargo</Button>
+        <Button onClick={handleCrearCargo}>Crear Cargo {cargoEntidad}</Button>
 
         <p className='my-6'> Cargos por entidad </p>
         <ButtonGroup variant="outlined" aria-label="Cargos">

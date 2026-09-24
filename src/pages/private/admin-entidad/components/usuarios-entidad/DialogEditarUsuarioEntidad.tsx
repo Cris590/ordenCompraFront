@@ -28,7 +28,7 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
     useEffect(() => {
         reset(usuario)
         getCargos()
-    }, [usuario])
+    }, [usuario,openDialog])
 
     const getCargos = async () => {
         try {
@@ -294,12 +294,12 @@ export const DialogEditarUsuarioEntidad = ({ codEntidad, openDialog, usuario, on
                         </Button>
                     </DialogActions>
                 </form>
+                <LoadingSpinnerScreen open={openLoadingSpinner} />
 
             </Dialog>
 
 
-            <LoadingSpinnerScreen open={openLoadingSpinner} />
-
+            
         </>
     )
 }

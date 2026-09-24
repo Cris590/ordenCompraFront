@@ -53,10 +53,12 @@ export const FormCargoEntidadBono = ({ codCargoEntidad: codCargoEntidadAux, codE
             reset(defaulValueCargo)
         }
         setCodCargoEntidad(codCargoEntidadAux)
-    }, [codCargoEntidadAux])
+    }, [codCargoEntidadAux, openDialog])
 
     const obtenerTodasCategorias = async () => {
+        setLoadingSpinner(true)
         let response = await obtenerCategoriasActivas()
+        setLoadingSpinner(false)
         if (response?.error === 0) {
             setCategorias(response.categorias)
             sincronizarCategorias()
@@ -65,7 +67,9 @@ export const FormCargoEntidadBono = ({ codCargoEntidad: codCargoEntidadAux, codE
 
     const obtenerInfoCargoEntidad = async (codCargoEntidad: number) => {
         try {
+            setLoadingSpinner(true)
             let response = await detalleCargoEntidad(codCargoEntidad)
+            setLoadingSpinner(false)
             if (response?.error === 0) {
                 if (Object.keys(response.cargo).length === 0) {
                     navigate('/entidades/admin-entidad/')
@@ -253,7 +257,7 @@ export const FormCargoEntidadBono = ({ codCargoEntidad: codCargoEntidadAux, codE
                 </form>
 
 
-
+                <LoadingSpinnerScreen open={openLoadingSpinner} />
             </Dialog>
 
             <DialogCrearCargosBonosProducto
@@ -262,7 +266,7 @@ export const FormCargoEntidadBono = ({ codCargoEntidad: codCargoEntidadAux, codE
                 codCargoBonoProducto={codCargoBonoProducto}
                 codCargoEntidad={codCargoEntidad}
             />
-            <LoadingSpinnerScreen open={openLoadingSpinner} />
+            
         </>
     )
 }
