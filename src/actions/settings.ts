@@ -62,6 +62,10 @@ export const actionsSettings  = {
         consultarEntidadesEntregaBono:`${apiUrl}/entidad_bono/consultar_entidades`,
         consultarBonoProducto:`${apiUrl}/entidad_bono/consultar_bono_usuario`,
         redimirBonoEntrega:`${apiUrl}/entidad_bono/redimir_bono_entrega`,
+        buscarBonosCedula:`${apiUrl}/entidad_bono/buscar_bonos_cedula`,
+        obtenerBonosUsuarioRedencion:`${apiUrl}/entidad_bono/obtener_bonos_usuario_redencion`,
+        redimirBonosTienda:`${apiUrl}/entidad_bono/redimir_bonos_tienda`,
+        
         
         obtenerTemplateCargoBono:`${apiUrl}/entidad/obtener_template_cargo_bono`,
         guardarTemplateCargoBono:`${apiUrl}/entidad/guardar_template_cargo_bono`,
@@ -131,6 +135,7 @@ export const actionsSettings  = {
         crearVentaPos:`${apiUrl}/pos/crear_venta`,
         actualizarVentaPos:`${apiUrl}/pos/editar_venta`,
         cancelarVentaPos:`${apiUrl}/pos/cancelar_factura_pos`,
+        obtenerImagenesProductoPos:`${apiUrl}/pos/imagenes_producto`,
     
         generarFacturaPdf:`${apiUrl}/pos/generar_factura_pdf`,
         obtenerClientesCrm:`${apiUrl}/pos/obtener_clientes`,

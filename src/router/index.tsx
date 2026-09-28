@@ -43,6 +43,8 @@ import { EntradaSalidaInventarioPage } from '../pages/private/entrada-salida-inv
 import LogInventariosPage from '../pages/private/log-in-out-pos/LogInventariosPage';
 import { PedidosEcommercePage } from '../pages/private/pedidos_ecommerce/PedidosEcommercePage';
 import { GestionarPedidoEcommercePage } from '../pages/private/ecommerce/gestionar-pedido-ecommerce/GestionarPedidoEcommercePage';
+import { RedencionBonosTiendaPage } from '../pages/private/redencion-bonos-tienda/redencion-bono/RedencionBonosTiendaPage';
+import { BuscarClienteBonoRedencionPage } from '../pages/private/redencion-bonos-tienda/busqueda-cliente/BuscarClienteBonoRedencionPage';
 
 
 const AppRouter: React.FC = () => {
@@ -81,6 +83,9 @@ const AppRouter: React.FC = () => {
           {/* RUTAS COORDINADOR BONOS */}
           <Route path="/usuarios_bonos_dotacion" element={<RouteGuard element={<UsuariosDotacionPage />} />} />
           <Route path="/reporte_bonos_dotacion" element={<RouteGuard element={<ReporteDotacionBonosPage />} />} />
+          
+          <Route path="/buscar_cliente_redencion" element={<RouteGuard element={<BuscarClienteBonoRedencionPage />} />} />
+          <Route path="/redencion_bonos_tienda" element={<RouteGuard element={<RedencionBonosTiendaPage />} />} />
 
 
           {/* RUTAS FABRICA */}

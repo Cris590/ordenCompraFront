@@ -3,7 +3,7 @@ import { actionsSettings } from '../settings';
 import { getAuthToken } from '../axios-helper/getToken';
 import { handleHttpError } from '../axios-helper/axiosError';
 import { IRespuestaGeneralAction } from '../../interfaces/general.interface';
-import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltroLogInventarios, IFiltrosVentasPOS, IFiltroTrasladosProductos, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialTraslados, IResponseHistorialVentas, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseMovimientoInventarios, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
+import { CrearVentaRequest, IClienteCrm, IFiltroInventarios, IFiltroLogInventarios, IFiltrosVentasPOS, IFiltroTrasladosProductos, IResponseClientePorDocumento, IResponseCreacionClientePos, IResponseCrearVentaPos, IResponseHistorialTraslados, IResponseHistorialVentas, IResponseImagenesProducto, IResponseInventariosPorCodigoPos, IResponseInventariosPos, IResponseMediosPago, IResponseMovimientoInventarios, IResponseObtenerClientesPos, IResponseProductoVentaCrm, IResponseTiendasPosUsuario, IResponseTiposDocumento, IResponseVendedoresCrm, IResponseVendedoresPorTiendaCrm, IResponseVentaDetalle, IResponseVentaRetomar } from '../../interfaces/pos.interface';
 
 export const obtenerMediosPago = async () => {
   try {
@@ -468,6 +468,8 @@ export const buscarInventarioPorCodigo= async (codigo:string) => {
 
 
 
+
+
 export const obtenerProductoInventarioPorCodigoPos= async (codigo:string, idTienda:number) => {
   try {
 
@@ -607,7 +609,27 @@ export const obtenerMovimientosInventarios = async ( filtros:IFiltroLogInventari
 }
 
 
+export const obtenerImagenesProductoPos= async (codigo:string) => {
+  try {
 
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerImagenesProductoPos}/${codigo}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21
+    }
+    const { data }: AxiosResponse<IResponseImagenesProducto> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 
 
 

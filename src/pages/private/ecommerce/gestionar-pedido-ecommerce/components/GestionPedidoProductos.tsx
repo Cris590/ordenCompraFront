@@ -12,6 +12,8 @@ import { currencyFormat } from '../../../../../utils/currencyFormat';
 import { IProductoPedidoEcommerce } from '../../../../../interfaces/ecommerce.interface';
 import { ColorCircle } from '../../../../../components/product/color-circle/ColorCircle';
 import { DialogImagenesProducto } from '../../../../../components/product/dialog-imagenes-producto/DialogImagenesProducto';
+import { obtenerImagenesProductoPos } from '../../../../../actions/pos/pos';
+import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 
 
 interface Props {
@@ -23,6 +25,19 @@ export const GestionPedidoProductos = ({
 }: Props) => {
 
     const [productoSeleccionado, setProductoSeleccionado] = useState<IProductoPedidoEcommerce | null>(null);
+    const [loadingSpinner, setLoadingSpinner] = useState(false)
+    const [openImages, setOpenImages] = useState(false)
+    const [imagenes, setImagenes] = useState<string[]>([])
+    
+    const obtenerImagenesProducto = async (codigo:string) => {
+            setLoadingSpinner(true)
+            let response = await obtenerImagenesProductoPos(codigo)
+            setLoadingSpinner(false)
+            if (response?.error == 0) {
+                setOpenImages(true)
+                setImagenes(response.imagenes)
+            }
+        }
 
     return (
         <>
@@ -182,9 +197,10 @@ export const GestionPedidoProductos = ({
                                         <td className="px-4 py-4 text-center">
                                             <IconButton
                                                 color="primary"
-                                                onClick={() =>
+                                                onClick={() =>{
                                                     setProductoSeleccionado(producto)
-                                                }
+                                                    obtenerImagenesProducto(producto.codigo)
+                                                }}
                                             >
                                                 <IoImagesOutline />
                                             </IconButton>
@@ -198,10 +214,11 @@ export const GestionPedidoProductos = ({
                 </CardContent>
             </Card>
 
+            <LoadingSpinnerScreen open={loadingSpinner}/>
             <DialogImagenesProducto
-                images={productoSeleccionado?.imagenes || []}
-                open={productoSeleccionado !== null}
-                onClose={() => setProductoSeleccionado(null)}
+                images={imagenes}
+                open={openImages}
+                onClose={() => setOpenImages(false)}
                 descripcion={productoSeleccionado?.descripcion}
                 color={productoSeleccionado?.color_rgb || ''}
                 nombreColor={productoSeleccionado?.nombre_color || ''}

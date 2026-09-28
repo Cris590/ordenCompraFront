@@ -5,6 +5,8 @@ import { DialogImagenesProducto } from '../../../../components/product/dialog-im
 import { IoImagesOutline } from 'react-icons/io5';
 import { IconButton } from '@mui/material';
 import { ColorCircle } from '../../../../components/product/color-circle/ColorCircle';
+import { obtenerImagenesProductoPos } from '../../../../actions/pos/pos';
+import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 
 interface Props {
     inventarios: IInventarioProducto[];
@@ -12,6 +14,9 @@ interface Props {
 
 export const TableInventarios = ({ inventarios }: Props) => {
     const [productoSeleccionado, setProductoSeleccionado] = useState<IInventarioProducto | null>(null);
+    const [imagenes, setImagenes] = useState<string[]>([]);
+    const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
+    const [openImages, setOpenImages] = useState(false)
     const columns = [
         {
             name: "#",
@@ -70,7 +75,10 @@ export const TableInventarios = ({ inventarios }: Props) => {
                 return (
                     <IconButton
                         color="primary"
-                        onClick={() =>setProductoSeleccionado(row)}
+                        onClick={() =>{
+                            setProductoSeleccionado(row)
+                            obtenerImagenesProducto(row.codigo)
+                        }}
                     >
                         <IoImagesOutline />
                     </IconButton>
@@ -131,6 +139,17 @@ export const TableInventarios = ({ inventarios }: Props) => {
             },
         }
     ];
+
+    const obtenerImagenesProducto = async (codigo:string) => {
+        setOpenLoadingSpinner(true)
+        let response = await obtenerImagenesProductoPos(codigo)
+        setOpenLoadingSpinner(false)
+        if (response?.error == 0) {
+          setImagenes(response.imagenes)
+          setOpenImages(true)
+        }
+    }
+
     return (
         <>
             <DataTable
@@ -143,11 +162,11 @@ export const TableInventarios = ({ inventarios }: Props) => {
                 pagination
                 highlightOnHover
             />
-
+            <LoadingSpinnerScreen open={openLoadingSpinner}/>
             <DialogImagenesProducto
-                images={productoSeleccionado?.imagenes || []}
-                open={productoSeleccionado !== null}
-                onClose={() => setProductoSeleccionado(null)}
+                images={imagenes}
+                open={openImages}
+                onClose={() => setOpenImages(false)}
                 descripcion={productoSeleccionado?.descripcion}
                 color={productoSeleccionado?.color_rgb || ''}
                 nombreColor={productoSeleccionado?.nombre_color || ''}

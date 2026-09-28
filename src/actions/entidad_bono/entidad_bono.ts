@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
-import { IFiltroBonoBusqueda, IRespuestaBonoProductoUsuario, IRespuestaFiltroBonosBusqueda, IRespuestaReporteBonosRedimidos } from "../../interfaces/entidad_bonos.interface";
+import { IFiltroBonoBusqueda, IResponseInfoBonosRedimir, IRespuestaBonoProductoUsuario, IRespuestaFiltroBonosBusqueda, IRespuestaReporteBonosRedimidos, IRespuestaUsuariosAgrupados } from "../../interfaces/entidad_bonos.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 import { IResponseEntidadTarjetabono } from "../../interfaces/control_accesos.interface";
 
@@ -28,6 +28,30 @@ export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) 
       return null
     }
   }
+
+  export const buscarBonosCedula = async ( documento:string) => {
+    try {
+  
+      let options = {
+        method: 'get',
+        url: `${actionsSettings.backendRoutes.buscarBonosCedula}/${documento}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IRespuestaUsuariosAgrupados> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+  
 
   export const consultarReporteBonosRedimidos = async ( codEntidad:number) => {
     try {
@@ -139,3 +163,52 @@ export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) 
       return null
     }
   }
+
+  export const obtenerBonosUsuarioRedencion = async ( codUsuarios:number[]) => {
+    try {
+  
+      let options = {
+        method: 'post',
+        url: `${actionsSettings.backendRoutes.obtenerBonosUsuarioRedencion}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        data:{codUsuarios},
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IResponseInfoBonosRedimir> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+  export const redimirBonosTienda = async ( redencion:any) => {
+    try {
+  
+      let options = {
+        method: 'post',
+        url: `${actionsSettings.backendRoutes.redimirBonosTienda}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': getAuthToken()
+        },
+        data:redencion,
+        maxRedirects: 21
+      }
+      const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
+      return data
+    } catch (e) {
+      handleHttpError(e);
+      console.log('************')
+      console.log(e)
+      return null
+    }
+  }
+
+
+  

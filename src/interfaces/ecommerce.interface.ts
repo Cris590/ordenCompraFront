@@ -204,7 +204,6 @@ export interface IProductoPedidoEcommerce {
     codigo_color: string | null;
     color_rgb: string | null;
     precio_crm: number;
-    imagenes: string[];
     cantidad: number;
     precio: number;
     descuento: number;

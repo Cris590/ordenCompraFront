@@ -193,8 +193,7 @@ export interface IInventarioProducto{
   sub_categoria:string,
   talla:string,
   color_rgb:string,
-  nombre_color:string,
-  imagenes:string[]
+  nombre_color:string
 }
 
 export interface IFiltroTrasladosProductos {
@@ -357,4 +356,8 @@ export interface IResponseMovimientoInventarios extends IRespuestaGeneralAction{
 
 export interface IResponseListadoProductosCrm extends IRespuestaGeneralAction{
   productos:IProductoListadoCrm[]
+}
+
+export interface IResponseImagenesProducto extends IRespuestaGeneralAction{
+  imagenes:string[]
 }

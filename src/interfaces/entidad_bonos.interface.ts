@@ -1,5 +1,17 @@
 import { IRespuestaGeneralAction } from "./general.interface"
 
+export interface IUsuarioBonoBusquedaAgrupada{
+    cantidad_codigos:number,
+    nombre:string,
+    cedula:string,
+    sexo:'F' | 'M',
+    entidad:string,
+    no_contrato:string,
+    nit:string,
+    redimido:boolean,
+    cod_usuarios:string
+}
+
 export interface IUsuarioBonoBusqueda{
     cod_usuario:number,
     nombre:string,
@@ -16,6 +28,12 @@ export interface IUsuarioBonoBusqueda{
 
 export interface IRespuestaFiltroBonosBusqueda extends IRespuestaGeneralAction{
     usuarios:IUsuarioBonoBusqueda[]
+}
+
+
+
+export interface IRespuestaUsuariosAgrupados extends IRespuestaGeneralAction{
+    usuarios:IUsuarioBonoBusquedaAgrupada[]
 }
 
 export interface IFiltroBonoBusqueda{
@@ -66,3 +84,25 @@ export interface IBonoRedimido{
     no_contrato:string
 
 }
+
+export interface IBonoDisponible {
+   cod_usuario_bono_entrega: number;
+    codigo_bono: string;
+    valor: number;
+    descripcion: string;
+}
+
+interface IInfoClienteUSuario{
+    documento:string,
+    nombre:string,
+    entidad:string,
+    no_contrato:string,
+    fecha_inicial:string,
+    fecha_final:string
+}
+
+export interface IResponseInfoBonosRedimir extends IRespuestaGeneralAction{
+    bonos:IBonoDisponible[],
+    infoCliente:IInfoClienteUSuario
+}
+
