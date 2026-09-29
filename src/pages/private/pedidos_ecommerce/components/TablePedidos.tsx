@@ -10,6 +10,7 @@ import { currencyFormat } from '../../../../utils/currencyFormat';
 import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { FiltroBusquedaPedidosEcommerce, IPedidoEcommerceListado } from '../../../../interfaces/ecommerce.interface';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../../../../utils/formatDate';
 
 interface Props {
     filtros: FiltroBusquedaPedidosEcommerce;
@@ -113,7 +114,12 @@ export const TablePedidos = ({ filtros }: Props) => {
             selector: row => row.telefono_cliente,
             wrap: true
         },
-
+        
+        {
+            name: 'Fecha Creación',
+            selector: row => formatDate(row.fecha_creacion),
+            wrap: true
+        },
         {
             name: 'Ciudad',
             selector: row => row.ciudad_envio,

@@ -22,6 +22,7 @@ interface IActualizacionFormProductoGeneral {
     id_sub_categoria: number,
     activo: 1 | 0,
     descripcion: string,
+    descripcion_larga:string,
     precio_compra: number,
     precio_venta: number,
     lote: string,
@@ -33,6 +34,7 @@ const defaultProductoGeneral: IActualizacionFormProductoGeneral = {
     id_sub_categoria: 0,
     activo: 1,
     descripcion: '',
+    descripcion_larga:'',
     precio_compra: 0,
     precio_venta: 0,
     lote: ''
@@ -267,10 +269,29 @@ export const StepConfiguracionProductoGeneral = ({ onChange, producto }: Props) 
                             />
                         </div>
 
-                        {/* Descripcion */}
+                        {/* Nombre producto */}
                         <div className="col-span-12">
                             <Controller
                                 name="descripcion"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field }) => (
+                                    <TextField
+                                        fullWidth
+                                        label="Nombre producto"
+                                        multiline
+                                        rows={1}
+                                        {...field}
+                                        value={field.value || ""}
+                                    />
+                                )}
+                            />
+                        </div>
+
+                        {/* Descripcion */}
+                        <div className="col-span-12">
+                            <Controller
+                                name="descripcion_larga"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field }) => (
