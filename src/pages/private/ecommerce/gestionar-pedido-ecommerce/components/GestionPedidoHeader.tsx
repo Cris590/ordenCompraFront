@@ -65,7 +65,7 @@ export const GestionPedidoHeader = ({
                         variant="body2"
                         color="text.secondary"
                     >
-                        {pedido.numero_pedido}
+                       {pedido.id_woocommerce} - {pedido.numero_pedido}
                     </Typography>
                 </div>
 

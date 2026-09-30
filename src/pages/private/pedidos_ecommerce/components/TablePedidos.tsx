@@ -93,6 +93,11 @@ export const TablePedidos = ({ filtros }: Props) => {
 
         {
             name: 'Pedido',
+            selector: row => row.id_woocommerce,
+            wrap: true
+        },
+        {
+            name: 'ID',
             selector: row => row.numero_pedido,
             wrap: true
         },

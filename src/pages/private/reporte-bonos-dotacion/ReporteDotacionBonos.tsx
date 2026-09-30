@@ -28,7 +28,8 @@ export const ReporteDotacionBonosPage = () => {
         {
             name: 'Nombre Cliente',
             selector: (row: IBonoRedimido) => row.nombre,
-            sortable: true
+            sortable: true,
+            wrap:true
         },
         {
             name: 'Cedula',
@@ -38,17 +39,20 @@ export const ReporteDotacionBonosPage = () => {
         {
             name: 'Detalle productos',
             selector: (row: IBonoRedimido) => row.descripcion,
-            sortable: true
+            sortable: true,
+            wrap:true
         },
         {
             name: 'Entidad',
             selector: (row: IBonoRedimido) => row.entidad,
-            sortable: true
+            sortable: true,
+            wrap:true
         },
         {
             name: 'No Contrato',
             selector: (row: IBonoRedimido) => row.no_contrato,
-            sortable: true
+            sortable: true,
+            wrap:true
         },
         {
             name: 'Valor',
@@ -65,19 +69,23 @@ export const ReporteDotacionBonosPage = () => {
         },
         {
             name: 'Nombre vendedor',
-            selector: (row: IBonoRedimido) => row.nombre_vendedor
+            selector: (row: IBonoRedimido) => row.nombre_vendedor,
+            wrap:true
         },
         {
             name: 'Cédula vendedor',
-            selector: (row: IBonoRedimido) => row.cedula_vendedor
+            selector: (row: IBonoRedimido) => row.cedula_vendedor,
+            wrap:true
         },
         {
             name: 'Comentario de cierre',
-            selector: (row: IBonoRedimido) => row.comentario_cierre
+            selector: (row: IBonoRedimido) => row.comentario_cierre,
+            wrap:true
         },
         {
             name: 'Fecha redención',
-            selector: (row: IBonoRedimido) => formatDate(row.fecha_redimido)
+            selector: (row: IBonoRedimido) => formatDate(row.fecha_redimido),
+            wrap:true
         }
     ];
     const obtenerReporte = async (entidad: { entidad: number }) => {
