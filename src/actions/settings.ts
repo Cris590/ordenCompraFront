@@ -107,8 +107,11 @@ export const actionsSettings  = {
         obtenerDetallePedidoEcommerce:`${apiUrl}/ecommerce/detalle_pedido_ecommerce`,
         crearSeguimientoPedidoEcommerce:`${apiUrl}/ecommerce/crear_seguimiento_pedido`,
         obtenerInventarioDisponiblePedidoEcommerce:`${apiUrl}/ecommerce/obtener_inventario_pedido`,
+        obtenerInventarioEcommerce:`${apiUrl}/ecommerce/obtener_inventario_ecommerce`,
+        obtenerDetalleInventarioEcommerce:`${apiUrl}/ecommerce/obtener_detalle_inventario_ecommerce`,
+        sincronizarInventarioEcommerce:`${apiUrl}/ecommerce/sincronizar_inventario_ecommerce`,
         
-         
+        
         obtenerColoresProductoCrm:`${apiUrl}/ecommerce/obtener_colores_producto_crm`,
         crearColorProductoCrm:`${apiUrl}/ecommerce/crear_color_producto_crm`,
         actualizarColorProductoCrm:`${apiUrl}/ecommerce/editar_color_producto_crm`,

@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import {
     Box,
     Card,
-    CardContent,
     Tab,
-    Tabs,
-    Typography
+    Tabs
 } from '@mui/material';
 import { PedidosFiltros } from './components/PedidosFiltros';
 import { TablePedidos } from './components/TablePedidos';

@@ -3,8 +3,6 @@ import { FiltroInventarioPos } from './components/FiltroInventarioPos'
 import { IFiltroInventarios, IInventarioProducto } from '../../../interfaces/pos.interface';
 import Swal from 'sweetalert2';
 import LoadingSpinnerScreen from '../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
-import { Button } from '@mui/material';
-import { IoSwapHorizontalOutline } from 'react-icons/io5';
 import { Title } from '../../../components/title/Title';
 import { useFilteredData } from '../../../hooks/useFilteredData';
 import { TableInventarios } from './components/TableInventarios';

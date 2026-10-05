@@ -241,6 +241,38 @@ export interface IInventarioDisponibleProducto {
     tiendas: IInventarioDisponibleTienda[];
 }
 
+export interface IInventarioEcommerce {
+    lote: string;
+    codigo_modelo: string;
+    id_categoria: number;
+    categoria: string;
+    id_sub_categoria: number;
+    sub_categoria: string;
+    id_woo_subcategoria: number | null;
+    descripcion: string;
+    precio_compra: number;
+    precio_venta: number;
+    total_colores: number;
+    total_tallas:number;
+    stock_ecommerce: number;
+    tiene_stock: number;
+}
+
+export interface IInventarioEcommerceDetalle {
+    categoria: string;
+    sub_categoria: string;
+    codigo: string;
+    descripcion: string;
+    color: string;
+    talla: string;
+    nombre_color: string | null;
+    codigo_color: string | null;
+    color_rgb: string | null;
+    id_bodega: number | null;
+    bodega: string | null;
+    stock: number;
+}
+
 /** Respuestas APIS */
 
 export interface IResponseTallasProductoCrm extends IRespuestaGeneralAction{   
@@ -319,3 +351,11 @@ export interface INuevoSeguimientoPedidoEcommerce{
     descripcion: string,
     inventario: IAsignacionNuevoInventario[] | []
 }  
+
+export interface IResponseInventarioEcommerce extends IRespuestaGeneralAction{   
+    data:IInventarioEcommerce[]
+}
+
+export interface IResponseInventarioDetalleEcommerce extends IRespuestaGeneralAction{   
+    data:IInventarioEcommerceDetalle[]
+}

@@ -3,7 +3,7 @@ import { handleHttpError } from "../axios-helper/axiosError";
 import { getAuthToken } from "../axios-helper/getToken";
 import { actionsSettings } from "../settings";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
-import { FiltroBusquedaPedidosEcommerce, IActualizarProductoColorCrm, ICrearColorProductoCrm, IFiltroProductosCRM, INuevoSeguimientoPedidoEcommerce, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseGestionarPedidoEcommerce, IResponseInventarioDisponibleTienda, IResponseListadoPedidosEcommerce, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
+import { FiltroBusquedaPedidosEcommerce, IActualizarProductoColorCrm, ICrearColorProductoCrm, IFiltroProductosCRM, INuevoSeguimientoPedidoEcommerce, IPaginatedProductsCrmResponse, IResponseCreacionCategoriaCRM, IResponseCrearColorProductoCRM, IResponseGestionarPedidoEcommerce, IResponseInventarioDetalleEcommerce, IResponseInventarioDisponibleTienda, IResponseInventarioEcommerce, IResponseListadoPedidosEcommerce, IResponseTallasProductoCrm, IRespuestaColorProducto, IRespuestaDetalleProducto } from "../../interfaces/ecommerce.interface";
 import { IResponseColorImagenes } from "../../interfaces/producto.interface";
 import { ITallajeResumenResponse } from "../../interfaces/tallaje.interface";
 import { IResponseListadoProductosCrm } from "../../interfaces/pos.interface";
@@ -664,6 +664,76 @@ export const obtenerInventarioDisponiblePedidoEcommerce = async (codPedido: numb
 
     }
     const { data }: AxiosResponse<IResponseInventarioDisponibleTienda> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+
+
+export const obtenerInventarioEcommerce = async () => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerInventarioEcommerce}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseInventarioEcommerce> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+
+export const obtenerDetalleInventarioEcommerce = async (codigoModelo: string) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerDetalleInventarioEcommerce}/${codigoModelo}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseInventarioDetalleEcommerce> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+
+export const sincronizarInventarioEcommerce = async (codigoModelo: string) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.sincronizarInventarioEcommerce}/${codigoModelo}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IRespuestaGeneralAction> = await axios(options);
     return data
   } catch (e) {
     handleHttpError(e);
