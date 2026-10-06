@@ -22,6 +22,7 @@ export const ResumenSection = ({
     neto,
     impuesto,
     formatMoney,
+    
 }: ResumenSectionProps) => {
     return (
         <Card>
@@ -62,6 +63,8 @@ export const ResumenSection = ({
                         <span className="font-bold">Total</span>
                         <strong>{formatMoney(total)}</strong>
                     </div>
+
+                  
                 </div>
             </CardContent>
         </Card>

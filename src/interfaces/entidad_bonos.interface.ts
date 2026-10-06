@@ -1,5 +1,20 @@
 import { IRespuestaGeneralAction } from "./general.interface"
 
+
+export interface IBonoEntregado {
+  cod_cargo_bonos_producto: number;
+  redimido: number;
+  fecha_redimido: string;
+  comentario_cierre: string;
+  cedula_vendedor: string;
+  nombre_vendedor: string;
+  tienda: string;
+  cod_usuario: number;
+  codigo:string;
+  producto_cargo:string,
+  valor: number;
+}
+
 export interface IUsuarioBonoBusquedaAgrupada{
     cantidad_codigos:number,
     nombre:string,
@@ -9,7 +24,8 @@ export interface IUsuarioBonoBusquedaAgrupada{
     no_contrato:string,
     nit:string,
     redimido:boolean,
-    cod_usuarios:string
+    cod_usuarios:string,
+    bonos_entregados:IBonoEntregado[]
 }
 
 export interface IUsuarioBonoBusqueda{

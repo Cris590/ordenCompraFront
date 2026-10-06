@@ -25,7 +25,7 @@ export const EntidadSection = ({
         size="small"
         value={entidad}
         disabled
-        className="min-w-0 flex-1"
+        className="shrink-0 w-[400px]"
       />
 
       <TextField

@@ -6,9 +6,10 @@ import LoadingSpinnerScreen from '../../../../components/loadingSpinnerScreen/Lo
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2';
 import clsx from 'clsx';
-import { Button, Card, TextField } from '@mui/material';
-import { buscarBonosCedula, consultarBonosFiltro } from '../../../../actions/entidad_bono/entidad_bono';
+import { Button, Card, Popover, TextField } from '@mui/material';
+import { buscarBonosCedula } from '../../../../actions/entidad_bono/entidad_bono';
 import { useNavigate } from 'react-router-dom';
+import { PopoverBonosRedimidos } from './components/PopoverBonosRedimidos';
 
 
 export const BuscarClienteBonoRedencionPage = () => {
@@ -17,8 +18,6 @@ export const BuscarClienteBonoRedencionPage = () => {
   const [openLoadingSpinner, setOpenLoadingSpinner] = useState(false)
   const { search, setSearch, filteredData } = useFilteredData(usuarios);
   const [documento, setDocumento] = useState('')
-  const [openDialogRedencion, setOpenDialogRedencion] = useState(false)
-  const [codUsuarioRedimir, setCodUsuarioRedimir] = useState<number>(0)
   const navigate = useNavigate();
 
   const columns = [
@@ -58,19 +57,13 @@ export const BuscarClienteBonoRedencionPage = () => {
     },
     {
       name: 'Estado',
-      cell: (row: IUsuarioBonoBusquedaAgrupada) => {
-
-        if (row.redimido) {
-          return (
-            <Button size='small' color='success'>Bono redimido</Button>
-          )
-        } else {
-          return (
-            <Button size='small' color='primary'>Pendiente por redimir</Button>
-          )
-        }
-      },
-    }, {
+      cell: (row: IUsuarioBonoBusquedaAgrupada) => (
+        <PopoverBonosRedimidos
+          bonosEntregados={row.bonos_entregados}
+          redimido={row.redimido}
+        />
+      )
+    },{
       name: 'Acciones',
       cell: (row: IUsuarioBonoBusquedaAgrupada) => (
         <button
@@ -93,14 +86,14 @@ export const BuscarClienteBonoRedencionPage = () => {
   ];
 
 
-  const handleClicGestionarBono = (codUsuarios: string, redimido:boolean) => {
-    if(!redimido){
-      
+  const handleClicGestionarBono = (codUsuarios: string, redimido: boolean) => {
+    if (!redimido) {
+
       navigate('/redencion_bonos_tienda', {
         state: { codUsuarios }
       });
     }
-    
+
   };
 
 

@@ -6,14 +6,15 @@ import { IoCartOutline } from 'react-icons/io5';
 import { BreadCrumbsBuscarCliente } from './components/breadcrumbs/BreadCrumbsBuscarCliente';
 import { BonoRedencionSection } from './components/info-redencion-bono/BonoRedencionSection';
 import { ProductosSection } from './components/productos/ProductosSection';
-import { MedioPago, ProductoVenta } from '../../../../interfaces/pos.interface';
-import { obtenerInfoProductoVenta, obtenerMediosPago } from '../../../../actions/pos/pos';
+import { IVendedorCrmTienda, MedioPago, ProductoVenta } from '../../../../interfaces/pos.interface';
+import { obtenerInfoProductoVenta, obtenerMediosPago, obtenerVendedoresPorTiendaCrm } from '../../../../actions/pos/pos';
 import { DescuentoSection } from './components/descuento/DescuentoSection';
 import { ResumenSection } from './components/resumen/ResumenSection';
 import { MediosPagoSection } from './components/mediosPago/MediosPagoSection';
 import { IBonoDisponible } from '../../../../interfaces/entidad_bonos.interface';
 import { obtenerBonosUsuarioRedencion, redimirBonosTienda } from '../../../../actions/entidad_bono/entidad_bono';
 import Swal from 'sweetalert2';
+import { useUserStore } from '../../../../store/user/user';
 
 
 const formatMoney = (value: number) =>
@@ -85,6 +86,13 @@ export const RedencionBonosTiendaPage = () => {
   const [descuento, setDescuento] = useState(0);
 
   // ============================================================
+  // VENDEDOR
+  // ============================================================
+  
+  const [vendedores, setVendedores] = useState<IVendedorCrmTienda[]>([]);
+  const [vendedor, setVendedor] = useState<IVendedorCrmTienda | null>(null);
+
+  // ============================================================
   // MEDIOS DE PAGO
   // ============================================================
 
@@ -144,10 +152,12 @@ export const RedencionBonosTiendaPage = () => {
     if (!codUsuarios) {
       navigate('/buscar_cliente_redencion', { replace: true });
     }
+
     console.log('codUSuarios ', codUsuarios)
     const codUsuariosRedencion = codUsuarios.split(',').map(Number);
     obtenerInformacionRedencion(codUsuariosRedencion)
     cargarMediosPago()
+    cargarVendedores();
   }, [codUsuarios, navigate]);
 
   if (!codUsuarios) {
@@ -419,7 +429,8 @@ export const RedencionBonosTiendaPage = () => {
       impuesto,
       total_pagado: totalPagado,
       cambio: excedente,
-      descuento
+      descuento,
+      vendedor: vendedor?.cod_usuario
     }
 
     console.log('Vamos a guardar ', payload)
@@ -451,6 +462,41 @@ export const RedencionBonosTiendaPage = () => {
           });
         }
   }
+
+  const session = useUserStore.getState().user;
+  
+  
+    const cargarVendedores = async () => {
+        setOpenLoadingSpinner(true);
+  
+        try {
+          const idVentaValida = ''
+          const resultado = await obtenerVendedoresPorTiendaCrm(idVentaValida);
+  
+          setVendedores(resultado?.vendedores || []);
+          if (session?.cod_usuario) {
+            setVendedor(resultado?.vendedores.filter((vendedor) => vendedor.cod_usuario == session.cod_usuario)[0] || null);
+          }
+        } catch (error) {
+          console.error("Error cargando vendedores:", error);
+  
+          mostrarMensaje(
+            "No fue posible cargar los vendedores.",
+            "error"
+          );
+        } finally {
+          setOpenLoadingSpinner(false);
+        }
+      };
+
+  const handleCambiarVendedor = (vendedorId: number) => {
+    const vendedorSeleccionado =
+      vendedores.find(
+        (item) => item.id_usuario_crm === vendedorId
+      ) ?? null;
+
+    setVendedor(vendedorSeleccionado);
+  };
 
   // ============================================================
   // RENDER
@@ -491,6 +537,10 @@ export const RedencionBonosTiendaPage = () => {
             nombre_cliente={nombreCliente}
             no_contrato={noContrato}
             entidad={entidad}
+
+            onVendedorChange={handleCambiarVendedor}
+            vendedor={vendedor}
+            vendedores={vendedores}
 
           />
 
