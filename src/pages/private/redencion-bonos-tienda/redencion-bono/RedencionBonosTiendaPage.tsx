@@ -433,34 +433,53 @@ export const RedencionBonosTiendaPage = () => {
       vendedor: vendedor?.cod_usuario
     }
 
+    const valorRestante = totalPagado - total
+    if (valorRestante > 0) {
+        const confirmacion = await Swal.fire({
+            icon: 'warning',
+            title: '¿Está seguro?',
+            text: `La suma de los bonos es mayor al valor de los productos a pagar. Hay una diferencia de ${valorRestante.toLocaleString('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                maximumFractionDigits: 0
+            })} que no se podrá redimir. ¿Está seguro de redimir de esta forma?`,
+            showCancelButton: true,
+            confirmButtonText: 'Sí, redimir',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        });
+
+        if (!confirmacion.isConfirmed) {
+            return;
+        }
+    }
+
     console.log('Vamos a guardar ', payload)
 
-    
-
+  
     setOpenLoadingSpinner(true);
-    
-        try {
-          let response = await redimirBonosTienda(payload);
-    
-    
-          if (response?.error === 0) {
-            await Swal.fire(response.msg);
-            navigate('/buscar_cliente_redencion', { replace: true });
-      
-          } else {
-            setOpenLoadingSpinner(false);
-            await Swal.fire(response!.msg);
-          }
-    
-        } catch (error) {
-          setOpenLoadingSpinner(false);
-    
-          await Swal.fire({
-            icon: "error",
-            text: "Error al hacer la redención del bono, contacte al administrador.",
-            confirmButtonText: "Aceptar",
-          });
-        }
+    try {
+      let response = await redimirBonosTienda(payload);
+
+
+      if (response?.error === 0) {
+        await Swal.fire(response.msg);
+        navigate('/buscar_cliente_redencion', { replace: true });
+  
+      } else {
+        setOpenLoadingSpinner(false);
+        await Swal.fire(response!.msg);
+      }
+
+    } catch (error) {
+      setOpenLoadingSpinner(false);
+
+      await Swal.fire({
+        icon: "error",
+        text: "Error al hacer la redención del bono, contacte al administrador.",
+        confirmButtonText: "Aceptar",
+      });
+    }
   }
 
   const session = useUserStore.getState().user;

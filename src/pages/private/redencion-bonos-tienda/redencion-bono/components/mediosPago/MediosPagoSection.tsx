@@ -155,7 +155,8 @@ export const MediosPagoSection = ({
 
     const hayBonoSeleccionado = bonosSeleccionados.length > 0;
 
-    const puedeGuardar = productosLength > 0 && hayBonoSeleccionado && restante === 0 && !mediosPago.some((medio)=>medio.id_metodo_pago === 0);
+    const puedeGuardar = productosLength > 0 && hayBonoSeleccionado && restante === 0 
+    // && !mediosPago.some((medio)=>medio.id_metodo_pago === 0);
 
     return (
         <Card>
@@ -288,7 +289,7 @@ export const MediosPagoSection = ({
                 {/* MEDIOS DE PAGO */}
                 {/* ========================= */}
 
-                {(hayBonoSeleccionado) && (
+                {(hayBonoSeleccionado ) && (
 
                     <>
                         <Divider className="mt-4" />
@@ -324,10 +325,7 @@ export const MediosPagoSection = ({
                                     Agregar
                                 </Button>
                             }
-
-
                         </div>
-
 
                         <div className="space-y-3">
 
@@ -470,6 +468,7 @@ export const MediosPagoSection = ({
                             )}
 
                         </div>
+                           
 
                     </>
                 )}
