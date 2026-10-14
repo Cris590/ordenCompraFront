@@ -461,7 +461,6 @@ export const RedencionBonosTiendaPage = () => {
     try {
       let response = await redimirBonosTienda(payload);
 
-
       if (response?.error === 0) {
         await Swal.fire(response.msg);
         navigate('/buscar_cliente_redencion', { replace: true });

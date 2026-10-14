@@ -103,6 +103,8 @@ export const actionsSettings  = {
         descargarExcelImpresionProductosCrm:`${apiUrl}/ecommerce/descargar_excel_impresion_productos`,
         obtenerDetalleProductoCrm:`${apiUrl}/ecommerce/obtener_detalles_producto`,
         obtenerProductosListadoCrm:`${apiUrl}/ecommerce/obtener_productos_listado`,
+        inactivarProductoCrm:`${apiUrl}/ecommerce/inactivar_producto`,
+        activarProductoCrm:`${apiUrl}/ecommerce/reactivar_producto`,
         obtenerListadoPedidosEcommerce:`${apiUrl}/ecommerce/obtener_pedidos_ecommerce`,
         obtenerDetallePedidoEcommerce:`${apiUrl}/ecommerce/detalle_pedido_ecommerce`,
         crearSeguimientoPedidoEcommerce:`${apiUrl}/ecommerce/crear_seguimiento_pedido`,

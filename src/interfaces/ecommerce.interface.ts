@@ -32,7 +32,8 @@ export interface IProductoResumenCrm{
     total_colores:number,
     total_tallas:number,
     nuevo_producto:boolean,
-    sincronizar_ecommerce:boolean
+    sincronizar_ecommerce:boolean,
+    activo:number
 
 }
 
@@ -283,7 +284,7 @@ export interface IResponseTallasProductoCrm extends IRespuestaGeneralAction{
 export interface IEditarProductoModeloCrm extends IProductoResumenCrm{
   colores: string[];
   tallas: string[];
-  activo:number,
+//   activo:number,
   cod_tallaje:number
 }
 

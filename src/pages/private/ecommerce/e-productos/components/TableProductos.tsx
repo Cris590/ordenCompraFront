@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import DataTable, { type TableColumn } from 'react-data-table-component';
 import { IEditarProductoModeloCrm, IFiltroProductosCRM, IProductoResumenCrm } from '../../../../../interfaces/ecommerce.interface';
-import { obtenerProductosCrm } from '../../../../../actions/ecommerce/ecommerce';
+import { activarProductoCrm, inactivarProductoCrm, obtenerProductosCrm } from '../../../../../actions/ecommerce/ecommerce';
 import LoadingSpinnerScreen from '../../../../../components/loadingSpinnerScreen/LoadingSpinnerScreen';
 import { currencyFormat } from '../../../../../utils/currencyFormat';
 import { Button, IconButton, Tooltip } from '@mui/material';
-import { IoExpandOutline, IoGrid } from 'react-icons/io5';
+import { IoBanOutline, IoCheckmarkCircleOutline, IoExpandOutline, IoGrid } from 'react-icons/io5';
 import { DialogEditarProducto } from './DialogEditarProducto';
 import { useProductoEdicionStore } from '../../../../../store/ecommerce/producto-edicion';
 import ProductosListadoDialog from './ProductosListadoDialog';
@@ -85,6 +85,22 @@ export const TableProductos = ({ filtros }: Props) => {
                         <IoExpandOutline size={18} />
                     </IconButton>
                 </Tooltip>
+
+                <Tooltip
+                    title={row.activo === 1 ? 'Desactivar producto' : 'Activar producto'}
+                    arrow
+                >
+                    <IconButton
+                        color={row.activo === 1 ? 'error' : 'success'}
+                        onClick={() => handleCambiarEstadoProducto(row.codigo_modelo, row.activo)}
+                    >
+                        {row.activo === 1 ? (
+                            <IoBanOutline size={18} />
+                        ) : (
+                            <IoCheckmarkCircleOutline size={18} />
+                        )}
+                    </IconButton>
+                </Tooltip>
             </>)
 
         }
@@ -126,6 +142,49 @@ export const TableProductos = ({ filtros }: Props) => {
         }
     };
 
+    const handleCambiarEstadoProducto = async (codigoModelo: string, activo: number) => {
+        setLoading(true);
+        try {
+
+            const activar = activo != 1;
+            if (!activar) {
+                const confirmacion = await Swal.fire({
+                    icon: 'warning',
+                    title: '¿Estás seguro?',
+                    text: '¿Estás seguro de que deseas desactivar este producto?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, desactivar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: '#d33',
+                    reverseButtons: true
+                });
+
+                if (!confirmacion.isConfirmed) return;
+            }
+            
+            let response;
+            if (activar) {
+                response = await activarProductoCrm(codigoModelo);
+            } else {
+                response = await inactivarProductoCrm(codigoModelo);
+            }
+
+            Swal.fire(response!.msg);
+
+
+        } catch (error) {
+
+            Swal.fire({
+                icon: 'error',
+                text: 'Error al activar/inactivar el producto, contacte con el administrador'
+            });
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    }
     const handleCloseEditarProducto = async (actualizar: boolean) => {
 
         resetProducto();
