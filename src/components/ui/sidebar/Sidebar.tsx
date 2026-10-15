@@ -34,6 +34,7 @@ import {
   IoFileTrayFullSharp,
   IoBagHandleSharp,
   IoColorWandSharp,
+  IoFileTrayFull,
 } from "react-icons/io5";
 import { IconType } from "react-icons";
 import { useUIStore } from "../../../store/ui/ui-store";
@@ -73,7 +74,8 @@ const iconMapping: { [key: string]: IconType } = {
   'in_out_inventarios':IoStorefront,
   'historial_in_out':IoFileTrayFullSharp,
   'pedidos_ecommerce':IoBagHandleSharp,
-  'buscar_cliente_redencion':IoColorWandSharp
+  'buscar_cliente_redencion':IoColorWandSharp,
+  'historial_redencion_bonos':IoFileTrayFull
 };
 
 export const Sidebar = () => {

@@ -65,6 +65,8 @@ export const actionsSettings  = {
         buscarBonosCedula:`${apiUrl}/entidad_bono/buscar_bonos_cedula`,
         obtenerBonosUsuarioRedencion:`${apiUrl}/entidad_bono/obtener_bonos_usuario_redencion`,
         redimirBonosTienda:`${apiUrl}/entidad_bono/redimir_bonos_tienda`,
+        obtenerBonosRedimidosTienda:`${apiUrl}/entidad_bono/bonos_redimidos_tienda`,
+        obtenerDetalleBonoRedimidosTienda:`${apiUrl}/entidad_bono/bonos_redimidos_detalle`,
         
         
         obtenerTemplateCargoBono:`${apiUrl}/entidad/obtener_template_cargo_bono`,

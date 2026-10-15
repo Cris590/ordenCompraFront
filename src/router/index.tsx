@@ -45,6 +45,7 @@ import { PedidosEcommercePage } from '../pages/private/pedidos_ecommerce/Pedidos
 import { GestionarPedidoEcommercePage } from '../pages/private/ecommerce/gestionar-pedido-ecommerce/GestionarPedidoEcommercePage';
 import { RedencionBonosTiendaPage } from '../pages/private/redencion-bonos-tienda/redencion-bono/RedencionBonosTiendaPage';
 import { BuscarClienteBonoRedencionPage } from '../pages/private/redencion-bonos-tienda/busqueda-cliente/BuscarClienteBonoRedencionPage';
+import { HistorialRedencionBonosTiendaPage } from '../pages/private/historial-redencion-bonos-tienda/HistorialRedencionBonosTiendaPage';
 
 
 const AppRouter: React.FC = () => {
@@ -86,7 +87,7 @@ const AppRouter: React.FC = () => {
           
           <Route path="/buscar_cliente_redencion" element={<RouteGuard element={<BuscarClienteBonoRedencionPage />} />} />
           <Route path="/redencion_bonos_tienda" element={<RouteGuard element={<RedencionBonosTiendaPage />} />} />
-
+          <Route path="/historial_redencion_bonos" element={<RouteGuard element={<HistorialRedencionBonosTiendaPage />} />} />
 
           {/* RUTAS FABRICA */}
           <Route path="/depositos" element={<RouteGuard element={<DepositosPage />} />} />

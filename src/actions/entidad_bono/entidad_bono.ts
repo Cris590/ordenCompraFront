@@ -5,6 +5,7 @@ import { actionsSettings } from "../settings";
 import { IFiltroBonoBusqueda, IResponseInfoBonosRedimir, IRespuestaBonoProductoUsuario, IRespuestaFiltroBonosBusqueda, IRespuestaReporteBonosRedimidos, IRespuestaUsuariosAgrupados } from "../../interfaces/entidad_bonos.interface";
 import { IRespuestaGeneralAction } from "../../interfaces/general.interface";
 import { IResponseEntidadTarjetabono } from "../../interfaces/control_accesos.interface";
+import { IFiltrosRedencionBonosTienda, IResponseBonoDetalleRedimidoTienda, IResponseBonosRedimidosTienda } from "../../interfaces/redencion_bonos.interface";
 
 export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) => {
     try {
@@ -210,5 +211,48 @@ export const consultarBonosFiltro = async ( filtroBusqueda:IFiltroBonoBusqueda) 
     }
   }
 
+export const obtenerBonosRedimidosTienda = async (filtro: IFiltrosRedencionBonosTienda) => {
+  try {
+
+    let options = {
+      method: 'post',
+      url: `${actionsSettings.backendRoutes.obtenerBonosRedimidosTienda}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+      data: filtro
+    }
+    const { data }: AxiosResponse<IResponseBonosRedimidosTienda> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
+export const obtenerDetalleBonoRedimidosTienda= async (codRedencionBono:number) => {
+  try {
+
+    let options = {
+      method: 'get',
+      url: `${actionsSettings.backendRoutes.obtenerDetalleBonoRedimidosTienda}/${codRedencionBono}`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthToken()
+      },
+      maxRedirects: 21,
+    }
+    const { data }: AxiosResponse<IResponseBonoDetalleRedimidoTienda> = await axios(options);
+    return data
+  } catch (e) {
+    handleHttpError(e);
+    console.log('************')
+    console.log(e)
+    return null
+  }
+}
 
   
