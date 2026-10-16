@@ -53,7 +53,7 @@ export const InventarioPosPage = () => {
   return (
     <>
 
-      <Title title="Administrador de ventas" />
+      <Title title="Administrador de inventarios" />
      
       <div className="bg-slate-100 min-h-screen p-2 w-[98%]">
 
